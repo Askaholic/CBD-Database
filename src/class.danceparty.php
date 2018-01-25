@@ -6,7 +6,7 @@
 class DanceParty
 {
   public static function activation_hook() {
-    include 'router.php';
+    require_once( DP_PLUGIN_DIR . 'router.php' );
     flush_rewrite_rules();
   }
 

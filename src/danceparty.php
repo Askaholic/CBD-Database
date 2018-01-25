@@ -15,6 +15,17 @@ if ( !function_exists( 'add_action' ) ) {
   exit;
 }
 
+
+define('DP_PLUGIN_DIR', plugin_dir_path(__FILE__));
+
+
+register_activation_hook( __FILE__, array('DanceParty', 'activation_hook') );
+register_deactivation_hook( __FILE__, array('DanceParty', 'deactivation_hook') );
+
+
+require_once(DP_PLUGIN_DIR . 'class.danceparty.php');
+
+
 add_action('admin_menu', 'danceparty_setup_menu');
 
 function danceparty_setup_menu() {
@@ -22,7 +33,7 @@ function danceparty_setup_menu() {
 }
 
 function test_init() {
-  include(plugin_dir_path( __FILE__ ) . 'views/settings.php');
+  include(DP_PLUGIN_DIR . 'views/settings.php');
 }
 
 ?>

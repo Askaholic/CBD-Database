@@ -2,6 +2,7 @@
 
 Team:
 Alexander Eckert
+Cameron Showalter
 
 ### Guidelines
 

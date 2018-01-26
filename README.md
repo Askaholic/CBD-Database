@@ -34,13 +34,12 @@ module. This is pretty simple, but just requires a few steps.
         AllowOverride None
         Require all granted
     </Directory>
-
     ```
     3. Change `AllowOverride` to None
 
 3. Restart apache `sudo service apache2 restart`
 4. Create a blank `.htaccess` file. `sudo touch /var/www/html/.htaccess`
-5. Give WordPress write access to the `.htaccess` file: `sudo chown wpadmin:www-data .htaccess`
+5. Give WordPress write access to the `.htaccess` file: `sudo chown wpadmin:www-data /var/www/html/.htaccess`
 6. Disable and Re-enable the DanceParty plugin through wordpress. If everything
   is set up correctly this will flush the rewrite rules to the `.htaccess` file
   you created.

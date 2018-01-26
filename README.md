@@ -41,9 +41,8 @@ module. This is pretty simple, but just requires a few steps.
         AllowOverride None
         Require all granted
     </Directory>
-
     ```
-    3. Change `AllowOverride` to None
+    3. Change `AllowOverride` to All
 
 3. Restart apache `sudo service apache2 restart`
 4. Create a blank `.htaccess` file. `sudo touch /var/www/html/.htaccess`
@@ -53,3 +52,5 @@ module. This is pretty simple, but just requires a few steps.
   you created.
 
 Hopefully that should work now (make sure that you've restarted Apache!)
+You can test if it works by going to `localhost/test`. If you get the test page
+it works!

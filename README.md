@@ -42,3 +42,5 @@ module. This is pretty simple, but just requires a few steps.
   you created.
 
 Hopefully that should work now (make sure that you've restarted Apache!)
+You can test if it works by going to `localhost/test`. If you get the test page
+it works!

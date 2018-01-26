@@ -6,6 +6,12 @@
 - Work on `dev`
 - Only push to `master` as part of a production deployment
 
+### Pulling latest changes
+A lot of times you will want to pull the latest changest from the main repo. The easiest way to do
+this is to add the main repo as a remote.
+1. Add the remote: `git remote add ask https://www.github.com/Askaholic/CBD-Database.git`
+2. Now pull the latest changes from the dev branch `git pull ask dev`
+
 ### Installing with WordPress
 
 In WordPress, plugins are installed in the `wp-content/plugins/` folder. Plugins

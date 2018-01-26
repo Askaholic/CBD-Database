@@ -1,5 +1,8 @@
 # CBD-Database
 
+Team:
+Alexander Eckert
+
 ### Guidelines
 
 - Make your own fork, and merge changes with pull requests. (You can merge your own pull requests)

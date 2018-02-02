@@ -17,7 +17,7 @@ class DancePartyAdmin
     }
 
     static function init_hooks() {
-        add_action( 'admin_menu', array( 'DancePartyAdmin', 'setup_menu') );
+        add_action( 'admin_menu', array( 'DancePartyAdmin', 'setup_menu' ) );
 
         self::$init_done = true;
     }
@@ -26,7 +26,7 @@ class DancePartyAdmin
         add_menu_page( DanceParty::NAME . ' Settings',
                        DanceParty::NAME, 'manage_options',
                        'danceparty-plugin',
-                       array('DancePartyAdmin', 'admin_view') );
+                       array('DancePartyAdmin', 'admin_view' ) );
     }
 
     static function admin_view() {

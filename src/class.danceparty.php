@@ -37,7 +37,13 @@ class DanceParty
     }
 
     public static function render_view( $view ) {
+        include_once( 'class.formbuilder.php' );
+
         include DanceParty::VIEW_DIR . $view;
+    }
+
+    public static function run_controller( $controller ) {
+        include DanceParty::CONTROLLER_DIR . $controller;
     }
 }
 

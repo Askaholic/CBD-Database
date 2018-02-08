@@ -30,4 +30,7 @@ if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 	add_action( 'init', array( 'DancePartyAdmin', 'init' ) );
 }
 
+//set theme
+require_once( DP_PLUGIN_DIR . 'class.theme.php' );
+
 ?>

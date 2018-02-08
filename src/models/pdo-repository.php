@@ -1,18 +1,21 @@
 <?php
 
 abstract class PDORepository {
-    private $username = 'cbd_dev_user';
-    private $password = 'cbd_dev_user_pass';
-    private $host = 'localhost';
-    private $name = 'cbd_dev';
+    private static $username = 'cbd_dev_user';
+    private static $password = 'cbd_dev_user_pass';
+    private static $host = 'localhost';
+    private static $name = 'cbd_dev';
 
-    private function get_connection() {
-        $conn = new PDO("mysql:dbname=$name;host=$host", $username, $password);
+    private static function get_connection() {
+        $name = self::$name;
+        $host = self::$host;
+        $conn = new PDO( "mysql:dbname=$name;host=$host", self::$username, self::$password );
+        $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
         return $conn;
     }
 
-    protected function query($sql, $args) {
-        $conn = $this->get_connection();
+    protected static function query( $sql, $args=array() ) {
+        $conn = self::get_connection();
         $stmt = $conn->prepare($sql);
         $stmt->execute($args);
         return $stmt;
@@ -20,10 +23,11 @@ abstract class PDORepository {
 }
 
 /**
- * Model
+ * Model base class
  */
 abstract class Model extends PDORepository {
     public static abstract function create_table();
+    public static abstract function query_all();
 }
 
 ?>

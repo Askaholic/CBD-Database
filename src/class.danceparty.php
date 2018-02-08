@@ -8,6 +8,7 @@ require_once( DP_PLUGIN_DIR . 'class.router.php' );
 class DanceParty
 {
     const NAME = 'Dance Party';
+    const OPTION_GROUP = 'danceparty-options';
     const CONTROLLER_DIR = DP_PLUGIN_DIR . 'controllers/';
     const VIEW_DIR = DP_PLUGIN_DIR . 'views/';
 

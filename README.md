@@ -3,6 +3,7 @@
 Team:
 Alexander Eckert
 Cameron Showalter
+Rohan Weeden
 
 ### Guidelines
 

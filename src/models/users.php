@@ -6,6 +6,7 @@ require_once('pdo-repository.php');
  * User
  */
 class User extends Model {
+    const TABLE_NAME = 'users';
     /* Used to identify the table entry for this object */
     private $_id;
 
@@ -45,6 +46,7 @@ class User extends Model {
     }
 
     function __construct($first_name, $last_name, $email) {
+        parent::__construct();
         $this->first_name = $first_name;
         $this->last_name = $last_name;
         $this->email = $email;

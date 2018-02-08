@@ -31,21 +31,34 @@ if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 }
 
 //adding template hook actions
-//just example actions for now 
+//just example actions for now
 function writeToFooter()
 {
   echo "<p>Hi footer</p>";
 }
 function writeToHeader()
 {
-  echo "<p>Hi header</p>";
+//  echo "<p>Hi header</p>";
 }
 function writeToMenu()
 {
   echo '<a href="signup">Sign Up</a>';
 }
+function writeToIframeMenu()
+{
+  //I'm pretty sure there's a better way of doing this
+  echo '<form style="float: left" method="post" action="test">';
+  echo '<input type="hidden" name="menu" value="index.php/home">';
+  echo '<input type="submit" value="Home"></form>';
+
+  echo '<form style="float: left" method="post" action="test">';
+  echo '<input type="hidden" name="menu" value="signup">';
+  echo '<input type="submit" value="Sign Up"></form>';
+}
+
 
 add_action('wp_footer', 'writeToFooter');
 add_action('wp_head', 'writeToHeader');
 add_action('wp_meta', 'writeToMenu');
+add_action('wp_iframe', 'writeToIframeMenu');
 ?>

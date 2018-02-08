@@ -30,4 +30,22 @@ if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 	add_action( 'init', array( 'DancePartyAdmin', 'init' ) );
 }
 
+//adding template hook actions
+//just example actions for now 
+function writeToFooter()
+{
+  echo "<p>Hi footer</p>";
+}
+function writeToHeader()
+{
+  echo "<p>Hi header</p>";
+}
+function writeToMenu()
+{
+  echo '<a href="signup">Sign Up</a>';
+}
+
+add_action('wp_footer', 'writeToFooter');
+add_action('wp_head', 'writeToHeader');
+add_action('wp_meta', 'writeToMenu');
 ?>

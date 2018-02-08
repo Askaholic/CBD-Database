@@ -1,6 +1,6 @@
 <?php
 
-require_once( DP_PLUGIN_DIR . 'router.php' );
+require_once( DP_PLUGIN_DIR . 'class.router.php' );
 
 /**
  * DanceParty

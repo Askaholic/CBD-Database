@@ -16,4 +16,18 @@ class User extends Model {
     );
 }
 
+class Membership extends Model {
+    const TABLE_NAME = 'users_memberships';
+
+    protected static $columns = array(
+        'user_id' => 'int NOT NULL',
+        'expiration_date' => 'DATE NOT NULL'
+    );
+
+    protected static $constraints = '
+        PRIMARY KEY (user_id, expiration_date),
+        FOREIGN KEY (user_id) REFERENCES users(id)
+    ';
+}
+
 ?>

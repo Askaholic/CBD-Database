@@ -1,16 +1,20 @@
 # CBD-Database
 
 Team:
-Aisha Peters
-Alexander Eckert
-Cameron Showalter
-Rohan Weeden
+* Aisha Peters
+* Alexander Eckert
+* Cameron Showalter
+* Rohan Weeden
 
 ### Guidelines
 
 - Make your own fork, and merge changes with pull requests. (You can merge your own pull requests)
 - Work on `dev`
 - Only push to `master` as part of a production deployment
+
+#### Style Guidelines
+- Use soft tabs set at **4 spaces**.
+- Use single quotes for strings unless intentionally injecting variables
 
 ### Pulling latest changes
 A lot of times you will want to pull the latest changest from the main repo. The easiest way to do

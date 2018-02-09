@@ -15,6 +15,7 @@ abstract class PDORepository {
     }
 
     protected static function query( $sql, $args=array() ) {
+        echo $sql;
         $conn = self::get_connection();
         $stmt = $conn->prepare($sql);
         $stmt->execute($args);
@@ -35,8 +36,8 @@ abstract class Model extends PDORepository {
         AbstractConstantEnforcer::__add(__CLASS__, get_called_class());
 
         // Replace strings with column objects
-        foreach ( static::$columns as $key => $value ) {
-            $this->cols[$key] = new Column($value);
+        foreach ( static::$columns as $key => $type ) {
+            $this->cols[$key] = new Column($type);
         }
 
         // Populate columns with values from arguments
@@ -52,7 +53,48 @@ abstract class Model extends PDORepository {
     }
 
     public function __set($key, $value) {
+        if (array_key_exists($key, $this->cols)) {
+            $this->cols[$key] = $value;
+        }
+    }
 
+    public function __toString() {
+        $str = __CLASS__ . '( ';
+        foreach ($this->cols as $name => $col) {
+            $str .= "$name => '$col->value', ";
+        }
+        $str = substr($str, 0, -2);
+        $str .= ')';
+        return $str;
+    }
+
+    public function commit() {
+        $table = static::TABLE_NAME;
+
+        $insert_columns_string = '';
+        $values_string = '';
+        $update_columns_string = '';
+        $args = array();
+        foreach (static::$columns as $name => $type) {
+            $insert_columns_string .= "$name,";
+            $values_string .= "?,";
+            $update_columns_string .= "$name = VALUES($name),";
+            array_push($args, $this->cols[$name]->value);
+        }
+        $insert_columns_string = substr($insert_columns_string, 0 , -1);
+        $values_string = substr($values_string, 0 , -1);
+        $update_columns_string = substr($update_columns_string, 0 , -1);
+
+        $this->query(
+            "INSERT INTO $table (
+                $insert_columns_string
+            ) VALUES (
+                $values_string
+            )
+            ON DUPLICATE KEY UPDATE
+                $update_columns_string;",
+            $args
+        );
     }
 
     public static function create_table() {
@@ -62,15 +104,39 @@ abstract class Model extends PDORepository {
         }
         // Remove last comma
         $columns_string = substr($columns_string, 0, -1);
+        $table = static::TABLE_NAME;
         self::query(
-            "CREATE TABLE IF NOT EXISTS ? (
+            "CREATE TABLE IF NOT EXISTS $table (
                 $columns_string
-            );",
-            array(static::TABLE_NAME)
+            );"
         );
     }
 
-    public static abstract function query_all();
+    public static function query_all() {
+        $table = static::TABLE_NAME;
+        $columns_string = '';
+        foreach (static::$columns as $name => $type) {
+            $columns_string .= "$name,";
+        }
+        // Remove last comma
+        $columns_string = substr($columns_string, 0, -1);
+
+        $result = self::query(
+            "SELECT $columns_string FROM $table;"
+        );
+        $retval = array();
+        foreach ($result as $row) {
+            $column_values = array();
+            foreach (static::$columns as $name => $type) {
+                $column_values[$name] = $row[$name];
+            }
+            $obj = new static(
+                $column_values
+            );
+            array_push($retval, $obj);
+        }
+        return $retval;
+    }
 }
 
 class Column {

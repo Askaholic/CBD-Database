@@ -67,7 +67,7 @@ class DancePartyAdmin
             $option_group,
             $db_section
         );
-	register_setting( $option_group, 'db_user', 'database_settings_validate' );
+	register_setting( $option_group, 'db_user', 'database_settings_validate');
 
 	//PASSWORD
 
@@ -78,7 +78,7 @@ class DancePartyAdmin
             $option_group,
             $db_section
         );
-	register_setting( $option_group, 'db_password', 'database_settings_validate' );
+	register_setting( $option_group, 'db_password', 'database_settings_validate');
 
 	//HOSTNAME
 
@@ -89,7 +89,7 @@ class DancePartyAdmin
             $option_group,
             $db_section
         );
-	register_setting( $option_group, 'db_name', 'database_settings_validate' );
+	register_setting( $option_group, 'db_name', 'database_settings_validate');
 
 	//HOST
 
@@ -100,7 +100,7 @@ class DancePartyAdmin
             $option_group,
             $db_section
         );
-	register_setting( $option_group, 'db_host', 'database_settings_validate' );
+	register_setting( $option_group, 'db_host', 'database_settings_validate');
 
 	//PORT
 
@@ -111,7 +111,7 @@ class DancePartyAdmin
             $option_group,
             $db_section
         );
-	register_setting( $option_group, 'db_port', 'database_settings_validate' );
+	register_setting( $option_group, 'db_port', 'database_settings_validate');
     }
 
 /* ------------------------------------------------------------------------ *

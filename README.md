@@ -12,6 +12,10 @@ Rohan Weeden
 - Work on `dev`
 - Only push to `master` as part of a production deployment
 
+#### Style Guidelines
+- Use soft tabs set at **4 spaces**.
+- Use single quotes for strings unless intentionally injecting variables
+
 ### Pulling latest changes
 A lot of times you will want to pull the latest changest from the main repo. The easiest way to do
 this is to add the main repo as a remote.

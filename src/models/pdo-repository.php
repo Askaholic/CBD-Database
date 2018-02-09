@@ -6,7 +6,17 @@ abstract class PDORepository {
     private static $host = 'localhost';
     private static $name = 'cbd_dev';
 
+    private static $fetched_options = false;
+
     private static function get_connection() {
+        if ( !self::$fetched_options ) {
+            self::$username = get_option( 'db_user' );
+            self::$password = get_option( 'db_password' );
+            self::$host = get_option( 'db_host' );
+            self::$name = get_option( 'db_name' );
+            self::$fetched_options = true;
+        }
+
         $name = self::$name;
         $host = self::$host;
         $conn = new PDO( "mysql:dbname=$name;host=$host", self::$username, self::$password );
@@ -31,6 +41,8 @@ abstract class Model extends PDORepository {
 
     protected static $columns = array();
     private $cols = array();
+
+    protected static $constraints = '';
 
     public function __construct($arr) {
         AbstractConstantEnforcer::__add(__CLASS__, get_called_class());
@@ -105,11 +117,15 @@ abstract class Model extends PDORepository {
         // Remove last comma
         $columns_string = substr($columns_string, 0, -1);
         $table = static::TABLE_NAME;
-        self::query(
+        $query_string =
             "CREATE TABLE IF NOT EXISTS $table (
                 $columns_string
-            );"
-        );
+            ";
+        if ( static::$constraints != '' ) {
+            $query_string .= ", $constraints";
+        }
+        $query_string .= ');';
+        self::query( $query_string );
     }
 
     public static function query_all() {

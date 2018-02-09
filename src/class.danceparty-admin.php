@@ -118,7 +118,7 @@ class DancePartyAdmin
  * Section Callbacks
  * ------------------------------------------------------------------------ */
 /**
- * This function provides a simple description for the Database Options page. 
+ * This function provides a simple description for the Database Options page.
  *
  * It is called from the 'database_settings' function by being passed as a parameter
  * in the add_settings_section function.
@@ -164,10 +164,10 @@ class DancePartyAdmin
     function database_settings_validate( $input ) {
 	$output = array();
    	foreach( $input as $key => $value ) {
-            if( isset( $input[$key] ) ) {
-		$output[$key] = strip_tags( stripslashes( $input[$key] ));
-            }
+        if( isset( $input[$key] ) ) {
+            $output[$key] = strip_tags( stripslashes( $input[$key] ));
         }
+    }
     return apply_filters( 'database_settings_validate', $output, $input );
     }
 

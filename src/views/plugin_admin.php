@@ -1,7 +1,7 @@
 <div class="wrap">
     <h1><?php echo DanceParty::NAME ?> Options</h1>
 
-    <form method="post">
+    <form action="options.php" method="post">
         <?php
 
             settings_fields( DanceParty::OPTION_GROUP );

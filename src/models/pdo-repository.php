@@ -28,24 +28,48 @@ abstract class PDORepository {
 abstract class Model extends PDORepository {
     const TABLE_NAME = 'abstract';
 
-    protected $columns = array();
+    protected static $columns = array();
+    private $cols = array();
 
-    public function __construct() {
+    public function __construct($arr) {
         AbstractConstantEnforcer::__add(__CLASS__, get_called_class());
+
+        // Replace strings with column objects
+        foreach ( static::$columns as $key => $value ) {
+            $this->cols[$key] = new Column($value);
+        }
+
+        // Populate columns with values from arguments
+        foreach ( $arr as $key => $value ) {
+            $this->cols[$key]->value = $value;
+        }
     }
 
     public function __get($key) {
-        echo '__get called';
-        if (array_key_exists($key, $this->$columns)) {
-            return $this->$columns[$key]->$value;
+        if (array_key_exists($key, $this->cols)) {
+            return $this->cols[$key]->value;
         }
     }
 
     public function __set($key, $value) {
-        
+
     }
 
-    public static abstract function create_table();
+    public static function create_table() {
+        $columns_string = '';
+        foreach (static::$columns as $name => $type) {
+            $columns_string .= "$name $type,";
+        }
+        // Remove last comma
+        $columns_string = substr($columns_string, 0, -1);
+        self::query(
+            "CREATE TABLE IF NOT EXISTS ? (
+                $columns_string
+            );",
+            array(static::TABLE_NAME)
+        );
+    }
+
     public static abstract function query_all();
 }
 

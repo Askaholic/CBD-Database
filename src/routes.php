@@ -8,5 +8,6 @@
 
 Router::route( 'test', 'test.php' );
 Router::route( 'signup', 'signup.php' );
+Router::route( 'user_model_test', 'umt.php' );
 
 ?>

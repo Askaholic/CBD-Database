@@ -1,10 +1,10 @@
 # CBD-Database
 
 Team:
-Aisha Peters
-Alexander Eckert
-Cameron Showalter
-Rohan Weeden
+* Aisha Peters
+* Alexander Eckert
+* Cameron Showalter
+* Rohan Weeden
 
 ### Guidelines
 

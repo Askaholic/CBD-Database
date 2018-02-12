@@ -1,6 +1,6 @@
 <?php
 
-require_once('pdo-repository.php');
+require_once('model.php');
 
 /**
  * User
@@ -14,6 +14,10 @@ class User extends Model {
         'last_name' => 'VARCHAR(128) NOT NULL',
         'email' => 'VARCHAR(255) NOT NULL'
     );
+
+    public static function query_all_with_membership() {
+        
+    }
 }
 
 class Membership extends Model {

@@ -54,6 +54,9 @@ abstract class Model extends PDORepository {
 
         // Populate columns with values from arguments
         foreach ( $arr as $key => $value ) {
+            if ( !array_key_exists($key, $this->cols) ) {
+                $this->cols[$key] = new Column('joined_value');
+            }
             $this->cols[$key]->value = $value;
         }
     }
@@ -121,7 +124,7 @@ abstract class Model extends PDORepository {
             "CREATE TABLE IF NOT EXISTS $table (
                 $columns_string
             ";
-        if ( static::$constraints != '' ) {
+        if ( defined(static::$constraints) and isset(static::$constraints) and static::$constraints != '' ) {
             $query_string .= ", $constraints";
         }
         $query_string .= ');';

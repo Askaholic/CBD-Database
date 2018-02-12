@@ -13,11 +13,15 @@ class Role extends Model {
     public static $roles = array(
         array(
             'id' => 1,
-            'name' => 'VIEW_MEMBERS'
+            'name' => 'MEMBER'
         ),
         array(
             'id' => 2,
-            'name' => 'ADD_MEMBERS'
+            'name' => 'DOOR_HOST'
+        ),
+        array(
+            'id' => 3,
+            'name' => 'ADMIN'
         )
     );
 

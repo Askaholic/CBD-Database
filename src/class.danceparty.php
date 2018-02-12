@@ -36,10 +36,14 @@ class DanceParty
         flush_rewrite_rules();
     }
 
-    public static function render_view( $view ) {
+    public static function render_view( $view, $context ) {
         include_once( 'class.formbuilder.php' );
 
         include DanceParty::VIEW_DIR . $view;
+    }
+
+    public static function render_view_with_template( $view, $context ) {
+        include DanceParty::VIEW_DIR . 'layout.php';
     }
 
     public static function run_controller( $controller ) {

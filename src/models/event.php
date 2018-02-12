@@ -1,6 +1,6 @@
 <?php
 
-require_once('pdo-repository.php');
+require_once('model.php');
 
 /**
  * Event. Table for keeping track of custom event pages.

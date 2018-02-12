@@ -30,16 +30,31 @@ class DanceParty
     public static function activation_hook() {
       Router::register_routes();
       flush_rewrite_rules();
+
+      self::create_tables();
     }
 
     public static function deactivation_hook() {
         flush_rewrite_rules();
     }
 
-    public static function render_view( $view ) {
+    public static function create_tables() {
+        require_once( DP_PLUGIN_DIR . 'models/user.php' );
+        require_once( DP_PLUGIN_DIR . 'models/event.php' );
+
+        User::create_table();
+        Membership::create_table();
+        Event::create_table();
+    }
+
+    public static function render_view( $view, $context ) {
         include_once( 'class.formbuilder.php' );
 
         include DanceParty::VIEW_DIR . $view;
+    }
+
+    public static function render_view_with_template( $view, $context ) {
+        include DanceParty::VIEW_DIR . 'layout.php';
     }
 
     public static function run_controller( $controller ) {

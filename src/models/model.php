@@ -8,7 +8,7 @@ abstract class PDORepository {
 
     private static $fetched_options = false;
 
-    private static function get_connection() {
+    protected static function get_connection() {
         if ( !self::$fetched_options ) {
             self::$username = get_option( 'db_user' );
             self::$password = get_option( 'db_password' );
@@ -25,7 +25,7 @@ abstract class PDORepository {
     }
 
     protected static function query( $sql, $args=array() ) {
-        echo $sql;
+        // echo $sql;
         $conn = self::get_connection();
         $stmt = $conn->prepare($sql);
         $stmt->execute($args);
@@ -83,22 +83,40 @@ abstract class Model extends PDORepository {
         return $str;
     }
 
+    public static function get_sql_column_strings() {
+        $column_names = '';
+        $values_string = '';
+        $update_columns_string = '';
+        foreach (static::$columns as $name => $type) {
+            $column_names .= "$name,";
+            $values_string .= "?,";
+            $update_columns_string .= "$name = VALUES($name),";
+        }
+
+        $column_names = substr($column_names, 0 , -1);
+        $values_string = substr($values_string, 0 , -1);
+        $update_columns_string = substr($update_columns_string, 0 , -1);
+
+        return array(
+            'names' => $column_names,
+            'placeholders' => $values_string,
+            'updates' => $update_columns_string
+        );
+    }
+
     public function commit() {
         $table = static::TABLE_NAME;
 
-        $insert_columns_string = '';
-        $values_string = '';
-        $update_columns_string = '';
+        $sql_parts = self::get_sql_column_strings();
+
+        $insert_columns_string = $sql_parts['names'];
+        $values_string = $sql_parts['placeholders'];
+        $update_columns_string = $sql_parts['updates'];
+
         $args = array();
         foreach (static::$columns as $name => $type) {
-            $insert_columns_string .= "$name,";
-            $values_string .= "?,";
-            $update_columns_string .= "$name = VALUES($name),";
             array_push($args, $this->cols[$name]->value);
         }
-        $insert_columns_string = substr($insert_columns_string, 0 , -1);
-        $values_string = substr($values_string, 0 , -1);
-        $update_columns_string = substr($update_columns_string, 0 , -1);
 
         $this->query(
             "INSERT INTO $table (

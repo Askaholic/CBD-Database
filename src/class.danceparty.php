@@ -30,10 +30,21 @@ class DanceParty
     public static function activation_hook() {
       Router::register_routes();
       flush_rewrite_rules();
+
+      self::create_tables();
     }
 
     public static function deactivation_hook() {
         flush_rewrite_rules();
+    }
+
+    public static function create_tables() {
+        require_once( DP_PLUGIN_DIR . 'models/user.php' );
+        require_once( DP_PLUGIN_DIR . 'models/event.php' );
+
+        User::create_table();
+        Membership::create_table();
+        Event::create_table();
     }
 
     public static function render_view( $view, $context ) {

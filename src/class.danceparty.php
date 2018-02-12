@@ -41,10 +41,12 @@ class DanceParty
     public static function create_tables() {
         require_once( DP_PLUGIN_DIR . 'models/user.php' );
         require_once( DP_PLUGIN_DIR . 'models/event.php' );
+        require_once( DP_PLUGIN_DIR . 'models/roles.php' );
 
         User::create_table();
         Membership::create_table();
         Event::create_table();
+        Role::create_table();
     }
 
     public static function render_view( $view, $context ) {

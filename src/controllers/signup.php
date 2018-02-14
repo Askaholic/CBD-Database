@@ -51,7 +51,7 @@
 
 <?php
 
-//require_once('../models/user.php');
+require_once(DP_PLUGIN_DIR . 'user.php');
 
     $name = $_POST['user'];
     $email = $_POST['email'];
@@ -63,8 +63,8 @@
       {
         $splitName = explode(" ", $name);
         $userData = array('first_name' => $splitName[0],'last_name' => $splitName[1],'email' => $email);
-        // $user = new User($userData);
-        // $user->commit();
+        $user = new User($userData);
+        $user->commit();
         $out = "$email account created";
       }
       else

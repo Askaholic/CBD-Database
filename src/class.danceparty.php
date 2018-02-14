@@ -49,7 +49,7 @@ class DanceParty
         Role::create_table();
     }
 
-    public static function render_view( $view, $context ) {
+    public static function render_view( $view, $context = array()) {
         include_once( 'class.formbuilder.php' );
 
         include DanceParty::VIEW_DIR . $view;

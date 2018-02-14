@@ -2,7 +2,7 @@
 
 function writeToFooter()
 {
-  echo "<p>Hi footer</p>";
+  //echo "<p>Hi footer</p>";
 }
 function writeToHeader()
 {

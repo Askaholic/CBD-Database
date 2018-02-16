@@ -16,7 +16,8 @@ if ( !function_exists( 'add_action' ) ) {
 }
 
 
-define('DP_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define( 'DP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'DP_PLUGIN_URL', plugins_url('/', __FILE__ ) );
 
 register_activation_hook( __FILE__, array( 'DanceParty', 'activation_hook' ) );
 register_deactivation_hook( __FILE__, array( 'DanceParty', 'deactivation_hook' ) );

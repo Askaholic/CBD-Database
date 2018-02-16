@@ -12,6 +12,8 @@ class DanceParty
     const CONTROLLER_DIR = DP_PLUGIN_DIR . 'controllers/';
     const VIEW_DIR = DP_PLUGIN_DIR . 'views/';
 
+    const ASSET_URL = DP_PLUGIN_URL . 'assets/';
+
     private static $init_done = false;
 
     static function init() {

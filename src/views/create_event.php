@@ -31,14 +31,18 @@
 
             <editable tag="h3" form-value="form.name"></editable>
             <div ng-repeat="f in form.fields">
-                <editable tag="label" form-value="f.name"></editable>
+                <editable form-value="f.name"></editable>
+                <editable tag="i" form-value="f.desc"></editable>
+                <br/>
                 <input type="{{ f.type }}" id="{{ f.short_name }}" name="{{ f.short_name }}">
+                <br/>
             </div>
 
             <div ng-if="showCreateField">
                 <br/>
                 <div class="border-light">
-                    <editable tag="label" form-value="$parent.newFieldName"></editable>
+                    <editable form-value="$parent.newFieldName"></editable>
+                    <editable tag="i" form-value="$parent.newFieldDesc"></editable>
                     <br/>
                     <input type="text" id="field_name" name="field_name">
                 </div>

@@ -11,6 +11,7 @@ app.controller("formBuilder", function($scope) {
     $scope.addField = function() {
         $scope.showCreateField = true;
         $scope.newFieldName = "Name"
+        $scope.newFieldDesc = "Description"
     };
 
     $scope.createField = function() {
@@ -19,6 +20,7 @@ app.controller("formBuilder", function($scope) {
             {
                 "name": $scope.newFieldName,
                 "short_name": $scope.newFieldName.toLowerCase().replace(/ */, '_'),
+                "desc": $scope.newFieldDesc,
                 "type": "text"
             }
         );
@@ -41,10 +43,11 @@ app.component('editable', {
         }
     },
     template: function ($element, $attrs) {
-        console.log($attrs)
+        if ($attrs.tag == undefined) { $attrs.tag = "label" }
+        
         return `
             <div>
-                <` + $attrs.tag + ` title="Double click to edit" for="field_name" ng-if="!$ctrl.editing" ng-dblclick="$ctrl.setEditing(true)">{{ $ctrl.formValue }}:
+                <` + $attrs.tag + ` title="Double click to edit" for="field_name" ng-if="!$ctrl.editing" ng-dblclick="$ctrl.setEditing(true)">{{ $ctrl.formValue }}
                 </` + $attrs.tag + `>
                 <div style="position: relative;">
                     <input ng-if="$ctrl.editing"ng-model="$ctrl.formValue" ec-enter="$ctrl.setEditing(false)" type="text">

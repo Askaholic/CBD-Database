@@ -43,7 +43,7 @@
   <input type="email" name="email"
     placeholder="Enter Email Address" style="width: 300px; margin-left: 10px;">
   <input type="password" id="password" name="password" onkeyup="check();"
-  pattern="*{5,20}" title="Password must be from 5 to 20 characters in length."
+  pattern=".{5,20}" title="Password must be from 5 to 20 characters in length."
   placeholder="Choose Password" style="width: 300px; margin-left: 10px;">
   <input type="password" id="confirm_password" name="confirm_password" onkeyup="check();"
    placeholder="Confirm Password" style="width: 300px; margin-left: 10px;">
@@ -64,13 +64,18 @@ require_once(DP_PLUGIN_DIR . 'models/user.php');
     {
       if($pass == $pass2)
       {
-    //    $hash = wp_hash_password($pass);
-        $hash = "test";
+        //this fails to commit - I think $ in hash breaks insert, quoting didn't help
+        $hash = wp_hash_password($pass);
+        echo "<p>$hash</p>";
+        //delete this out once sql insert special chars figured out
+        $hash = $pass;
+
         $splitName = explode(" ", $name);
         $userData = array('first_name' => $splitName[0],'last_name' => $splitName[1],
                           'email' => $email, 'password' => $hash,'role_id' => 0);
         $user = new User($userData);
         $user->commit();
+
         $out = "$email account created";
       }
       else
@@ -79,7 +84,6 @@ require_once(DP_PLUGIN_DIR . 'models/user.php');
         $out = "Passwords do not match";
       }
     }
-
 
     echo "<p>$out</p>";
 

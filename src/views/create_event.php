@@ -12,11 +12,22 @@
                 border-radius: .2rem;
                 padding: 1rem;
             }
+
+            .pull-right {
+                float: right;
+            }
+            .input-inline {
+                position: absolute;
+                right: 3px;
+                top: 3px;
+                bottom: 3px;
+            }
         </style>
     </head>
     <body>
         <div class="wrap" ng-app="EventCreator" ng-controller="formBuilder">
             <h1>Create a new event</h1>
+            <hr/>
 
             <editable tag="h3" form-value="form.name"></editable>
             <div ng-repeat="f in form.fields">
@@ -28,6 +39,7 @@
                 <br/>
                 <div class="border-light">
                     <editable tag="label" form-value="$parent.newFieldName"></editable>
+                    <br/>
                     <input type="text" id="field_name" name="field_name">
                 </div>
                 <br/>

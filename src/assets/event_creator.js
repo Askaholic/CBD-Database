@@ -44,8 +44,12 @@ app.component('editable', {
         console.log($attrs)
         return `
             <div>
-                <` + $attrs.tag + ` for="field_name" ng-if="!$ctrl.editing" ng-dblclick="$ctrl.setEditing(true)">{{ $ctrl.formValue }}:</` + $attrs.tag + `>
-                <input ng-if="$ctrl.editing" ng-model="$ctrl.formValue" ec-enter="$ctrl.setEditing(false)" type="text">
+                <` + $attrs.tag + ` title="Double click to edit" for="field_name" ng-if="!$ctrl.editing" ng-dblclick="$ctrl.setEditing(true)">{{ $ctrl.formValue }}:
+                </` + $attrs.tag + `>
+                <div style="position: relative;">
+                    <input ng-if="$ctrl.editing"ng-model="$ctrl.formValue" ec-enter="$ctrl.setEditing(false)" type="text">
+                    <input ng-if="$ctrl.editing" class="button input-inline" value="Done" type="button" ng-click="$ctrl.setEditing(false)">
+                </div>
             </div>
         `
     }

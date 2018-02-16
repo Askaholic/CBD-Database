@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title><?php $title ?></title>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js" charset="utf-8"></script>
+        <script src="<?php echo DanceParty::ASSET_URL . 'event_creator.js' ?>" charset="utf-8"></script>
         <?php wp_head(); ?>
         <style media="screen">
             .border-light {
@@ -37,6 +38,5 @@
             <button ng-if="!showCreateField" type="button" name="button" ng-click="addField()">New Field</button>
         </div>
         <?php wp_footer(); ?>
-        <script src="<?php echo DanceParty::ASSET_URL . 'event_creator.js' ?>" charset="utf-8"></script>
     </body>
 </html>

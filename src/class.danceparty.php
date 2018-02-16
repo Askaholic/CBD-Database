@@ -31,7 +31,7 @@ class DanceParty
       Router::register_routes();
       flush_rewrite_rules();
 
-      self::create_tables();
+      // self::create_tables();
     }
 
     public static function deactivation_hook() {
@@ -55,7 +55,7 @@ class DanceParty
         include DanceParty::VIEW_DIR . $view;
     }
 
-    public static function render_view_with_template( $view, $context ) {
+    public static function render_view_with_template( $view, $context = array() ) {
         include DanceParty::VIEW_DIR . 'layout.php';
     }
 

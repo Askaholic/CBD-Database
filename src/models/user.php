@@ -14,7 +14,7 @@ class User extends Model {
         'last_name' => 'VARCHAR(128) NOT NULL',
         'email' => 'VARCHAR(255) NOT NULL',
         'password' => 'VARCHAR(32) NOT NULL',  //for MD5 hashed password
-        'role_id' => 'int NOT NULL DEFAULT 0'
+        'role_id' => 'int NOT NULL DEFAULT 1'
     );
 
     protected static $constraints = '

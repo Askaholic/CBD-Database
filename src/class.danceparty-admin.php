@@ -36,7 +36,7 @@ class DancePartyAdmin
     }
 
     static function admin_view() {
-        DanceParty::render_view( 'plugin_admin.php' );
+        DanceParty::run_controller( 'plugin_admin.php' );
     }
 
 /* ------------------------------------------------------------------------ *

@@ -6,7 +6,9 @@
         <?php wp_head(); ?>
     </head>
     <body>
-        <?php DanceParty::render_view( $view, $context ); ?>
+        <div class="wrap">
+            <?php DanceParty::render_view( $view, $context ); ?>
+        </div>
         <?php wp_footer(); ?>
     </body>
 </html>

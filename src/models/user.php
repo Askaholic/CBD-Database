@@ -13,6 +13,7 @@ class User extends Model {
         'first_name' => 'VARCHAR(128) NOT NULL',
         'last_name' => 'VARCHAR(128) NOT NULL',
         'email' => 'VARCHAR(255) NOT NULL',
+        'password' => 'VARCHAR(32) NOT NULL',  //for MD5 hashed password
         'role_id' => 'int NOT NULL DEFAULT 0'
     );
 

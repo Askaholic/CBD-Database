@@ -11,10 +11,10 @@
         ?>
     </form>
     <?php
-    if( isset($context['error']) && $context['error'] != '' ) {
+    if( isset($context['error']) and $context['error'] != '' ) {
     ?>
         <div class="error">
-            <p><?php $context['error'] ?></p>
+            <p><?php echo $context['error'] ?></p>
         </div>
     <?php
     }

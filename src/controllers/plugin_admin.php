@@ -7,6 +7,6 @@ try {
     $e = 'Error connecting to database. Please double check that the config options are correct.';
 }
 
-DanceParty::render_view( 'plugin_admin.php', array( 'error' => $e) );
+DanceParty::render_view( 'plugin_admin.php', array( 'error' => $e ) );
 
 ?>

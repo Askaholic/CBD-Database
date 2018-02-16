@@ -10,4 +10,13 @@
             submit_button();
         ?>
     </form>
+    <?php
+    if( isset($context['error']) && $context['error'] != '' ) {
+    ?>
+        <div class="error">
+            <p><?php $context['error'] ?></p>
+        </div>
+    <?php
+    }
+    ?>
 </div>

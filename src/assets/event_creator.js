@@ -46,7 +46,13 @@ app.component('editable', {
     },
     controller: function() {
         this.setEditing = function (value) {
+            if (value) {
+                this.default = this.formValue;
+            }
             this.editing = value;
+            if (this.default !== undefined && this.formValue === "") {
+                this.formValue = this.default;
+            }
         }
     },
     template: function ($element, $attrs) {

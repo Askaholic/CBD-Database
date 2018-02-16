@@ -12,22 +12,51 @@
                 border-radius: .2rem;
                 padding: 1rem;
             }
+
+            .pull-right {
+                float: right;
+            }
+            .inline-container {
+                position: relative;
+            }
+            .input-inline {
+                position: absolute;
+                right: 3px;
+                top: 3px;
+                bottom: 3px;
+            }
+            .button-sm {
+                padding-left: 1em !important;
+                padding-right: 1em !important;
+                padding-top: .2em !important;
+            }
         </style>
     </head>
     <body>
         <div class="wrap" ng-app="EventCreator" ng-controller="formBuilder">
             <h1>Create a new event</h1>
+            <hr/>
 
             <editable tag="h3" form-value="form.name"></editable>
             <div ng-repeat="f in form.fields">
-                <editable tag="label" form-value="f.name"></editable>
-                <input type="{{ f.type }}" id="{{ f.short_name }}" name="{{ f.short_name }}">
+                <div class="border-light">
+                    <div class="inline-container">
+                        <input class="button-sm button input-inline" type="button" value="Delete" ng-click="deleteField($index)">
+                    </div>
+                    <editable form-value="f.name"></editable>
+                    <editable tag="i" form-value="f.desc"></editable>
+                    <br/>
+                    <input type="{{ f.type }}" id="{{ f.short_name }}" name="{{ f.short_name }}">
+                </div>
+                <br/>
             </div>
 
             <div ng-if="showCreateField">
                 <br/>
                 <div class="border-light">
-                    <editable tag="label" form-value="$parent.newFieldName"></editable>
+                    <editable form-value="$parent.newFieldName"></editable>
+                    <editable tag="i" form-value="$parent.newFieldDesc"></editable>
+                    <br/>
                     <input type="text" id="field_name" name="field_name">
                 </div>
                 <br/>

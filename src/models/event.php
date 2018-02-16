@@ -16,8 +16,24 @@ class Event extends Model
         'id' => 'int PRIMARY KEY NOT NULL AUTO_INCREMENT',
         'name' => 'VARCHAR(128) NOT NULL',
         'enabled' => 'boolean NOT NULL DEFAULT 0',
+        'user_id' => 'int NOT NULL',
         'schema_info' => 'JSON'
     );
+    protected static $constraints = '
+        FOREIGN KEY (user_id) references users(id)
+    ';
+
+    public function create() {
+        $schema = json_decode($this->schema_info);
+
+        $table_name = $this->id . '_' . $this->name;
+        $column_strings = implode(',', $schema->columns);
+
+        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+            $column_strings
+        );";
+        self::query($sql);
+    }
 }
 
 

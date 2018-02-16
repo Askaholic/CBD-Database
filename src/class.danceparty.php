@@ -12,6 +12,8 @@ class DanceParty
     const CONTROLLER_DIR = DP_PLUGIN_DIR . 'controllers/';
     const VIEW_DIR = DP_PLUGIN_DIR . 'views/';
 
+    const ASSET_URL = DP_PLUGIN_URL . 'assets/';
+
     private static $init_done = false;
 
     static function init() {
@@ -30,8 +32,6 @@ class DanceParty
     public static function activation_hook() {
       Router::register_routes();
       flush_rewrite_rules();
-
-      //self::create_tables();
     }
 
     public static function deactivation_hook() {
@@ -49,13 +49,13 @@ class DanceParty
         Role::create_table();
     }
 
-    public static function render_view( $view, $context = array()) {
+    public static function render_view( $view, $context = array() ) {
         include_once( 'class.formbuilder.php' );
 
         include DanceParty::VIEW_DIR . $view;
     }
 
-    public static function render_view_with_template( $view, $context ) {
+    public static function render_view_with_template( $view, $context = array() ) {
         include DanceParty::VIEW_DIR . 'layout.php';
     }
 

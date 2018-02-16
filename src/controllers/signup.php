@@ -11,7 +11,6 @@
 //can put other limits on password here
   function check()
   {
-    //do wp_nonce()
     if(!document.getElementById("password").value)
     {
       document.getElementById("submit").disabled = true;
@@ -36,7 +35,7 @@
 
 ?>
 <form method="post" action="signup">
-  <!--?php wp_nonce(); ?-->
+  <?php wp_nonce_field('submit', 'signup_nonce'); ?>
   <input type="text" name="user"
    pattern="[A-Za-z]{2,128} [A-Za-z]{2,128}" title="John Doe"
    placeholder="Enter First and Last Name" style="width: 300px; margin-left: 10px;">
@@ -56,37 +55,46 @@
 
 require_once(DP_PLUGIN_DIR . 'models/user.php');
 
-    $name = $_POST['user'];
-    $email = $_POST['email'];
-    $pass = $_POST['password'];
-    $pass2 = $_POST['confirm_password'];
-    if(!empty($name) && !empty($email) && !empty($pass))
+
+    if(!isset($_POST['signup_nonce']) || !wp_verify_nonce($_POST['signup_nonce'], 'submit'))
     {
-      if($pass == $pass2)
-      {
-        //this fails to commit - I think $ in hash breaks insert, quoting didn't help
-        $hash = wp_hash_password($pass);
-        echo "<p>$hash</p>";
-        //delete this out once sql insert special chars figured out
-        $hash = $pass;
-
-        $splitName = explode(" ", $name);
-        $userData = array('first_name' => $splitName[0],'last_name' => $splitName[1],
-                          'email' => $email, 'password' => $hash,'role_id' => 0);
-        $user = new User($userData);
-        $user->commit();
-
-        $out = "$email account created";
-      }
-      else
-      {
-        //should never get here
-        $out = "Passwords do not match";
-      }
+      //do nothing - either form hasn't been submitted or bad nonce
     }
+    else //check form
+    {
+      $name = $_POST['user'];
+      $email = $_POST['email'];
+      $pass = $_POST['password'];
+      $pass2 = $_POST['confirm_password'];
+      if(!empty($name) && !empty($email) && !empty($pass))
+      {
+        if($pass == $pass2)
+        {
+          //this fails to commit - I think $ in hash breaks insert, quoting didn't help
+          //TODO make it work or make external hashing class, wp hash isn't strong
+          $hash = wp_hash_password($pass);
+          //delete this out once sql insert special chars figured out
+          echo "<p>$hash</p>";
+          $hash = $pass;
+          //
 
-    echo "<p>$out</p>";
+          $splitName = explode(" ", $name);
+          $userData = array('first_name' => $splitName[0],'last_name' => $splitName[1],
+                            'email' => $email, 'password' => $hash,'role_id' => 0);
+          $user = new User($userData);
+          $user->commit();
 
+          $out = "$email account created";
+        }
+        else
+        {
+          //should never get here
+          $out = "Passwords do not match";
+        }
+      }
+
+      echo "<p>$out</p>";
+    }
 ?>
 
   <?php wp_footer(); ?>

@@ -3,6 +3,7 @@
 Team:
 * Aisha Peters
 * Alexander Eckert
+* Sam Erie
 * Cameron Showalter
 * Rohan Weeden
 

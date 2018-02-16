@@ -13,7 +13,8 @@ class User extends Model {
         'first_name' => 'VARCHAR(128) NOT NULL',
         'last_name' => 'VARCHAR(128) NOT NULL',
         'email' => 'VARCHAR(255) NOT NULL',
-        'role_id' => 'int NOT NULL DEFAULT 0'
+        'password' => 'VARCHAR(255) NOT NULL',  //for hashed password
+        'role_id' => 'int NOT NULL DEFAULT 1'
     );
 
     protected static $constraints = '

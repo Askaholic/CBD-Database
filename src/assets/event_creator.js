@@ -42,7 +42,8 @@ app.controller("formBuilder", function($scope, $http) {
 app.component('editable', {
     bindings: {
         formValue: '=',
-        tag: '<'
+        tag: '<',
+        nullable: '<'
     },
     controller: function() {
         this.setEditing = function (value) {
@@ -50,7 +51,7 @@ app.component('editable', {
                 this.default = this.formValue;
             }
             this.editing = value;
-            if (this.default !== undefined && this.formValue === "") {
+            if (this.default !== undefined && this.formValue === "" && !this.nullable) {
                 this.formValue = this.default;
             }
         }

@@ -55,7 +55,7 @@
                 <br/>
                 <div class="border-light">
                     <editable form-value="$parent.newFieldName"></editable>
-                    <editable tag="i" form-value="$parent.newFieldDesc"></editable>
+                    <editable tag="i" form-value="$parent.newFieldDesc" nullable="true"></editable>
                     <br/>
                     <input type="text" id="field_name" name="field_name">
                 </div>

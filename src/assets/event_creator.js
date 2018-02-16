@@ -2,7 +2,7 @@ var app = angular.module('EventCreator', []);
 
 app.controller("formBuilder", function($scope) {
     $scope.form = {
-        name: 'New Event',
+        name: 'Untitled Event',
         fields: []
     }
 
@@ -26,6 +26,10 @@ app.controller("formBuilder", function($scope) {
         );
     };
 
+    $scope.deleteField = function(index) {
+        $scope.form.fields.splice(index, 1);
+    }
+
     $scope.discardField = function() {
         $scope.showCreateField = false;
     };
@@ -44,7 +48,7 @@ app.component('editable', {
     },
     template: function ($element, $attrs) {
         if ($attrs.tag == undefined) { $attrs.tag = "label" }
-        
+
         return `
             <div>
                 <` + $attrs.tag + ` title="Double click to edit" for="field_name" ng-if="!$ctrl.editing" ng-dblclick="$ctrl.setEditing(true)">{{ $ctrl.formValue }}

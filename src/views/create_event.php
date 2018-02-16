@@ -16,11 +16,19 @@
             .pull-right {
                 float: right;
             }
+            .inline-container {
+                position: relative;
+            }
             .input-inline {
                 position: absolute;
                 right: 3px;
                 top: 3px;
                 bottom: 3px;
+            }
+            .button-sm {
+                padding-left: 1em !important;
+                padding-right: 1em !important;
+                padding-top: .2em !important;
             }
         </style>
     </head>
@@ -31,10 +39,15 @@
 
             <editable tag="h3" form-value="form.name"></editable>
             <div ng-repeat="f in form.fields">
-                <editable form-value="f.name"></editable>
-                <editable tag="i" form-value="f.desc"></editable>
-                <br/>
-                <input type="{{ f.type }}" id="{{ f.short_name }}" name="{{ f.short_name }}">
+                <div class="border-light">
+                    <div class="inline-container">
+                        <input class="button-sm button input-inline" type="button" value="Delete" ng-click="deleteField($index)">
+                    </div>
+                    <editable form-value="f.name"></editable>
+                    <editable tag="i" form-value="f.desc"></editable>
+                    <br/>
+                    <input type="{{ f.type }}" id="{{ f.short_name }}" name="{{ f.short_name }}">
+                </div>
                 <br/>
             </div>
 

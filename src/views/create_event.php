@@ -67,9 +67,18 @@
                     <editable form-value="$parent.newFieldName"></editable>
                     <editable tag="i" form-value="$parent.newFieldDesc" nullable="true"></editable>
                     <br/>
-                    <input type="text" id="field_name" name="field_name">
+                    <form-change type="$parent.newFieldType"></form-change>
+                    <!-- <input type="text" id="field_name" name="field_name"> -->
                 </div>
                 <br/>
+                <!--  -->
+                <select ng-model="$parent.newFieldType">
+                 <option value="text">Text Field</option>
+                 <option value="checkbox">Checkbox</option>
+                 <option value="radio">Radio Box</option>
+                 <option value="number">number</option>
+                </select>
+                <!--  -->
                 <button class="button secondary" type="button" ng-click="createField()">Add</button>
                 <button class="button secondary" type="button" ng-click="discardField()">Cancel</button>
             </div>

@@ -1,0 +1,14 @@
+/*
+ * Styles to use if the current stylesheet doesn't have any defined yet.
+ */
+.error {
+    margin: .5em 0 1.5em;
+    border-left: .4em solid;
+    border-left-color: #dc3232;
+    background: #FFF;
+    box-shadow: 0 .1em .1em 0 rgba(0,0,0,.1);
+    padding: .1em 1.2em;
+}
+.error > p {
+    margin: .2em;
+}

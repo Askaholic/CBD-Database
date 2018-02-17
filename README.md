@@ -6,6 +6,7 @@ Team:
 * Sam Erie
 * Cameron Showalter
 * Rohan Weeden
+* Jeremiah Jacobson
 
 ### Guidelines
 

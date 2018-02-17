@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title><?php $title ?></title>
+        <link rel="stylesheet" href="<?php echo DanceParty::ASSET_URL . 'fallback.css' ?>">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js" charset="utf-8"></script>
         <script src="<?php echo DanceParty::ASSET_URL . 'event_creator.js' ?>" charset="utf-8"></script>
         <?php wp_head(); ?>
@@ -34,6 +35,15 @@
     </head>
     <body>
         <div class="wrap" ng-app="EventCreator" ng-controller="formBuilder">
+            <?php
+            if (isset($error)) {
+            ?>
+                <div class="error">
+                    <p><?php echo $error ?></p>
+                </div>
+            <?php
+            }
+            ?>
             <h1>Create a new event</h1>
             <hr/>
 
@@ -41,7 +51,7 @@
             <div ng-repeat="f in form.fields">
                 <div class="border-light">
                     <div class="inline-container">
-                        <input class="button-sm button input-inline" type="button" value="Delete" ng-click="deleteField($index)">
+                        <input class="button-sm button secondary input-inline" type="button" value="Delete" ng-click="deleteField($index)">
                     </div>
                     <editable form-value="f.name"></editable>
                     <editable tag="i" form-value="f.desc"></editable>
@@ -55,16 +65,29 @@
                 <br/>
                 <div class="border-light">
                     <editable form-value="$parent.newFieldName"></editable>
-                    <editable tag="i" form-value="$parent.newFieldDesc"></editable>
+                    <editable tag="i" form-value="$parent.newFieldDesc" nullable="true"></editable>
                     <br/>
-                    <input type="text" id="field_name" name="field_name">
+                    <form-change type="$parent.newFieldType"></form-change>
+                    <!-- <input type="text" id="field_name" name="field_name"> -->
                 </div>
                 <br/>
-                <button type="button" ng-click="createField()">Add</button>
-                <button type="button" ng-click="discardField()">Cancel</button>
+                <!--  -->
+                <select ng-model="$parent.newFieldType">
+                 <option value="text">Text Field</option>
+                 <option value="checkbox">Checkbox</option>
+                 <option value="radio">Radio Box</option>
+                 <option value="number">number</option>
+                </select>
+                <!--  -->
+                <button class="button secondary" type="button" ng-click="createField()">Add</button>
+                <button class="button secondary" type="button" ng-click="discardField()">Cancel</button>
             </div>
             <br/>
-            <button ng-if="!showCreateField" type="button" name="button" ng-click="addField()">New Field</button>
+            <form action="" method="post" ng-if="!showCreateField">
+                <input type="hidden" name="event_schema" value="{{ $parent.jsonify() }}">
+                <input class="button secondary" type="button" ng-click="addField()" value="New Field">
+                <button class="button primary pull-right" type="submit">Submit</button>
+            </form>
         </div>
         <?php wp_footer(); ?>
     </body>

@@ -51,11 +51,14 @@ class DanceParty
 
     public static function render_view( $view, $context = array() ) {
         include_once( 'class.formbuilder.php' );
+        extract($context);
 
         include DanceParty::VIEW_DIR . $view;
     }
 
     public static function render_view_with_template( $view, $context = array() ) {
+        extract($context);
+        
         include DanceParty::VIEW_DIR . 'layout.php';
     }
 

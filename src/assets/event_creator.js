@@ -19,7 +19,6 @@ app.controller("formBuilder", function($scope, $http) {
         $scope.form.fields.push(
             {
                 "name": $scope.newFieldName,
-                "short_name": $scope.newFieldName.toLowerCase().replace(/ */, '_'),
                 "desc": $scope.newFieldDesc,
                 "type": "text"
             }
@@ -35,7 +34,7 @@ app.controller("formBuilder", function($scope, $http) {
     };
 
     $scope.jsonify = function() {
-        return JSON.stringify($scope.form);
+        return angular.toJson($scope.form);
     }
 });
 

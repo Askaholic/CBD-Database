@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title><?php $title ?></title>
+        <link rel="stylesheet" href="<?php echo DanceParty::ASSET_URL . 'fallback.css' ?>">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js" charset="utf-8"></script>
         <script src="<?php echo DanceParty::ASSET_URL . 'event_creator.js' ?>" charset="utf-8"></script>
         <?php wp_head(); ?>
@@ -34,6 +35,15 @@
     </head>
     <body>
         <div class="wrap" ng-app="EventCreator" ng-controller="formBuilder">
+            <?php
+            if (isset($error)) {
+            ?>
+                <div class="error">
+                    <p><?php echo $error ?></p>
+                </div>
+            <?php
+            }
+            ?>
             <h1>Create a new event</h1>
             <hr/>
 

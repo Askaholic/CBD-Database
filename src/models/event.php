@@ -1,6 +1,7 @@
 <?php
 
-require_once('model.php');
+require_once( 'model.php' );
+require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
 /**
  * Event. Table for keeping track of custom event pages.
@@ -14,7 +15,7 @@ class Event extends Model
 
     protected static $columns = array(
         'id' => 'int PRIMARY KEY NOT NULL AUTO_INCREMENT',
-        'name' => 'VARCHAR(128) NOT NULL',
+        'name' => 'VARCHAR(255) NOT NULL',
         'enabled' => 'boolean NOT NULL DEFAULT 0',
         'user_id' => 'int NOT NULL',
         'schema_info' => 'JSON'
@@ -26,7 +27,7 @@ class Event extends Model
     public function create() {
         $schema = json_decode($this->schema_info);
 
-        $table_name = $this->id . '_' . $this->name;
+        $table_name = $this->id . '_' . clean_name($this->name);
         $column_strings = implode(',', $schema->columns);
 
         $sql = "CREATE TABLE IF NOT EXISTS $table_name (

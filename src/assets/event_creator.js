@@ -20,7 +20,6 @@ app.controller("formBuilder", function($scope, $http) {
         $scope.form.fields.push(
             {
                 "name": $scope.newFieldName,
-                "short_name": $scope.newFieldName.toLowerCase().replace(/ */, '_'),
                 "desc": $scope.newFieldDesc,
                 "type": $scope.newFieldType
             }
@@ -36,7 +35,7 @@ app.controller("formBuilder", function($scope, $http) {
     };
 
     $scope.jsonify = function() {
-        return JSON.stringify($scope.form);
+        return angular.toJson($scope.form);
     }
 
 });
@@ -44,11 +43,18 @@ app.controller("formBuilder", function($scope, $http) {
 app.component('editable', {
     bindings: {
         formValue: '=',
-        tag: '<'
+        tag: '<',
+        nullable: '<'
     },
     controller: function() {
         this.setEditing = function (value) {
+            if (value) {
+                this.default = this.formValue;
+            }
             this.editing = value;
+            if (this.default !== undefined && this.formValue === "" && !this.nullable) {
+                this.formValue = this.default;
+            }
         }
     },
     template: function ($element, $attrs) {

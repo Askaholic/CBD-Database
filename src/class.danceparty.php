@@ -32,6 +32,8 @@ class DanceParty
     public static function activation_hook() {
       Router::register_routes();
       flush_rewrite_rules();
+
+      // self::create_tables();
     }
 
     public static function deactivation_hook() {

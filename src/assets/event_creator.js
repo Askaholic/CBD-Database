@@ -11,6 +11,7 @@ app.controller("formBuilder", function($scope, $http) {
     $scope.addField = function() {
         $scope.showCreateField = true;
         $scope.newFieldName = "Name"
+        $scope.newFieldType = "text"
         $scope.newFieldDesc = "Description"
     };
 
@@ -21,7 +22,7 @@ app.controller("formBuilder", function($scope, $http) {
                 "name": $scope.newFieldName,
                 "short_name": $scope.newFieldName.toLowerCase().replace(/ */, '_'),
                 "desc": $scope.newFieldDesc,
-                "type": "text"
+                "type": $scope.newFieldType
             }
         );
     };
@@ -37,6 +38,7 @@ app.controller("formBuilder", function($scope, $http) {
     $scope.jsonify = function() {
         return JSON.stringify($scope.form);
     }
+
 });
 
 app.component('editable', {
@@ -64,6 +66,23 @@ app.component('editable', {
         `
     }
 });
+
+app.component('formChange', {
+    bindings: {
+        type: '<',
+    },
+    controller: function() {
+
+    },
+    template:
+    `<div ng-if="$ctrl.type === 'text'">
+      <h1>WORKING?</h1>
+    </div>
+    <div ng-if="$ctrl.type === 'checkbox'">
+      <h1>YESS</h1>
+    </div>`
+});
+
 
 /* Directive for when the enter key is pressed */
 app.directive('ecEnter', function() {

@@ -26,8 +26,27 @@
     {
       document.getElementById("bad_password").style.color = "green";
       document.getElementById("bad_password").innerHTML = "    Password good.";
-      document.getElementById("submit").disabled = false;
+      if(checkInputs())
+      {
+        document.getElementById("submit").disabled = false;
+        document.getElementById("bad_input").innerHTML = "";
+      }
+      else
+      {
+        document.getElementById("bad_input").style.color = "red";
+        document.getElementById("bad_input").innerHTML = "Missing input.";
+      }
     }
+  }
+
+  function checkInputs()
+  {
+    if(!document.getElementById("first").value || !document.getElementById("last").value
+        || !document.getElementById("email").value || !document.getElementById("password").value
+        || !document.getElementById("confirm_password").value)
+          return false; //empty input field
+
+    return true;
   }
 </script>
 <?php
@@ -36,10 +55,14 @@
 ?>
 <form method="post" action="signup">
   <?php wp_nonce_field('submit', 'signup_nonce'); ?>
-  <input type="text" name="user"
-   pattern="[A-Za-z]{2,128} [A-Za-z]{2,128}" title="John Doe"
-   placeholder="Enter First and Last Name" style="width: 300px; margin-left: 10px;">
-  <input type="email" name="email"
+  <input type="text" name="first" id="first" onkeyup="check();"
+   pattern="[A-Za-z]{2,128}" title="First name"
+   placeholder="Enter First Name" style="width: 300px; margin-left: 10px;">
+   <input type="text" name="last" id="last" onkeyup="check();"
+    pattern="[A-Za-z]{2,128}" title="Last name"
+    placeholder="Enter Last Name" style="width: 300px; margin-left: 10px;">
+  <input type="email" name="email" id="email" onkeyup="check();"
+    pattern=".*[.]{1}[a-z]{2,4}" title="user@domain.com"
     placeholder="Enter Email Address" style="width: 300px; margin-left: 10px;">
   <input type="password" id="password" name="password" onkeyup="check();"
   pattern=".{5,20}" title="Password must be from 5 to 20 characters in length."
@@ -47,9 +70,9 @@
   <input type="password" id="confirm_password" name="confirm_password" onkeyup="check();"
    placeholder="Confirm Password" style="width: 300px; margin-left: 10px;">
   <input type="submit" id="submit" value="Sign Up" style="margin-left: 10px;">
-  <span id="bad_password"></span>
+  <span id="bad_password"></span><br>
+  <span id="bad_input"></span>
 </form>
-
 
 <?php
 
@@ -62,13 +85,37 @@ require_once(DP_PLUGIN_DIR . 'models/user.php');
     }
     else //check form
     {
-      $name = $_POST['user'];
+      $first = $_POST['first'];
+      $last = $_POST['last'];
       $email = $_POST['email'];
       $pass = $_POST['password'];
       $pass2 = $_POST['confirm_password'];
-      if(!empty($name) && !empty($email) && !empty($pass))
+      if(!empty($first) && !empty($last) && !empty($email) && !empty($pass))
       {
-        if($pass == $pass2)
+        $input_check = true;
+
+        $test = preg_match('/^[A-Za-z]{2,255}$/', $first);
+        if($test == false)
+          $input_check = false;
+
+        $test = preg_match('/^[A-Za-z]{2,255}$/', $last);
+        if($test == false)
+          $input_check = false;
+
+        //email regex needs improved - needs to check user/domain chars
+        $test = preg_match('/^.*[@]{1}.*[.]{1}[a-z]{2,4}$/', $email);
+        if($test == false)
+          $input_check = false;
+
+        //password criteria should be more complex, must be mirrored in check() js function
+        $test = preg_match('/^.{5,20}$/', $pass);
+        if($test == false)
+          $input_check = false;
+
+        if($pass != $pass2)
+          $input_check = false;
+
+        if($input_check)
         {
           //this fails to commit - I think $ in hash breaks insert, quoting didn't help
           //TODO make it work or make external hashing class, wp hash isn't strong
@@ -78,8 +125,7 @@ require_once(DP_PLUGIN_DIR . 'models/user.php');
           $hash = $pass;
           //
 
-          $splitName = explode(" ", $name);
-          $userData = array('first_name' => $splitName[0],'last_name' => $splitName[1],
+          $userData = array('first_name' => $first,'last_name' => $last,
                             'email' => $email, 'password' => $hash,'role_id' => 0);
           $user = new User($userData);
           $user->commit();
@@ -89,8 +135,13 @@ require_once(DP_PLUGIN_DIR . 'models/user.php');
         else
         {
           //should never get here
-          $out = "Passwords do not match";
+          $out = 'Bad input.';
         }
+      }
+      else
+      {
+        //should never get here either
+        $out = 'Missing Input Fields.';
       }
 
       echo "<p>$out</p>";

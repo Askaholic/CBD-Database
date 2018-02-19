@@ -31,6 +31,14 @@ abstract class PDORepository {
         $stmt->execute($args);
         return $stmt;
     }
+
+        protected static function query_id( $sql, $args=array() ) {
+        // echo $sql;
+        $conn = self::get_connection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($args);
+        return $conn->lastInsertId();
+    }
 }
 
 /**
@@ -128,6 +136,33 @@ abstract class Model extends PDORepository {
                 $update_columns_string;",
             $args
         );
+    }
+
+    public function commit_id() {
+        $table = static::TABLE_NAME;
+
+        $sql_parts = self::get_sql_column_strings();
+
+        $insert_columns_string = $sql_parts['names'];
+        $values_string = $sql_parts['placeholders'];
+        $update_columns_string = $sql_parts['updates'];
+
+        $args = array();
+        foreach (static::$columns as $name => $type) {
+            array_push($args, $this->cols[$name]->value);
+        }
+
+        $id = $this->query_id(
+            "INSERT INTO $table (
+                $insert_columns_string
+            ) VALUES (
+                $values_string
+            )
+            ON DUPLICATE KEY UPDATE
+                $update_columns_string;",
+            $args
+        );
+        return $id; 
     }
 
     public static function create_table() {

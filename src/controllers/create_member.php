@@ -17,7 +17,7 @@ else //check form
       // commit user data
       $splitName = explode(" ", $name);
       $userData = array('first_name' => $splitName[0],'last_name' => $splitName[1],
-                        'email' => $email, 'password' => $pass,'role_id' => 0);
+                        'email' => $email, 'password' => $pass,'role_id' => 1);
       $user = new User($userData);
       $new_id = $user->commit_id();
 

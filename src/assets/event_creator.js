@@ -38,6 +38,7 @@ app.controller("formBuilder", function($scope, $http) {
         return angular.toJson($scope.form);
     }
 
+
 });
 
 app.component('editable', {
@@ -78,14 +79,29 @@ app.component('formChange', {
         type: '<',
     },
     controller: function() {
+        if(this.items === undefined) { this.items = [] }
+
+        this.createBox = function () {
+            this.items.push();
+        }
+        this.discardBox = function () {
+            this.items.pop();
+        }
 
     },
     template:
     `<div ng-if="$ctrl.type === 'text'">
-      <h1>WORKING?</h1>
+        <label for="uname">Description for your text filed: </label>
+        <input type="text" id="uname" placeholder="eg: 'First Name: '">
     </div>
     <div ng-if="$ctrl.type === 'checkbox'">
-      <h1>YESS</h1>
+          <li ng-repeat="ForEachButton">{{boxes}}
+              <input type="checkbox" name="checkboxes">
+              <label for="checkboxDescription"> Description: </label>
+              <input type="text" id="checkboxDescription"><br>
+          </li>
+        <button class="button secondary" type="button" ng-click="$ctrl.createBox()">+</button>
+        <button class="button secondary" type="button" ng-click="$ctrl.discardBox()">-</button>
     </div>`
 });
 

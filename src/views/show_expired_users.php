@@ -28,7 +28,7 @@ foreach ( $display_members as $usr ) { ?>
         <td><?php echo date_format(date_create($usr->expiration_date), 'M. j, Y') ?></td>
         <td style="width: 200px">
             <input type="date" name="expiry">
-            <input type="hidden" name="id" value="<?php $usr->id; ?>"/>
+            <input type="hidden" name="id" value="<?php echo $usr->id; ?>"/>
         </td>
         <td><input type="submit" id="submit" value="Renew"></td>
     </tr>

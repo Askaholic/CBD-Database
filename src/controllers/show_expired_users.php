@@ -2,22 +2,27 @@
 
 require_once( DP_PLUGIN_DIR . 'models/user.php' );
 
-if(!isset($_POST['renew_member_nonce']) || !wp_verify_nonce($_POST['renew_member_nonce'], 'submit'))
-{
-  //do nothing - either form hasn't been submitted or bad nonce
+// TODO: Authenticate that the user is an admin
+
+if ( isset( $_POST['renew_member_nonce'] ) && !wp_verify_nonce( $_POST['renew_member_nonce'], 'submit' ) ) {
+    die( 'Bad token' );
 }
-else //check form
-{
-  $id = $_POST['id'];
-  $expiry = $_POST['expiry'];
-  if(!empty($id) && !empty($expiry))
-  {
-      // commit user data
-      $memberData = array('user_id' => $id, 'expiration_date' => $expiry);
-      $member = new Membership($memberData);
-      $member->commit();
-  }
+
+
+if ( isset( $_POST['renew_member_nonce'] ) ) {
+    $id = $_POST['id'];
+    $expiry = $_POST['expiry'];
+
+    if ( !empty( $id ) && !empty( $expiry ) ) {
+        $memberData = array(
+            'user_id' => $id,
+            'expiration_date' => $expiry
+        );
+        $member = new Membership( $memberData );
+        $member->commit();
+    }
 }
+
 
 $members = User::query_all_without_membership();
 

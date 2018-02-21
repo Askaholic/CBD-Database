@@ -2,6 +2,14 @@
 
 require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
+$sql_types = array(
+    'text' => 'text',
+    'number' => 'int',
+    'radio' => '',
+    'checkbox' => '',
+    'select' => '',
+);
+
 if ( isset($_POST['event_schema']) ) {
     try {
         $field_info = json_decode(stripslashes($_POST['event_schema']), true);

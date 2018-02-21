@@ -4,7 +4,7 @@ require_once( DP_PLUGIN_DIR . 'models/user.php' );
 
 // TODO: Authenticate that the user is an admin
 
-if ( !wp_verify_nonce( $_POST['renew_member_nonce'], 'submit' ) ) {
+if ( isset( $_POST['renew_member_nonce'] ) && !wp_verify_nonce( $_POST['renew_member_nonce'], 'submit' ) ) {
     die( 'Bad token' );
 }
 

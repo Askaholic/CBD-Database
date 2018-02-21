@@ -27,7 +27,7 @@
     </tr>
     <?php
     foreach ( $members as $usr ) { ?>
-    <form method="post" action="show_expired_users">
+    <form method="post" action="show_expired_users" onsubmit="return confirm('Are you sure?')">
     <?php wp_nonce_field('submit', 'renew_member_nonce'); ?>
         <tr>
             <td><?php echo $usr->first_name ?></td>

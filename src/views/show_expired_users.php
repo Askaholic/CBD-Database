@@ -1,3 +1,21 @@
+<script type="text/javascript">
+    function getDateOneYearFromToday() {
+        var date = new Date();
+        date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+        date.setFullYear(date.getFullYear() + 1);
+        return date.toJSON().slice(0, 10);
+    }
+    document.onreadystatechange = () => {
+        var newExpirationDate = getDateOneYearFromToday();
+
+        if(document.readyState === 'complete' );
+        var list = document.getElementsByClassName('default-date');
+        for (let input of list) {
+            input.value = newExpirationDate;
+        }
+    }
+</script>
+
 <h1>Expired Members</h1>
 
 <table>
@@ -16,7 +34,7 @@
             <td><?php echo $usr->last_name ?></td>
             <td><?php echo date_format(date_create($usr->expiration_date), 'M. j, Y') ?></td>
             <td style="width: 200px">
-                <input type="date" name="expiry">
+                <input class="default-date" type="date" name="expiry">
                 <input type="hidden" name="id" value="<?php echo $usr->id; ?>"/>
             </td>
             <td><input type="submit" id="submit" value="Renew"></td>

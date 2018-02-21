@@ -49,7 +49,7 @@ require_once(DP_PLUGIN_DIR . 'class.passwordhash.php');
           $hash = Password::hash($pass);
 
           $userData = array('first_name' => $first,'last_name' => $last,
-                            'email' => $email, 'password' => $hash,'role_id' => 0);
+                            'email' => $email, 'password' => $hash,'role_id' => 1);
           $user = new User($userData);
           $user->commit();
 

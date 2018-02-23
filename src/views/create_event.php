@@ -53,8 +53,8 @@
                     <div class="inline-container">
                         <input class="button-sm button secondary input-inline" type="button" value="Delete" ng-click="deleteField($index)">
                     </div>
-                    <editable form-value="f.name"></editable>
-                    <editable tag="i" form-value="f.desc"></editable>
+                    <!-- <editable form-value="f.name"></editable>
+                         <editable tag="i" form-value="f.desc"></editable> -->
                     <br/>
                     <input type="{{ f.type }}" id="{{ f.short_name }}" name="{{ f.short_name }}">
                 </div>
@@ -64,8 +64,8 @@
             <div ng-if="showCreateField">
                 <br/>
                 <div class="border-light">
-                    <editable form-value="$parent.newFieldName"></editable>
-                    <editable tag="i" form-value="$parent.newFieldDesc" nullable="true"></editable>
+                    <!-- <editable form-value="$parent.newFieldName"></editable>
+                         <editable tag="i" form-value="$parent.newFieldDesc" nullable="true"></editable> -->
                     <br/>
                     <form-change type="$parent.newFieldType"></form-change>
                     <!-- <input type="text" id="field_name" name="field_name"> -->

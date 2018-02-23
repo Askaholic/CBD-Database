@@ -77,28 +77,47 @@ app.component('editable', {
 app.component('formChange', {
     bindings: {
         type: '<',
+        output: '=',
+
     },
     controller: function() {
+      console.log("Created controller");
+      // Text Based:
+        if(this.textString === undefined) { this.textString = "(Click to edit description)" }
+      // Checkbox or Radio Based:
         if(this.items === undefined) { this.items = [] }
 
+        if(this.type === 'text'){
+            this.output = this.textString;
+        }
+        else if (this.type === 'checkbox' || this.type === 'radio') {
+            this.output = this.items;
+        }
+
         this.createBox = function () {
-            this.items.push();
+            this.items.push(this.textString);
+            //console.log(this.items);
         }
         this.discardBox = function () {
-            this.items.pop();
+            if(this.numItems !== 0) {
+                this.items.pop();
+            }
         }
 
     },
     template:
-    `<div ng-if="$ctrl.type === 'text'">
-        <label for="uname">Description for your text filed: </label>
-        <input type="text" id="uname" placeholder="eg: 'First Name: '">
+    // <input type="text" id="uname" placeholder="eg: 'First Name'">
+    // <input type="checkbox" name="checkboxes">
+    // (On other side, something like) <label for="TextEditableID"> (Var) </label>
+   `<div ng-if="$ctrl.type === 'text' || $ctrl.type === 'number'">
+        Description:
+        <editable form-value="$ctrl.textString"></editable>
     </div>
-    <div ng-if="$ctrl.type === 'checkbox'">
-          <li ng-repeat="ForEachButton">{{boxes}}
-              <input type="checkbox" name="checkboxes">
+    <div ng-if="$ctrl.type === 'checkbox' || $ctrl.type === 'radio'">
+          <li ng-repeat="i in $ctrl.items track by $index">
               <label for="checkboxDescription"> Description: </label>
-              <input type="text" id="checkboxDescription"><br>
+              <editable form-value="$ctrl.items[$index]" id="checkboxDescription"></editable>
+              <br>
           </li>
         <button class="button secondary" type="button" ng-click="$ctrl.createBox()">+</button>
         <button class="button secondary" type="button" ng-click="$ctrl.discardBox()">-</button>

@@ -15,7 +15,6 @@ class DanceParty
     const ASSET_URL = DP_PLUGIN_URL . 'assets/';
 
     private static $init_done = false;
-	public $session = new DanceParty_Session();
 
     static function init() {
         if ( !self::$init_done) {

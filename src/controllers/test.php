@@ -12,18 +12,21 @@
   <hr>
   <h3>Custom Menu</h3>
 <!-- //custom hooks example -->
-<?php do_action('wp_iframe');
 
-$menu = "index.php/home";
-if (isset($_POST['menu']) && !empty($_POST['menu'])) {
-    $check = $_POST['menu'];
-    if(!empty($check))
-      $menu=$check;
-}
+<?php
+require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 
-echo "<iframe src='$menu' width='100%' height='50%'></iframe>";
+	$GLOBALS['session']->set( 'id', '1234' );
+
+//echo Authenticate()->logged_in();
+	$id = $GLOBALS['session']->get( 'id' );
+	if(empty($id))
+		echo 'No session id found.';
+	else
+		echo 'Session id: ' . $GLOBALS['session']->get( 'id' );
 
 ?>
+
 <hr>
   <h3>Footer</h3>
   <?php wp_footer(); ?>

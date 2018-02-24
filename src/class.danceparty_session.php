@@ -1,18 +1,24 @@
 <?php
-// Code is based on class.edd_session.php from http://edd.wp-a2z.org/oik-plugins/easy-digital-downloads/
+/* Code is based on class.edd_session.php from:
+*  http://edd.wp-a2z.org/oik-plugins/easy-digital-downloads/
+*/
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+/* ------------------------------------------------------------------------ *
+ * DanceParty_Session Class
+ * ------------------------------------------------------------------------ */
+/**
+ * Wrapper class for WP_Session
+ */
 class DanceParty_Session {
 	
 	private $session;	//Holds session data
 	private $prefix = '';	// Session index prefix
 
 	/**
-	 * Get things started
-	 *
-	 * Defines our WP_Session constants, includes the necessary libraries and
+	 * Defines WP_Session constants, includes the necessary libraries and
 	 * retrieves the WP Session instance
 	 */
 	public function __construct() {
@@ -24,12 +30,12 @@ class DanceParty_Session {
 			define( 'WP_SESSION_COOKIE', 'danceparty_wp_session' );
 		}
 		if ( ! class_exists( 'Recursive_ArrayAccess' ) ) {
-			require_once(plugin_dir_path(__FILE__) . 'libraries/class-recursive-arrayaccess.php';
+			require_once(DP_PLUGIN_DIR . 'libraries/class-recursive-arrayaccess.php');
 		}
 
 		if ( ! class_exists( 'WP_Session' ) ) {
-			require_once(plugin_dir_path(__FILE__) . 'libraries/class-wp-session.php');
-			require_once(plugin_dir_path(__FILE__) . 'libraries/wp-session.php';
+			require_once(DP_PLUGIN_DIR . 'libraries/class-wp-session.php');
+			require_once(DP_PLUGIN_DIR . 'libraries/wp-session.php');
 		}
 		
 		add_filter( 'wp_session_expiration_variant', array( $this, 'set_expiration_variant_time' ), 99999 );
@@ -44,8 +50,6 @@ class DanceParty_Session {
 	
 	/**
 	 * Setup the WP_Session instance
-	 *
-	 * @return void
 	 */
 	public function init() {
 		$this->session = WP_Session::get_instance();
@@ -54,8 +58,6 @@ class DanceParty_Session {
 	
 	/**
 	 * Retrieve session ID
-	 *
-	 * @return string Session ID
 	 */
 	public function get_id() {
 		return $this->session->session_id;
@@ -63,10 +65,6 @@ class DanceParty_Session {
 	
 	/**
 	 * Retrieve a session variable
-	 *
-	 * @access public
-	 * @param string $key Session key
-	 * @return mixed Session variable
 	 */
 	public function get( $key ) {
 		$key    = sanitize_key( $key );
@@ -101,10 +99,6 @@ class DanceParty_Session {
 	
 	/**
 	 * Set a session variable
-	 *
-	 * @param string $key Session key
-	 * @param int|string|array $value Session variable
-	 * @return mixed Session variable
 	 */
 	public function set( $key, $value ) {
 		$key = sanitize_key( $key );
@@ -120,10 +114,7 @@ class DanceParty_Session {
 	/**
 	 * Force the cookie expiration variant time to 23 hours
 	 *
-	 * @access public
-	 * @since 2.0
 	 * @param int $exp Default expiration (1 hour)
-	 * @return int
 	 */
 	public function set_expiration_variant_time( $exp ) {
 		return ( 30 * 60 * 23 );
@@ -132,8 +123,6 @@ class DanceParty_Session {
 	/**
 	 * Force the cookie expiration time to 24 hours
 	 *
-	 * @access public
-	 * @since 1.9
 	 * @param int $exp Default expiration (1 hour)
 	 * @return int Cookie expiration time
 	 */
@@ -143,8 +132,6 @@ class DanceParty_Session {
 	
 	/**
 	 * Determines if we should start sessions
-	 *
-	 * @return bool
 	 */
 	public function should_start_session() {
 		$start_session = true;

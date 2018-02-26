@@ -38,6 +38,7 @@ app.controller("formBuilder", function($scope, $http) {
         return angular.toJson($scope.form);
     }
 
+
 });
 
 app.component('editable', {
@@ -76,16 +77,50 @@ app.component('editable', {
 app.component('formChange', {
     bindings: {
         type: '<',
+        output: '=',
+
     },
     controller: function() {
+      console.log("Created controller");
+      // Text Based:
+        if(this.textString === undefined) { this.textString = "(Click to edit description)" }
+      // Checkbox or Radio Based:
+        if(this.items === undefined) { this.items = [] }
+
+        if(this.type === 'text'){
+            this.output = this.textString;
+        }
+        else if (this.type === 'checkbox' || this.type === 'radio') {
+            this.output = this.items;
+        }
+
+        this.createBox = function () {
+            this.items.push(this.textString);
+            //console.log(this.items);
+        }
+        this.discardBox = function () {
+            if(this.numItems !== 0) {
+                this.items.pop();
+            }
+        }
 
     },
     template:
-    `<div ng-if="$ctrl.type === 'text'">
-      <h1>WORKING?</h1>
+    // <input type="text" id="uname" placeholder="eg: 'First Name'">
+    // <input type="checkbox" name="checkboxes">
+    // (On other side, something like) <label for="TextEditableID"> (Var) </label>
+   `<div ng-if="$ctrl.type === 'text' || $ctrl.type === 'number'">
+        Description:
+        <editable form-value="$ctrl.textString"></editable>
     </div>
-    <div ng-if="$ctrl.type === 'checkbox'">
-      <h1>YESS</h1>
+    <div ng-if="$ctrl.type === 'checkbox' || $ctrl.type === 'radio'">
+          <li ng-repeat="i in $ctrl.items track by $index">
+              <label for="checkboxDescription"> Description: </label>
+              <editable form-value="$ctrl.items[$index]" id="checkboxDescription"></editable>
+              <br>
+          </li>
+        <button class="button secondary" type="button" ng-click="$ctrl.createBox()">+</button>
+        <button class="button secondary" type="button" ng-click="$ctrl.discardBox()">-</button>
     </div>`
 });
 

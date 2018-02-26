@@ -10,7 +10,7 @@ class Password
 
   function verify($pass, $check)
   {
-    return $pass === hash($check);
+    return wp_verify_password($pass, $check);
   }
 
 }

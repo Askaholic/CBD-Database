@@ -7,7 +7,7 @@
 class FormBuilder
 {
 
-    private static function _input( $type, $name, $onkeyup='', $pattern='.*', $title='', $style='', $default_value = '') {
+    private static function _input( $type, $name, $onkeyup='', $pattern='.*', $title='', $style='width: 300px', $default_value = '') {
         return '<input type="' . $type . '" class="input"' . ' name="' . $name . '" id="' . $name . '" onkeyup"' . $onkeyup
          . '" pattern="' . $pattern . '" title="' . $title . '" style="' . $style . '" value="' . $default_value . '"/>';
     }

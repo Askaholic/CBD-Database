@@ -12,3 +12,12 @@
 .error > p {
     margin: .2em;
 }
+
+#first, #last, #email, #password, #confirm_password
+{
+  width: 300px;
+}
+.inputButton
+{
+  width: 100px;
+}

@@ -67,6 +67,6 @@ require_once(DP_PLUGIN_DIR . 'class.passwordhash.php');
         $out = 'Missing Input Fields.';
       }
 
-      echo "<p>$out</p>";
+      echo "<div class='wrap'>$out</div>";
     }
 ?>

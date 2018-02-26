@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * FormBuilder
  * Helper functions for creating form elements more easily
@@ -8,15 +7,15 @@
 class FormBuilder
 {
 
-    private static function _input( $type, $name, $display_text, $default_value = '') {
-        return '<input type="' . $type . '" name="' . $name . '" id="' . $name . '" value="' . $default_value . '"/>';
+    private static function _input( $type, $name, $onkeyup='', $pattern='.*', $title='', $style='', $default_value = '') {
+        return '<input type="' . $type . '" class="input"' . ' name="' . $name . '" id="' . $name . '" onkeyup"' . $onkeyup
+         . '" pattern="' . $pattern . '" title="' . $title . '" style="' . $style . '" value="' . $default_value . '"/>';
     }
     /* Create an input field with a label */
-    static function input( $type, $name, $display_text, $default_value = '', $echo = true ) {
+    static function input( $type, $name, $display_text, $onkeyup='', $pattern='', $title='', $style='', $default_value = '', $echo = true ) {
         $label = '<label for="' . $name . '">' . $display_text . '</label>';
-        $input = self::_input( $type, $name, $display_text, $default_value );
+        $input = self::_input( $type, $name, $onkeyup, $pattern, $title, $style, $default_value );
         $html = $label . $input;
-
 
         if ($echo) {
             echo $html;

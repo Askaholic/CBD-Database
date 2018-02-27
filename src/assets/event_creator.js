@@ -1,5 +1,9 @@
 var app = angular.module('EventCreator', []);
 
+function makeShortName(name) {
+    return name.toLowerCase().replace(/[^a-zA-Z0-9_]/, "").replace(/ +/, "_");
+}
+
 app.controller("formBuilder", function($scope, $http) {
     $scope.form = {
         name: 'Untitled Event',
@@ -13,17 +17,17 @@ app.controller("formBuilder", function($scope, $http) {
         $scope.newFieldName = "Name"
         $scope.newFieldType = "text"
         $scope.newFieldDesc = "Description"
+        $scope.newField = {};
     };
 
     $scope.createField = function() {
         $scope.showCreateField = false;
+        $scope.newField['type'] = $scope.newFieldType;
+        $scope.newField['short_name'] = makeShortName($scope.newField['name']);
         $scope.form.fields.push(
-            {
-                "name": $scope.newFieldName,
-                "desc": $scope.newFieldDesc,
-                "type": $scope.newFieldType
-            }
+            $scope.newField
         );
+        console.log($scope.newField);
     };
 
     $scope.deleteField = function(index) {
@@ -37,8 +41,6 @@ app.controller("formBuilder", function($scope, $http) {
     $scope.jsonify = function() {
         return angular.toJson($scope.form);
     }
-
-
 });
 
 app.component('editable', {
@@ -76,52 +78,46 @@ app.component('editable', {
 
 app.component('formChange', {
     bindings: {
-        type: '<',
+        type: '=',
         output: '=',
 
     },
     controller: function() {
-      console.log("Created controller");
-      // Text Based:
-        if(this.textString === undefined) { this.textString = "(Click to edit description)" }
-      // Checkbox or Radio Based:
-        if(this.items === undefined) { this.items = [] }
+        this.$onInit = () => {
+            if(this.textString === undefined) { this.textString = "Label" }
 
-        if(this.type === 'text'){
-            this.output = this.textString;
-        }
-        else if (this.type === 'checkbox' || this.type === 'radio') {
-            this.output = this.items;
+            this.output = {
+                "name": "Name",
+                "desc": "Description",
+                "items": []
+            }
         }
 
-        this.createBox = function () {
-            this.items.push(this.textString);
-            //console.log(this.items);
+        this.createBox = () => {
+            this.output.items.push(this.textString);
         }
-        this.discardBox = function () {
+        this.discardBox = () => {
             if(this.numItems !== 0) {
-                this.items.pop();
+                this.output.items.pop();
             }
         }
 
     },
     template:
-    // <input type="text" id="uname" placeholder="eg: 'First Name'">
-    // <input type="checkbox" name="checkboxes">
-    // (On other side, something like) <label for="TextEditableID"> (Var) </label>
-   `<div ng-if="$ctrl.type === 'text' || $ctrl.type === 'number'">
-        Description:
-        <editable form-value="$ctrl.textString"></editable>
-    </div>
+   `
+    <editable form-value="$ctrl.output.name"></editable>
+    <editable form-value="$ctrl.output.desc"></editable>
     <div ng-if="$ctrl.type === 'checkbox' || $ctrl.type === 'radio'">
-          <li ng-repeat="i in $ctrl.items track by $index">
-              <label for="checkboxDescription"> Description: </label>
-              <editable form-value="$ctrl.items[$index]" id="checkboxDescription"></editable>
-              <br>
-          </li>
+        <div ng-repeat="i in $ctrl.output.items track by $index">
+            <input type="{{ $ctrl.type }}"/>
+            <editable form-value="$ctrl.output.items[$index]"></editable>
+        </div>
         <button class="button secondary" type="button" ng-click="$ctrl.createBox()">+</button>
         <button class="button secondary" type="button" ng-click="$ctrl.discardBox()">-</button>
-    </div>`
+    </div>
+    <div  ng-if="!($ctrl.type === 'checkbox' || $ctrl.type === 'radio')">
+        <input type="{{ $ctrl.type }}"/>    </div>
+    `
 });
 
 

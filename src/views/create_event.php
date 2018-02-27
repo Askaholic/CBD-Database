@@ -53,10 +53,18 @@
                     <div class="inline-container">
                         <input class="button-sm button secondary input-inline" type="button" value="Delete" ng-click="deleteField($index)">
                     </div>
-                    <!-- <editable form-value="f.name"></editable>
-                         <editable tag="i" form-value="f.desc"></editable> -->
+                    <editable form-value="f.name"></editable>
+                    <editable tag="i" form-value="f.desc"></editable>
                     <br/>
-                    <input type="{{ f.type }}" id="{{ f.short_name }}" name="{{ f.short_name }}">
+                    <div ng-if="f.type == 'checkbox' || f.type == 'radio'">
+                        <div ng-repeat="label in f.items track by $index">
+                            <input type="{{ f.type }}" name="{{ f.short_name }}">
+                            <label>{{ label }}</label>
+                        </div>
+                    </div>
+                    <div ng-if="!(f.type == 'checkbox' || f.type == 'radio')">
+                        <input type="{{ f.type }}" id="{{ f.short_name }}" name="{{ f.short_name }}">
+                    </div>
                 </div>
                 <br/>
             </div>
@@ -64,19 +72,16 @@
             <div ng-if="showCreateField">
                 <br/>
                 <div class="border-light">
-                    <!-- <editable form-value="$parent.newFieldName"></editable>
-                         <editable tag="i" form-value="$parent.newFieldDesc" nullable="true"></editable> -->
                     <br/>
-                    <form-change type="$parent.newFieldType"></form-change>
-                    <!-- <input type="text" id="field_name" name="field_name"> -->
+                    <form-change type="$parent.newFieldType" output="$parent.newField"></form-change>
                 </div>
                 <br/>
                 <!--  -->
                 <select ng-model="$parent.newFieldType">
-                 <option value="text">Text Field</option>
-                 <option value="checkbox">Checkbox</option>
-                 <option value="radio">Radio Box</option>
-                 <option value="number">number</option>
+                    <option value="text">Text Field</option>
+                    <option value="checkbox">Checkbox</option>
+                    <option value="radio">Radio Box</option>
+                    <option value="number">number</option>
                 </select>
                 <!--  -->
                 <button class="button secondary" type="button" ng-click="createField()">Add</button>

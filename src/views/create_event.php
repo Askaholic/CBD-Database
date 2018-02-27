@@ -59,7 +59,7 @@
                     <div ng-if="f.type == 'checkbox' || f.type == 'radio'">
                         <div ng-repeat="label in f.items track by $index">
                             <input type="{{ f.type }}" name="{{ f.short_name }}">
-                            <label>{{ label }}</label>
+                            <editable form-value="label"></editable>
                         </div>
                     </div>
                     <div ng-if="!(f.type == 'checkbox' || f.type == 'radio')">

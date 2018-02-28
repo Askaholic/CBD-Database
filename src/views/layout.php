@@ -6,6 +6,7 @@
         <title><?php $title ?></title>
         <?php wp_head(); ?>
     </head>
+
     <body>
         <div class="wrap">
             <?php DanceParty::render_view( $view, $context ); ?>

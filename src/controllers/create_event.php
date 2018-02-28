@@ -24,6 +24,15 @@ if ( isset($_POST['event_schema']) ) {
                 }, $field_info['fields'] )
         );
 
+        $schema1 = array(
+            'columns' => array_map( function($value) {
+                    $col_name = not_empty(clean_name($value['name']));
+                    $col_type = not_empty(clean_name($value['type']));
+
+                    return "$col_name $col_type";
+                }, $field_info['fields'] )
+        );
+
         require_once( DP_PLUGIN_DIR . 'models/event.php' );
 
         $event = new Event(array(
@@ -32,6 +41,11 @@ if ( isset($_POST['event_schema']) ) {
             'user_id' => 1, /* TODO: Make this the id of the logged in user */
             'schema_info' => json_encode($schema)
         ));
+
+        if ($schema === $schema1) {
+            DanceParty::render_view( 'create_event.php', array('error' => "Cannot insert empty Event"));
+            exit();
+        }
         $event->commit();
     }
     catch (PDOException $e) {

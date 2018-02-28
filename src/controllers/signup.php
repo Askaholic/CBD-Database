@@ -54,6 +54,11 @@ require_once(DP_PLUGIN_DIR . 'class.passwordhash.php');
           $user->commit();
 
           $out = "$email account created";
+          //password test
+          // if(Password::verify($pass, $hash))
+          //   $out = $out . 'password checks out';
+          // else
+          //   $out = $out . 'password not working';
         }
         else
         {
@@ -67,6 +72,6 @@ require_once(DP_PLUGIN_DIR . 'class.passwordhash.php');
         $out = 'Missing Input Fields.';
       }
 
-      echo "<p>$out</p>";
+      echo "<div class='wrap'>$out</div>";
     }
 ?>

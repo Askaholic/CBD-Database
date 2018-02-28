@@ -53,6 +53,8 @@ class DanceParty
 
     public static function render_view( $view, $context = array() ) {
         include_once( 'class.formbuilder.php' );
+        // Escape dangerous characters
+        array_map("htmlspecialchars", $context);
         extract($context);
 
         include DanceParty::VIEW_DIR . $view;
@@ -60,7 +62,7 @@ class DanceParty
 
     public static function render_view_with_template( $view, $context = array() ) {
         extract($context);
-        
+
         include DanceParty::VIEW_DIR . 'layout.php';
     }
 

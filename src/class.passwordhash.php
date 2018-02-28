@@ -1,16 +1,19 @@
 <?php
 
+//using php default hash functions
+// http://php.net/manual/en/function.password-hash.php
+
 class Password
 {
 
   function hash($pass)
   {
-    return wp_hash_password($pass);
+    return password_hash($pass, PASSWORD_DEFAULT);
   }
 
-  function verify($pass, $check)
+  function verify($unhashed, $hashed)
   {
-    return wp_verify_password($pass, $check);
+    return password_verify($unhashed, $hashed);
   }
 
 }

@@ -10,56 +10,56 @@
 //can put other limits on password here
   function check()
   {
-    if(!document.getElementById("password").value)
+    if(!document.getElementsByName("password")[0].value)
     {
-      document.getElementById("submit").disabled = true;
-      document.getElementById("bad_password").innerHTML = "";
+      document.getElementsByName("submit")[0].disabled = true;
+      document.getElementsByName("bad_password")[0].innerHTML = "";
     }
-    else if(document.getElementById("password").value !== document.getElementById("confirm_password").value)
+    else if(document.getElementsByName("password")[0].value !== document.getElementsByName("confirm_password")[0].value)
     {
-      document.getElementById("submit").disabled = true;
-      document.getElementById("bad_password").style.color = "red";
-      document.getElementById("bad_password").innerHTML = "Passwords don't match.";
+      document.getElementsByName("submit")[0].disabled = true;
+      document.getElementsByName("bad_password")[0].style.color = "red";
+      document.getElementsByName("bad_password")[0].innerHTML = "Passwords don't match.";
     }
     else
     {
-      if(document.getElementById("password").value.length >= 6)
+      if(document.getElementsByName("password")[0].value.length >= 6)
       {
-          document.getElementById("bad_password").style.color = "green";
-          document.getElementById("bad_password").innerHTML = "    Password good.";
+          document.getElementsByName("bad_password")[0].style.color = "green";
+          document.getElementsByName("bad_password")[0].innerHTML = "    Password good.";
       } else
       {
-        document.getElementById("bad_password").style.color = "orange";
-        document.getElementById("bad_password").innerHTML = "Password must be at least 6 characters.";
+        document.getElementsByName("bad_password")[0].style.color = "orange";
+        document.getElementsByName("bad_password")[0].innerHTML = "Password must be at least 6 characters.";
       }
 
       if(checkInputs())
       {
-        document.getElementById("submit").disabled = false;
-        document.getElementById("bad_input").innerHTML = "";
+        document.getElementsByName("submit")[0].disabled = false;
+        document.getElementsByName("bad_input")[0].innerHTML = "";
       }
       else
       {
-        document.getElementById("bad_input").style.color = "red";
-        document.getElementById("bad_input").innerHTML = "Missing input.";
+        document.getElementsByName("bad_input")[0].style.color = "red";
+        document.getElementsByName("bad_input")[0].innerHTML = "Missing input.";
       }
     }
   }
 
   function checkInputs()
   {
-    if(!document.getElementById("first").value || !document.getElementById("last").value
-        || !document.getElementById("email").value || !document.getElementById("password").value
-        || !document.getElementById("confirm_password").value)
+    if(!document.getElementsByName("first")[0].value || !document.getElementsByName("last")[0].value
+        || !document.getElementsByName("email")[0].value || !document.getElementsByName("password")[0].value
+        || !document.getElementsByName("confirm_password")[0].value)
           return false; //empty input field
 
     return true;
   }
 </script>
 
-<?php require_once(DP_PLUGIN_DIR . 'class.formbuilder.php');
- ?>
-<form id="form" method="post" action="signup">
+<!--?php require_once(DP_PLUGIN_DIR . 'class.formbuilder.php');
+ ?-->
+<form method="post" action="signup">
   <?php wp_nonce_field('submit', 'signup_nonce');
     // FormBuilder::input("text", "first", "First Name", "check();", "[A-Za-z]{2,128}",
     //                   "Enter First Name");
@@ -69,26 +69,26 @@
     //                   "Enter valid Email Address");
     // FormBuilder::input("password", "password", "Password", "check();", ".{6,100}",
     //                 "Password must be from 6 to 100 characters in length");
-    // FormBuilder::input("password", "confirm_password", "Confirm Password", "check();");
-    // FormBuilder::input("submit", "submit", "", "", "width: 100px", "Sign Up");
+    // FormBuilder::input("password", "confirm_password", "Confirm Password", "check();", ".*");
+    //FormBuilder::input("submit", "submit", "", "", "width: 100px", "Sign Up");
      ?>
   <label for="first">First Name</label>
-  <input class="inputField" type="text" name="first" id="first" onkeyup="check();"
+  <input type="text" id="inputField" name="first" class="inputField" onkeyup="check();"
    pattern="[A-Za-z]{2,128}" title="Enter First Name">
   <label for="last">Last Name</label>
-  <input type="text" name="last" id="last" class="inputField" onkeyup="check();"
+  <input type="text" name="last" class="inputField" onkeyup="check();"
     pattern="[A-Za-z]{2,128}" title="Enter Last Name">
   <label for="email">Email Address</label>
-  <input type="email" name="email" id="email" class="inputField" onkeyup="check();"
+  <input type="email" name="email" class="inputField" onkeyup="check();"
     pattern=".*[.]{1}[a-z]{2,4}" title="Enter valid Email Address">
   <label for="password">Choose Password</label>
-  <input type="password" id="password" name="password" class="inputField" onkeyup="check();"
+  <input type="password" name="password" class="inputField" onkeyup="check();"
   pattern=".{6,100}" title="Password must be from 6 to 100 characters in length">
   <label for="confirm_password">Confirm Password</label>
-  <input type="password" id="confirm_password" name="confirm_password" class="inputField" onkeyup="check();">
-  <input type="submit" id="submit" class="inputButton" value="Sign Up">
-  <br><span id="bad_password"></span><br>
-  <span id="bad_input"></span>
+  <input type="password" name="confirm_password" class="inputField" onkeyup="check();">
+  <input type="submit" name="submit" class="inputButton" value="Sign Up">
+  <br><span name="bad_password"></span><br>
+  <span name="bad_input"></span>
 </form>
 
 <!-- ?php wp_footer(); ? -->

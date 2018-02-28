@@ -13,11 +13,16 @@
     margin: .2em;
 }
 
-#first, #last, #email, #password, #confirm_password
+/* #inputField
 {
-  width: 300px;
+  width: 25em;
+}
+.input-field
+{
+  background-color: red;
+  width: 25em;
 }
 .inputButton
 {
-  width: 100px;
-}
+  width: 10em;
+} */

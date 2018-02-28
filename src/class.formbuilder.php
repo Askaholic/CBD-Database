@@ -7,14 +7,13 @@
 class FormBuilder
 {
 
-    private static function _input( $type, $name, $onkeyup='', $pattern='.*', $title='', $style='width: 300px', $default_value = '') {
-        return '<input type="' . $type . '" class="input"' . ' name="' . $name . '" id="' . $name . '" onkeyup"' . $onkeyup
-         . '" pattern="' . $pattern . '" title="' . $title . '" style="' . $style . '" value="' . $default_value . '"/>';
+    private static function _input( $type, $name, $extraattrs, $default_value = '') {
+        return '<input type="' . $type . '" class="input"' . ' name="' . $name . '" id="' . $name . '" $extraattrs"/>';
     }
     /* Create an input field with a label */
     static function input( $type, $name, $display_text, $onkeyup='', $pattern='', $title='', $style='', $default_value = '', $echo = true ) {
         $label = '<label for="' . $name . '">' . $display_text . '</label>';
-        $input = self::_input( $type, $name, $onkeyup, $pattern, $title, $style, $default_value );
+        $input = self::_input( $type, $name, $onkeyup, $pattern, $title, $style, $default_value, "patter= onclick= sylte=" );
         $html = $label . $input;
 
         if ($echo) {

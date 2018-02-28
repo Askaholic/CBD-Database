@@ -4,7 +4,9 @@
  * Misc little helper functions that may be usefull throughout the plugin
  */
 
-
+/* Returns a copy of the input with all non alpha-numeric characters stripped out.
+ * '_' and ' ' are not removed.
+ */
 function reg_chars($name) {
     $newName = preg_replace('/[^a-zA-Z0-9_ ]+/', '', $name);
     return $newName;
@@ -27,4 +29,12 @@ function not_empty($str) {
     return $str;
 }
 
+function is_valid_name($name) {
+    // Alpha numeric characters, length between 2-255
+    return preg_match('/^[A-Za-z]{2,255}$/', $name);
+}
+
+function is_valid_email($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+}
 ?>

@@ -1,5 +1,8 @@
 <?php
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 //using php default hash functions
 // http://php.net/manual/en/function.password-hash.php
 

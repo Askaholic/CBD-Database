@@ -5,17 +5,15 @@
 
 class Password
 {
+    function hash($pass)
+    {
+        return password_hash($pass, PASSWORD_DEFAULT);
+    }
 
-  function hash($pass)
-  {
-    return password_hash($pass, PASSWORD_DEFAULT);
-  }
-
-  function verify($unhashed, $hashed)
-  {
-    return password_verify($unhashed, $hashed);
-  }
-
+    function verify($unhashed, $hashed)
+    {
+        return password_verify($unhashed, $hashed);
+    }
 }
 
 

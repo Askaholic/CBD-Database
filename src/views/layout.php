@@ -4,10 +4,9 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="<?php echo DanceParty::ASSET_URL . 'fallback.css' ?>">
         <title><?php $title ?></title>
-        <link rel="stylesheet" href="<?php echo DanceParty::ASSET_URL . 'fallback.css' ?>">
         <?php wp_head(); ?>
     </head>
-    
+
     <body>
         <div class="wrap">
             <?php DanceParty::render_view( $view, $context ); ?>

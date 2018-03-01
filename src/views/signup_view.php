@@ -4,12 +4,11 @@
     function checkPasswordsMatch() {
         let password = document.getElementById('password').value;
         let confirm_pass = document.getElementById('confirm_password').value;
-        console.log(password, confirm_pass)
+
         if (password !== confirm_pass) {
             setPasswordMessage('Passwords do not match', 'red');
             return;
         }
-
         setPasswordMessage('');
     }
 
@@ -24,7 +23,6 @@
 
         messageElement.style.color = color;
     }
-
 </script>
 
 <form method="post" action="signup">

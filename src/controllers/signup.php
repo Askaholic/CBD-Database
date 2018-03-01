@@ -11,69 +11,47 @@ if ( isset( $_POST['signup_nonce'] ) && !wp_verify_nonce( $_POST['signup_nonce']
 }
 
 $error = '';
+$info = '';
 
 if ( isset( $_POST['signup_nonce'] ) ) {
-    $first = $_POST['first'];
-    $last = $_POST['last'];
-    $email = $_POST['email'];
-    $pass = $_POST['password'];
-    $pass2 = $_POST['confirm_password'];
+    try {
+        $first = valid_name(not_empty($_POST['first']));
+        $last = valid_name(not_empty($_POST['last']));
+        $email = valid_email(not_empty($_POST['email']));
+        $pass = valid_password(not_empty($_POST['password']));
+        $pass2 = not_empty($_POST['confirm_password']);
 
-    if ( empty($first) || empty($last) || empty($email) || empty($pass)) {
-        die( 'Fields cannot be empty' );
-    }
+        if($pass !== $pass2)
+            throw new Exception("Passwords do not match");
 
-    $input_check = true;
-
-    if( ! is_valid_name($first) ) {
-        $input_check = false;
-    }
-
-    if( ! is_valid_name($last) ) {
-        $input_check = false;
-    }
-
-    if( ! is_valid_email($email) )
-        $input_check = false;
-
-    //password criteria should be more complex, must be mirrored in check() js function
-    $test = preg_match('/^.{6,100}$/', $pass);
-    if($test === false)
-        $input_check = false;
-
-    if($pass !== $pass2)
-        $input_check = false;
-
-    if($input_check)
-    {
         $hash = Password::hash($pass);
 
-        $userData = array('first_name' => $first,'last_name' => $last,
-                'email' => $email, 'password' => $hash,'role_id' => 1);
+        $userData = array(
+            'first_name' => $first,
+            'last_name' => $last,
+            'email' => $email,
+            'password' => $hash,
+            'role_id' => 1
+        );
+
         $user = new User($userData);
         $user->commit();
 
-        $out = "$email account created";
-        //password test
-        // if(Password::verify($pass, $hash))
-        //   $out = $out . 'password checks out';
-        // else
-        //   $out = $out . 'password not working';
+        $info = "Account created";
     }
-    else
-    {
-        //should never get here
-        $out = 'Bad input.';
+    catch (Exception $e) {
+        $error = $e->getMessage();
+        if ( get_class($e) === PDOException) {
+            $error = "Database error";
+        }
     }
 }
-else
-{
-    //should never get here either
-    $out = 'Missing Input Fields.';
-}
 
-echo "<div class='wrap'>$out</div>";
-
-DanceParty::render_view_with_template('signup_view.php');
+DanceParty::render_view_with_template( 'signup_view.php',
+    array(
+        'title' => $signup,
+        'error' => $error,
+        'info' => $info
+    ) );
 
 ?>

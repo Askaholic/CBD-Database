@@ -34,6 +34,7 @@ if ( isset( $_POST['signup_nonce'] ) ) {
             'role_id' => 1
         );
 
+        // TODO: Check that the email address is not taken already
         $user = new User($userData);
         $user->commit();
 

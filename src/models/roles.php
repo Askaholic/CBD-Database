@@ -10,17 +10,23 @@ class Role extends Model {
         'name' => 'VARCHAR(45) NOT NULL'
     );
 
-    public static $roles = array(
+    const ROLE_IDS = array(
+        'MEMBER' => 1,
+        'DOOR_HOST' => 2,
+        'ADIM' => 3
+    );
+
+    const ROLES = array(
         array(
-            'id' => 1,
+            'id' => ROLE_IDS['MEMBER'],
             'name' => 'MEMBER'
         ),
         array(
-            'id' => 2,
+            'id' => ROLE_IDS['DOOR_HOST'],
             'name' => 'DOOR_HOST'
         ),
         array(
-            'id' => 3,
+            'id' => ROLE_IDS['ADMIN'],
             'name' => 'ADMIN'
         )
     );
@@ -39,7 +45,7 @@ class Role extends Model {
             ', ',
             array_fill(
                 0,
-                count(static::$roles),
+                count(static::ROLES),
                 '(' . $placeholders . ')')
         );
         $args = array_reduce(
@@ -47,7 +53,7 @@ class Role extends Model {
                 function($role) {
                     return array($role['id'], $role['name']);
                 },
-                static::$roles ),
+                static::ROLES ),
                 'array_merge',
                 array()
         );

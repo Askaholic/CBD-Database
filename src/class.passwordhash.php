@@ -1,18 +1,20 @@
 <?php
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+//using php default hash functions
+// http://php.net/manual/en/function.password-hash.php
+
 class Password
 {
+    public static function hash($pass) {
+        return password_hash( $pass, PASSWORD_DEFAULT );
+    }
 
-  function hash($pass)
-  {
-    return wp_hash_password($pass);
-  }
-
-  function verify($pass, $check)
-  {
-    return wp_verify_password($pass, $check);
-  }
-
+    public static function verify($unhashed, $hashed) {
+        return password_verify( $unhashed, $hashed );
+    }
 }
 
 

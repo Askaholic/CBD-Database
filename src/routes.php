@@ -14,4 +14,5 @@ Router::route( 'show_members', 'show_members.php' );
 Router::route( 'show_expired_members', 'show_expired_users.php' );
 Router::route( 'Cameron_test', 'Cameron_test.php' );
 Router::route( 'create_event', 'create_event.php' );
+Router::route( 'login', 'login.php' );
 ?>

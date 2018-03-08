@@ -25,15 +25,13 @@ abstract class PDORepository {
     }
 
     protected static function query( $sql, $args=array() ) {
-        // echo $sql;
         $conn = self::get_connection();
         $stmt = $conn->prepare($sql);
         $stmt->execute($args);
         return $stmt;
     }
 
-        protected static function query_id( $sql, $args=array() ) {
-        // echo $sql;
+    protected static function query_id( $sql, $args=array() ) {
         $conn = self::get_connection();
         $stmt = $conn->prepare($sql);
         $stmt->execute($args);
@@ -66,6 +64,12 @@ abstract class Model extends PDORepository {
                 $this->cols[$key] = new Column('joined_value');
             }
             $this->cols[$key]->value = $value;
+        }
+    }
+
+    protected function set_values($row) {
+        foreach (static::$columns as $name => $type) {
+            $this->cols[$name] = $row[$name];
         }
     }
 
@@ -110,6 +114,17 @@ abstract class Model extends PDORepository {
             'placeholders' => $values_string,
             'updates' => $update_columns_string
         );
+    }
+
+    public function pull() {
+        $table = static::TABLE_NAME;
+
+        $result = $this->query(
+            "SELECT * FROM $table where id = ?;",
+            array($this->id)
+        );
+
+        $this->set_values($result->fetch());
     }
 
     public function commit() {
@@ -162,7 +177,7 @@ abstract class Model extends PDORepository {
                 $update_columns_string;",
             $args
         );
-        return $id; 
+        return $id;
     }
 
     public static function create_table() {
@@ -198,16 +213,21 @@ abstract class Model extends PDORepository {
         );
         $retval = array();
         foreach ($result as $row) {
-            $column_values = array();
-            foreach (static::$columns as $name => $type) {
-                $column_values[$name] = $row[$name];
-            }
-            $obj = new static(
-                $column_values
-            );
+            $obj = create_instance_from_row($row);
             array_push($retval, $obj);
         }
         return $retval;
+    }
+
+    protected static function create_instance_from_row($row) {
+        $column_values = array();
+        foreach (static::$columns as $name => $type) {
+            $column_values[$name] = $row[$name];
+        }
+        $obj = new static(
+            $column_values
+        );
+        return $obj;
     }
 }
 

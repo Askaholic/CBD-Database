@@ -1,31 +1,66 @@
 <?php
 
+require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'models/user.php' );
+require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
-// TODO: Authenticate that the user is an admin
+if ( ! Authenticate::logged_in() ) {
+    // TODO: Redirect to login page
+}
+
+if ( ! Authenticate::is_admin() ) {
+    die( 'Unauthorized' );
+}
 
 if ( isset( $_POST['renew_member_nonce'] ) && !wp_verify_nonce( $_POST['renew_member_nonce'], 'submit' ) ) {
     die( 'Bad token' );
 }
 
+$error;
+$info;
 
 if ( isset( $_POST['renew_member_nonce'] ) ) {
-    $id = $_POST['id'];
-    $expiry = $_POST['expiry'];
+    try {
+        $id = valid_id(not_empty($_POST['id']));
+        $expiry = valid_date(not_empty($_POST['expiry']));
 
-    if ( !empty( $id ) && !empty( $expiry ) ) {
+        // Check that the user actually exists
+        try {
+            $usr = new User(
+                array(
+                    'id' => $id
+                )
+            );
+            $usr->pull();
+        } catch (Exception $e) {
+            throw new Exception("User with id $id does not exist");
+        }
+
         $memberData = array(
             'user_id' => $id,
             'expiration_date' => $expiry
         );
         $member = new Membership( $memberData );
         $member->commit();
+
+    } catch ( Exception $e ) {
+        $error = $e->getMessage();
+
+        if ( get_class($e) === PDOException) {
+            $error = "Database error";
+        }
     }
 }
 
 
 $members = User::query_all_without_membership();
 
-DanceParty::render_view_with_template( 'show_expired_users.php', array('members' => $members) );
+DanceParty::render_view_with_template( 'show_expired_users.php',
+    array(
+        'members' => $members,
+        'error' => $error,
+        'info' => $info
+    )
+);
 
 ?>

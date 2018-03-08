@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="<?php echo DanceParty::ASSET_URL . 'fallback.css' ?>">
-        <title><?php $title ?></title>
+        <title><?php echo $title; ?></title>
         <?php wp_head(); ?>
     </head>
 

@@ -25,7 +25,7 @@ function clean_name($name) {
 
 /* Returns the string, throws an exception if it is empty */
 function not_empty($str) {
-    if ($str == '') {
+    if ($str == '' || empty($str) ) {
         throw new Exception("Invalid input: Cannot be empty.");
     }
     return $str;
@@ -84,6 +84,19 @@ function valid_date($date) {
         throw new Exception("Invalid date");
     }
     return $date;
+}
+
+
+function is_valid_id($id) {
+    return preg_match('/^[0-9]*$/', $id) !== false;
+}
+
+
+function valid_id($id) {
+    if (! is_valid_id($id) ) {
+        throw new Exception("Invalid id");
+    }
+    return $id;
 }
 
 

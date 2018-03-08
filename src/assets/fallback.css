@@ -1,14 +1,20 @@
 /*
  * Styles to use if the current stylesheet doesn't have any defined yet.
  */
-.error {
+.error, .info {
     margin: .5em 0 1.5em;
-    border-left: .4em solid;
-    border-left-color: #dc3232;
+    border-left: .3em solid;
     background: #FFF;
     box-shadow: 0 .1em .1em 0 rgba(0,0,0,.1);
     padding: .1em 1.2em;
 }
-.error > p {
+
+.error {
+    border-left-color: #dc3232;
+}
+.info {
+    border-left-color: #46b450;
+}
+.error, .info > p {
     margin: .2em;
 }

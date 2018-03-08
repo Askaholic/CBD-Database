@@ -1,22 +1,3 @@
-<body>
-<?php
-if ( isset( $error ) ) {
-?>
-    <div class="error">
-        <p><?php echo $error ?></p>
-    </div>
-<?php
-}
-?>
-<?php
-if ( isset( $info ) ) {
-?>
-    <div class="info">
-        <p><?php echo $info ?></p>
-    </div>
-<?php
-}
-?>
 <h1 style="margin-left: 10px;">Create a new Contra Borealis Dance account</h1>
 
 <form method="post" action="create_member">

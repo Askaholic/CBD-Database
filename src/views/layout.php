@@ -9,7 +9,19 @@
 
     <body>
         <div class="wrap">
-            <?php DanceParty::render_view( $view, $context ); ?>
+            <?php if ( isset( $error ) ) { ?>
+                <div class="error">
+                    <p><?php echo $error ?></p>
+                </div>
+            <?php
+            } 
+            if ( isset( $info ) ) { ?>
+                <div class="info">
+                    <p><?php echo $info ?></p>
+                </div>
+            <?php
+            }
+            DanceParty::render_view( $view, $context ); ?>
         </div>
         <?php wp_footer(); ?>
     </body>

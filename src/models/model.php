@@ -162,7 +162,7 @@ abstract class Model extends PDORepository {
                 $update_columns_string;",
             $args
         );
-        return $id; 
+        return $id;
     }
 
     public static function create_table() {

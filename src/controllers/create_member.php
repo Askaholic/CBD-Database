@@ -2,6 +2,7 @@
 
 require_once(DP_PLUGIN_DIR . 'models/user.php');
 require_once(DP_PLUGIN_DIR . 'models/roles.php');
+require_once(DP_PLUGIN_DIR . 'helpers.php');
 
 
 if ( isset( $_POST['create_member_nonce'] ) &&
@@ -13,7 +14,7 @@ if ( isset( $_POST['create_member_nonce'] ) &&
 $error;
 $info;
 
-if ( isset( $_POST['signup_nonce'] ) ) {
+if ( isset( $_POST['create_member_nonce'] ) ) {
     try {
         $first = valid_name(not_empty($_POST['first']));
         $last = valid_name(not_empty($_POST['last']));
@@ -42,6 +43,7 @@ if ( isset( $_POST['signup_nonce'] ) ) {
     }
     catch (Exception $e) {
         $error = $e->getMessage();
+
         if ( get_class($e) === PDOException) {
             $error = "Database error";
         }

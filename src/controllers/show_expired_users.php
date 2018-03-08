@@ -4,7 +4,13 @@ require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'models/user.php' );
 require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
-// TODO: Authenticate that the user is an admin
+if ( ! Authenticate::logged_in() ) {
+    // TODO: Redirect to login page
+}
+
+if ( ! Authenticate::is_admin() ) {
+    die( 'Unauthorized' );
+}
 
 if ( isset( $_POST['renew_member_nonce'] ) && !wp_verify_nonce( $_POST['renew_member_nonce'], 'submit' ) ) {
     die( 'Bad token' );

@@ -31,8 +31,8 @@ if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'sub
 }
 
 $title = 'Change This';
-$error = '';
-$info = '';
+$error;
+$info;
 
 if ( isset( $_POST[$nonce_name] ) ) {
     try {

@@ -1,9 +1,13 @@
-<header>
-  <title>Create member</title>
-  <?php wp_head(); ?>
-</header>
-
 <body>
+<?php
+if ( isset( $error ) ) {
+?>
+    <div class="error">
+        <p><?php echo $error ?></p>
+    </div>
+<?php
+}
+?>
 <h1 style="margin-left: 10px;">Create a new Contra Borealis Dance account</h1>
 
 <script>
@@ -45,6 +49,3 @@
     style="width: 300px; margin-left: 10px;">
   <input type="submit" id="submit" value="Create Member" style="margin-left: 10px;">
 </form>
-
-<?php wp_footer(); ?>
-</body>

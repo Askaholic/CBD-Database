@@ -16,14 +16,14 @@ class Authenticate
 
 	public static function is_logged_in() {
 		Authenticate::start();
-		if (isset($_SESSION['user']))
+		if (isset($_SESSION['id']))
 			return true;
 		return false;
 	}
 
 	public static function is_admin() {
 		Authenticate::start();
-		if (isset($_SESSION['user'])) {
+		if (isset($_SESSION['id'])) {
 			if (isset($_SESSION['role']) && $_SESSION['role'] == '3')
 				return true;
 		}
@@ -33,7 +33,7 @@ class Authenticate
 
 	public static function is_door_host() {
 		Authenticate::start();
-		if (isset($_SESSION['user'])) {
+		if (isset($_SESSION['id'])) {
 			if (isset($_SESSION['role']) && ($_SESSION['role'] == '2' || $_SESSION['role'] == '3'))
 				return true;
 		}

@@ -24,25 +24,15 @@ if ( isset( $_POST[$nonce_name] ) ) {
     	/* Check to see if a user exists with this email */
     	$email = valid_email( not_empty( $_POST['email'] ) );
     	$user = User::query_user_from_email( $email );
-        if ( empty( $user )) {
+        if ( count( $user ) == 0 ) {
             throw new BadInputException( "There is no user registered with that email address." );
         }
 		
 		/* Create a unique user password reset token */
-		// TODO: Store token in database w/ affiliated user id
-		/*
-		create a table called password_recovery with the following fields:
-
-		id Primary Key auto incremented
-		iduser
-		token_key varchar(78)
-		expire_date datetime
-		
-		mysqli_query($link, "INSERT INTO password_recovery (token, expiry_timestamp) VALUES($token, $expiry_timestamp)");
-		*/
+		// TODO: Store token in database w/ affiliated user id and expirey date
 		$length = 78;
 		$expiry = 15; // how many minutes till token expires
-		$token = bin2hex(random_bytes($length));
+		$token = 123;//bin2hex(random_bytes($length));
 		$expiry_timestamp = time() + $expiry*60; // time is in seconds
 				
 		// Create a reset link
@@ -50,7 +40,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
 		$pwurl = $uri. '/reset_password.php?q=' .$token;
 		
 		// Send the link to user email
-		$to = $user->email;
+		$to = $user[0]->email;
 		$message = "Dear user,\n\nIf this email does not apply to you please ignore it. ";
 		$message .= "It appears that you have requested a password reset at contraborealis.org.\n\n";
 		$message .= "To reset your password, please click the link below. ";

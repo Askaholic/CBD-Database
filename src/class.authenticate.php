@@ -9,20 +9,25 @@ require_once( DP_PLUGIN_DIR . 'models/user.php' );
 
 class Authenticate
 {
-	private static function start() {
+	private static function dp_start_session() {
 		if (session_status() == PHP_SESSION_NONE)
-    		session_start();
-    }
+    		session_dp_start_session();
+	}
+	
+	public static function dp_stop_session() {
+		if(session_status() != PHP_SESSION_NONE)
+			session_destroy();
+	}
 
 	public static function is_logged_in() {
-		Authenticate::start();
+		Authenticate::dp_start_session();
 		if (isset($_SESSION['id']))
 			return true;
 		return false;
 	}
 
 	public static function is_admin() {
-		Authenticate::start();
+		Authenticate::dp_start_session();
 		if (isset($_SESSION['id'])) {
 			if (isset($_SESSION['role']) && $_SESSION['role'] == '3')
 				return true;
@@ -32,7 +37,7 @@ class Authenticate
 
 
 	public static function is_door_host() {
-		Authenticate::start();
+		Authenticate::dp_start_session();
 		if (isset($_SESSION['id'])) {
 			if (isset($_SESSION['role']) && ($_SESSION['role'] == '2' || $_SESSION['role'] == '3'))
 				return true;

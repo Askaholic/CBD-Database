@@ -34,7 +34,6 @@ if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 //set theme
 require_once( DP_PLUGIN_DIR . 'class.theme.php' );
 
-//start session for plugin instance
 function dp_session() {
 	session_start();
 }

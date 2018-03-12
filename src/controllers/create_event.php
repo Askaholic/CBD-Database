@@ -20,7 +20,6 @@ if ( isset($_POST['event_schema']) ) {
 
     try {
         $field_info = json_decode(stripslashes($_POST['event_schema']), true);
-
         $event_name = not_empty(reg_chars($field_info['name']));
 
         $schema = array(
@@ -29,7 +28,7 @@ if ( isset($_POST['event_schema']) ) {
                     $col_type = not_empty(clean_name($value['type']));
                     $col_desc = reg_chars($value['desc']);
                     $col_options = array_map( 'clean_name', $value['items'] );
-                //    $col_required = not_empty(valid_bool($value['required']));
+                    $col_required = (bool) not_empty($value['required']);
 
                     if ( !is_string( $col_desc ) ) {
                         $col_desc = '';
@@ -41,7 +40,7 @@ if ( isset($_POST['event_schema']) ) {
                         'name' => $col_name,
                         'type' => $col_type,
                         'description' => $col_desc,
-                        'required' => true,#$col_required,
+                        'required' => $col_required,
                         'options' => $col_options,
                         'constraints' => ''
                     );

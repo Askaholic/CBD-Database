@@ -6,26 +6,28 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 require_once( DP_PLUGIN_DIR . 'models/roles.php' );
 
-class Authenticate {
-
-	public static function logged_in() {
-		$id = $GLOBALS['session']->get( 'id' );
-		if( empty( $id ) )
+class Authenticate
+{
+	public static function is_logged_in() {
+		$id = $_SESSION['user'];
+		//$id = $GLOBALS['session']->get( 'id' );
+		if( empty( $id ) ) {
 			return false;
+		}
 		return true;
 	}
 
 	public static function is_admin() {
-		$role_id = $GLOBALS['session']->get( 'role_id' );
-		if( empty( $role_id ) || $role_id !== Role::ROLE_IDS['ADMIN'])
+		$id = $_SESSION['user'];
+		if( empty( $id ) || $id !== '3')
 			return false;
 		return true;
 	}
 
 
 	public static function is_door_host() {
-		$role_id = $GLOBALS['session']->get( 'role_id' );
-		if( empty( $role_id ) || $role_id !== Role::ROLE_IDS['DOOR_HOST'])
+		$id = $_SESSION['user'];
+		if( empty( $id ) || $id !== '2' || $id !== '3')
 			return false;
 		return true;
 	}

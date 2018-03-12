@@ -9,7 +9,7 @@ require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'models/user.php' );
 
 
-if ( ! Authenticate::logged_in() ) {
+if ( ! Authenticate::is_logged_in() ) {
     // TODO: Redirect to login page
 }
 

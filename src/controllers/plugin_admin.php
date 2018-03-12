@@ -1,7 +1,7 @@
 <?php
 
-$error;
-$info;
+$error = '';
+$info = '';
 
 try {
     DanceParty::create_tables();

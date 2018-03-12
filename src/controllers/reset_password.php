@@ -1,32 +1,63 @@
 <?php
 
+/* reset_password.php
+ * Aisha Peters
+ * Created: March 20, 2018
+ *
+ * Allows a user to update their password
+ */
+
 require_once( DP_PLUGIN_DIR . 'class.passwordhash.php' );
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'models/user.php' );
 
-if ( ! Authenticate::logged_in() ) {
-    // TODO: Redirect to login page
+$nonce_name = 'reset_nonce';
+if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'submit' ) ) {
+	die( 'Bad token' );
 }
 
-if( isset( $_POST['password_nonce'] ) && !wp_verify_nonce( $_POST['password_nonce'], 'submit' ) ) {
-    die( 'Bad token' );
-}
+$error = '';
+$info = '';
 
-if ( isset( $_POST['login_nonce'] ) ) {
+if ( isset( $_POST[$nonce_name] ) ) {
+    try {
+    	$email = not_empty( $_POST['email'] );
+		$newpass =  valid_password( not_empty( $_POST['new_password'] ) );
+		$newpass2 = not_empty( $_POST['confirm_password'] );
+		$token = $_POST["q"];
+		
+		// TODO
 
-	$pass =  valid_password( not_empty( $_POST['new_password'] ) );
-        $pass2 = not_empty( $_POST['confirm_password'] );
+		if ( $newpass !== $newpass2 ) {
+			throw new BadInputException( "Passwords do not match" );
+		}
 
-        if ( $pass !== $pass2 ) {
-            throw new BadInputException( "Passwords do not match" );
+		$hash = Password::hash( $newpass );
+		
+		$user = $GLOBALS['session']->get( 'user' );
+		$user->password = $newpass;
+		$user->commit();
+
+        $info = "Change Succesful";
+    }
+    catch ( Exception $e ) {
+        if ( get_class( $e ) !== BadInputException ) {
+            error_log($e);
         }
 
-	$hash = Password::hash( $pass );
+        $error = $e->getMessage();
 
-	$user = $GLOBALS['session']->get( 'user' );
-	$user->password = $pass;
-	$user->commit();
-
+        if ( get_class( $e ) === PDOException ) {
+            $error = "Database error";
+        }
+    }
 }
 
-DanceParty::render_view_with_template( 'reset_password.php' );
+DanceParty::render_view_with_template( 'reset_password.php',
+    array(
+        'error' => $error,
+        'info' => $info
+    )
+);
+
+?>

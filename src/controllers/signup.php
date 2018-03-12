@@ -42,10 +42,9 @@ if ( isset( $_POST['signup_nonce'] ) ) {
             'role_id' => Role::ROLE_IDS['MEMBER']
         );
 
-        $ids = User::query_user_from_email( $email );
-        if ( count( $ids ) !== 0 ) {
+        $users = User::query_users_from_email( $email );
+        if ( count( $users ) !== 0 ) {
             throw new BadInputException( "$email already has associated account" );
-            // TODO: consider refilling input values minus email
         }
 
         $user = new User( $userData );
@@ -68,8 +67,9 @@ if ( isset( $_POST['signup_nonce'] ) ) {
         $viewParams['info'] = $info;
         $viewParams['first'] = $first;
         $viewParams['last'] = $last;
-        $viewParams['pass'] = $pass;
-        $viewParams['pass2'] = $pass2;
+        // User should type in password again, this is alo a common approach on other websites
+        //$viewParams['pass'] = $pass;
+        //$viewParams['pass2'] = $pass2;
     }
     #always set error and info
     $viewParams['error'] = $error;

@@ -21,7 +21,7 @@ class User extends Model {
         FOREIGN KEY (role_id) REFERENCES roles(id)
     ';
 
-    public static function query_user_from_email($email) {
+    public static function query_users_from_email($email) {
       $user_table = User::TABLE_NAME;
       $result = self::query(
         "SELECT * FROM $user_table WHERE email = '$email';"
@@ -55,7 +55,7 @@ class User extends Model {
         );
         $retval = array();
         foreach ($result as $row) {
-            $obj = create_instance_from_row_with_membership( $row );
+            $obj = self::create_instance_from_row_with_membership( $row );
             array_push($retval, $obj);
         }
         return $retval;
@@ -86,7 +86,7 @@ class User extends Model {
         );
         $retval = array();
         foreach ($result as $row) {
-            $obj = create_instance_from_row_with_membership( $row );
+            $obj = self::create_instance_from_row_with_membership( $row );
             array_push( $retval, $obj );
         }
         return $retval;

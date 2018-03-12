@@ -27,14 +27,13 @@ echo "<iframe src='$menu' width='100%' height='50%'></iframe>";
 <?php
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 
+  echo "Logged in: ";
   print_r(Authenticate::is_logged_in());
-
-  //Authenticate::is_logged_in();
-  //$id = $GLOBALS['session']->get( 'user' );
-  //if(empty($id))
-	//	echo 'No session id found.';
-	//else
-	//	echo 'Session id: ' . $GLOBALS['session']->get( 'user' );
+  echo "\n ID: " .$_SESSION['id']. "\nRole: " .$_SESSION['role'];
+  echo "\nAdmin?: ";
+  print_r(Authenticate::is_admin());
+  echo "\nDoor Host?: ";
+  print_r(Authenticate::is_door_host());
 
 ?>
 

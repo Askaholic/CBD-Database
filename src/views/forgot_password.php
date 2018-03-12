@@ -1,25 +1,11 @@
 <script type="text/javascript">
-	//TODO: Set up expiration for reset toke, 15 mins
-    function get15ahead() {
-        var date = new Date();
-        date.setMinutes(date.getMinutes() - date.getTimezoneOffset() + 15);
-        date.setFullYear(date.getFullYear());
-        return date.toJSON().slice(0, 10);
-    }
-    document.onreadystatechange = () => {
-        var newExpirationDate = get15ahead();
-
-        if(document.readyState === 'complete' );
-        var list = document.getElementsByClassName('default-date');
-        for (let input of list) {
-            input.value = newExpirationDate;
-        }
-    }
+	//TODO: Set up expiration for reset token, 15 mins
 </script>
 
-<h1>Reset Password</h1>
+<h1>Forgot Your Password?</h1>
 
-<form method="post" action="">
+<form method="post" action="send_link.php">
+<p>Enter the email address affiliated with your account and we'll send you a link to reset your password.</p>
 <?php
     wp_nonce_field('submit', 'forgot_nonce');
     FormBuilder::input( 'email', 'email', 'Email' );

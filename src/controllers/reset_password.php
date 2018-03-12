@@ -4,7 +4,7 @@
  * Aisha Peters
  * Created: March 20, 2018
  *
- * Allows a user to update their password
+ * Allows a user to reset their password if accessed with valid token.
  */
 
 require_once( DP_PLUGIN_DIR . 'class.passwordhash.php' );
@@ -21,12 +21,12 @@ $info = '';
 
 if ( isset( $_POST[$nonce_name] ) ) {
     try {
-    	$email = not_empty( $_POST['email'] );
+    	$token = isset($_GET['q']) ? $_GET['q'] : null;
+    	//TODO: check for token match in database before allowing change
+    	$email = null; // TODO: get email from database, stored with token
+    
 		$newpass =  valid_password( not_empty( $_POST['new_password'] ) );
 		$newpass2 = not_empty( $_POST['confirm_password'] );
-		$token = $_POST["q"];
-		
-		// TODO
 
 		if ( $newpass !== $newpass2 ) {
 			throw new BadInputException( "Passwords do not match" );
@@ -34,11 +34,14 @@ if ( isset( $_POST[$nonce_name] ) ) {
 
 		$hash = Password::hash( $newpass );
 		
-		$user = $GLOBALS['session']->get( 'user' );
+    	$user = User::query_user_from_email( $email );
+        if ( empty( $user )) {
+            throw new BadInputException( "Email address not registered to an account." );
+        }
 		$user->password = $newpass;
 		$user->commit();
 
-        $info = "Change Succesful";
+        $info = "Change succesful. Please login with your new password.";
     }
     catch ( Exception $e ) {
         if ( get_class( $e ) !== BadInputException ) {

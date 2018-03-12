@@ -25,27 +25,38 @@ if ( isset( $_POST[$nonce_name] ) ) {
     	$email = valid_email( not_empty( $_POST['email'] ) );
     	$user = User::query_user_from_email( $email );
         if ( empty( $user )) {
-            throw new BadInputException( "No user with that email address exists." );
+            throw new BadInputException( "There is no user registered with that email address." );
         }
 		
 		/* Create a unique user password reset token */
+		// TODO: Store token in database w/ affiliated user id
+		/*
+		create a table called password_recovery with the following fields:
+
+		id Primary Key auto incremented
+		iduser
+		token_key varchar(78)
+		expire_date datetime
+		
+		mysqli_query($link, "INSERT INTO password_recovery (token, expiry_timestamp) VALUES($token, $expiry_timestamp)");
+		*/
 		$length = 78;
-		$token = array(
-				'value' = bin2hex(random_bytes($length))
-				'expires' = $expiry
-				)
+		$expiry = 15; // how many minutes till token expires
+		$token = bin2hex(random_bytes($length));
+		$expiry_timestamp = time() + $expiry*60; // time is in seconds
 				
 		// Create a reset link
-		// TODO: Use actual links in code
-		$pwrurl = "www.yoursitehere.com/reset_password.php?q=".$token[value];
+		$uri = 'http://' .$_SERVER['HTTP_HOST'];
+		$pwurl = $uri. '/reset_password.php?q=' .$token;
 		
-		// Mail the token
-		$mailbody = "Dear user,\n\nIf this email does not apply to you please ignore it. ";
-		$mailbody .= "It appears that you have requested a password reset at our website www.yoursitehere.com\n\n";
-		$mailbody .= "To reset your password, please click the link below. ";
-		$mailbody .= "If you cannot click it, please paste it into your web browser's address bar.\n\n";
-		$mailbody .= $pwrurl . "\n\nThanks,\nThe Administration";
-		mail($user->email, "www.yoursitehere.com - Password Reset", $mailbody);
+		// Send the link to user email
+		$to = $user->email;
+		$message = "Dear user,\n\nIf this email does not apply to you please ignore it. ";
+		$message .= "It appears that you have requested a password reset at contraborealis.org.\n\n";
+		$message .= "To reset your password, please click the link below. ";
+		$message .= "If you cannot click it, please paste it into your web browser's address bar.\n\n";
+		$message .= $pwurl . "\n\nThis link will expire in " .$expiry. " minutes.";
+		mail($to, "Contra Borealis - Password Reset", $message);
 		
         $info = "A password recovery token has been sent to your email address.";
     }

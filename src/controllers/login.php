@@ -4,6 +4,7 @@ require_once( DP_PLUGIN_DIR . 'class.passwordhash.php' );
 require_once( DP_PLUGIN_DIR . 'models/user.php' );
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 
+
 if ( Authenticate::is_logged_in() ) {
     wp_redirect('/');
 }
@@ -13,6 +14,8 @@ if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'sub
     die( 'Bad token' );
 }
 
+//designate where to go after logging in
+$afterlog = $_GET['afterlog'];
 $error = '';
 $info = '';
 
@@ -20,11 +23,11 @@ if ( isset( $_POST[$nonce_name] ) ) {
     try {
         $email = $_POST['email'];
         $password = $_POST['password'];
-        
+
 		if ( empty( $email ) || empty( $password ) ) {
 			throw new BadInputException( "Field empty" );
 		}
-    
+
 		$usr = User::query_users_from_email($email);
 		if ( count( $usr ) === 0 ) {
 		    throw new BadInputException( "$email does not have an associated account" );
@@ -37,8 +40,16 @@ if ( isset( $_POST[$nonce_name] ) ) {
 
 		$_SESSION['id'] = $usr[0]->id;
 		$_SESSION['role'] = $usr[0]->role_id;
-        
-        wp_redirect('/');
+
+        $afterlog = $_POST['afterlog'];
+        if(not_empty($afterlog)) {
+            //go to previous page from redirect
+            wp_redirect($afterlog);
+        }
+        else {
+            //or just go home
+            wp_redirect('/');
+        }
     }
     catch ( Exception $e ) {
         if ( get_class( $e ) !== BadInputException ) {
@@ -56,7 +67,8 @@ if ( isset( $_POST[$nonce_name] ) ) {
 DanceParty::render_view_with_template( 'login.php',
     array(
         'error' => $error,
-        'info' => $info
+        'info' => $info,
+        'afterlog' => $afterlog
     )
 );
 

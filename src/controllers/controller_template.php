@@ -1,5 +1,4 @@
 <?php
-
 /* controller_template.php
  * Rohan Weeden
  * Created: March 7 , 2018
@@ -12,23 +11,18 @@
  * that you either forgot to do this, or can't read because this comment is still
  * here...
  */
-
-
 /*
  * Require dependencies here
  */
-
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'helpers.php' );
-
-
 /*
  * Keep this part if you need the user to be logged in
  */
 if ( ! Authenticate::is_logged_in() ) {
-    // TODO: Redirect to login page
+    // no parameter, links to homepage
+    redirect('change_this');
 }
-
 
 /*
  * Keep this part if you need the user to be an admin

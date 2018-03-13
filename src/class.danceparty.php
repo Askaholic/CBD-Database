@@ -1,6 +1,7 @@
 <?php
 
 require_once( DP_PLUGIN_DIR . 'class.router.php' );
+require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
 /**
  * DanceParty
@@ -54,7 +55,7 @@ class DanceParty
     public static function render_view( $view, $context = array() ) {
         include_once( 'class.formbuilder.php' );
         // Escape dangerous characters
-        array_map("htmlspecialchars", $context);
+        array_map("recurse_htmlspecialchars", $context);
         extract($context);
 
         include DanceParty::VIEW_DIR . $view;

@@ -25,7 +25,7 @@ class Router
 
         $args_array = array(
             'post_title' => $name,
-            'post_content' => "page $controller_name",
+            'post_content' => "dp_page $controller_name",
             'post_status' => 'publish',
             'comment_status' => 'closed',
             'ping_status' => 'closed',
@@ -52,7 +52,7 @@ class Router
     }
 
     static function render_php($content) {
-        if (! preg_match('!^page (.*)!', $content, $matches)) {
+        if (! preg_match('!^dp_page (.*)!', $content, $matches)) {
             return $content;
         }
 

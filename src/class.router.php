@@ -33,7 +33,7 @@ class Router
             'guid' => "http://localhost/$endpoint",
             'post_type' => 'page'
         );
-        
+
         // Update the page if it exists already
         if ($post !== null) {
             $args_array['ID'] = $post->ID;
@@ -52,7 +52,7 @@ class Router
     }
 
     static function render_php($content) {
-        if (! preg_match('!page (.*)!', $content, $matches)) {
+        if (! preg_match('!^page (.*)!', $content, $matches)) {
             return $content;
         }
 

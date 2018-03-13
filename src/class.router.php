@@ -18,16 +18,27 @@ class Router
     }
 
     static function route_post($name, $endpoint, $controller) {
-        $post_id = wp_insert_post( array(
+        $post = get_page_by_title($name);
+
+        preg_match('!(.*)[.]php!', $controller, $matches);
+        $controller_name = $matches[1];
+
+        $args_array = array(
             'post_title' => $name,
-            'post_content' => '',
+            'post_content' => "page $controller_name",
             'post_status' => 'publish',
             'comment_status' => 'closed',
             'ping_status' => 'closed',
             'post_name' => $endpoint,
             'guid' => "http://localhost/$endpoint",
             'post_type' => 'page'
-        ));
+        );
+        
+        // Update the page if it exists already
+        if ($post !== null) {
+            $args_array['ID'] = $post->ID;
+        }
+        $post_id = wp_insert_post( $args_array );
 
         if ( $post_id === 0 ) {
             throw new Exception("Error creating page '$endpoint'");

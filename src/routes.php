@@ -7,6 +7,8 @@
  */
 
 Router::route( 'test', 'test.php' );
+Router::route_post( 'Test' , 'test', 'test.php' );
+
 Router::route( 'signup', 'signup.php' );
 Router::route( 'create_member', 'create_member.php' );
 Router::route( 'user_model_test', 'umt.php' );

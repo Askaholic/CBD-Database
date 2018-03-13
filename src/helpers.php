@@ -4,6 +4,17 @@
  * Misc little helper functions that may be usefull throughout the plugin
  */
 
+
+function recurse_htmlspecialchars($input) {
+    if ( is_array($input) ) {
+        array_map("recurse_htmlspecialchars", $input);
+        return;
+    }
+    elseif ( is_string($input) ) {
+        return htmlspecialchars($input);
+    }
+}
+
 /* Returns a copy of the input with all non alpha-numeric characters stripped out.
  * '_' and ' ' are not removed.
  */

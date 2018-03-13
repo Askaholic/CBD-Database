@@ -37,7 +37,6 @@ class Router
     static function init_hooks() {
         add_filter( 'query_vars', array( 'Router', 'query_vars' ) );
         add_action( 'parse_request', array( 'Router', 'parse_request' ) );
-        // add_filter( 'the_content', array( 'Router', 'insert_php' ) , 9 );
         add_filter( 'the_content', array( 'Router', 'render_php' ) , 9 );
     }
 
@@ -53,22 +52,6 @@ class Router
         ob_clean();
         ob_end_flush();
         return $rendered_content;
-    }
-
-    static function insert_php($content) {
-        $content_copy = $content;
-		preg_match_all('!<[?]php(.*?)[?]>!s',$content_copy, $matches);
-
-		$nummatches = count($matches[0]);
-		for( $i = 0; $i < $nummatches; $i++ ) {
-			ob_start();
-			eval( $matches[1][$i] );
-			$replacement = ob_get_contents();
-			ob_clean();
-			ob_end_flush();
-			$content_copy = preg_replace('/'.preg_quote($matches[0][$i],'/').'/', $replacement, $content_copy, 1);
-		}
-		return $content_copy;
     }
 
     static function query_vars( $query_vars ) {

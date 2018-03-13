@@ -18,8 +18,24 @@
  * Require dependencies here
  */
 
- require_once( DP_PLUGIN_DIR . 'helpers.php' );
+require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
+require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
+
+/*
+ * Keep this part if you need the user to be logged in
+ */
+if ( ! Authenticate::logged_in() ) {
+    // TODO: Redirect to login page
+}
+
+
+/*
+ * Keep this part if you need the user to be an admin
+ */
+if ( ! Authenticate::is_admin() ) {
+    die( 'Unauthorized' );
+}
 
 /*
  * Keep this part if you need to handle form data
@@ -52,6 +68,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
         $info = "Success";
     }
     catch (Exception $e) {
+        error_log($e);
         /*
          * Display an error message if something goes wrong
          */

@@ -3,6 +3,7 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+
 require_once( DP_PLUGIN_DIR . 'models/roles.php' );
 
 class Authenticate {

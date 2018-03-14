@@ -1,7 +1,19 @@
 <?php
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 require_once( DP_PLUGIN_DIR . 'class.router.php' );
 require_once( DP_PLUGIN_DIR . 'helpers.php' );
+
+/*
+ * Need to define constants because old versions of php (which iPage appraently
+ * still uses) do not support concatenating constant values and strings...
+ */
+
+define( 'DP_CONTROLLER_DIR', DP_PLUGIN_DIR . 'controllers/' );
+define( 'DP_VIEW_DIR', DP_PLUGIN_DIR . 'views/' );
+define( 'DP_ASSET_DIR', DP_PLUGIN_DIR . 'assets/' );
 
 /**
  * DanceParty
@@ -10,10 +22,10 @@ class DanceParty
 {
     const NAME = 'Dance Party';
     const OPTION_GROUP = 'danceparty-options';
-    const CONTROLLER_DIR = DP_PLUGIN_DIR . 'controllers/';
-    const VIEW_DIR = DP_PLUGIN_DIR . 'views/';
+    const CONTROLLER_DIR = DP_CONTROLLER_DIR;
+    const VIEW_DIR = DP_VIEW_DIR;
 
-    const ASSET_URL = DP_PLUGIN_URL . 'assets/';
+    const ASSET_URL = DP_ASSET_DIR;
 
     private static $init_done = false;
 

@@ -1,6 +1,6 @@
 <h1 style="margin-left: 10px;">Create a new Contra Borealis Dance account</h1>
 
-<form method="post" action="create_member">
+<form method="post" action="">
 <?php
     wp_nonce_field('submit', 'create_member_nonce');
     FormBuilder::input('text', 'first', 'First Name', 'pattern="[A-Za-z]{2,128}" required title="First name, letters only"');

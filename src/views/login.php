@@ -1,6 +1,6 @@
 <h1>Login to your Contra Borealis Dance account</h1>
 
-<form method="post" action="login">
+<form method="post" action="">
     <?php
     wp_nonce_field('submit', 'login_nonce');
     FormBuilder::input( 'email', 'email', 'Email' );

@@ -70,6 +70,7 @@ class DanceParty
         wp_enqueue_style( 'fallback-css', self::ASSET_URL . 'fallback.css' );
         wp_enqueue_script( 'angularjs-1.6.7', 'https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js' );
         wp_enqueue_script( 'app-event-creator', self::ASSET_URL . 'event_creator.js' );
+        wp_enqueue_script( 'danceparty', self::ASSET_URL . 'danceparty.js' );
     }
 
     public static function render_view( $view, $context = array() ) {

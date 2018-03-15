@@ -1,0 +1,23 @@
+This file contains an example of the schema
+
+{
+    "columns" : [
+        {
+            "name": "first_name",
+            "description": "",
+            "type": "text",
+            "constraints": "not null"
+        },
+        {
+            "name": "lodging",
+            "description": "",
+            "type": "multivalued",
+            "constraints": "not null default='tent'",
+            "options" : [
+                "tent",
+                "cabin_male",
+                "cabin_female"
+            ]
+        }
+    ]
+}

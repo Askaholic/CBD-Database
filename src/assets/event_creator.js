@@ -106,7 +106,7 @@ app.component('formChange', {
     template:
    `
     <editable form-value="$ctrl.output.name"></editable>
-    <editable tag="i" form-value="$ctrl.output.desc"></editable>
+    <editable tag="i" form-value="$ctrl.output.desc" nullable="true"></editable>
     <div ng-if="$ctrl.type === 'checkbox' || $ctrl.type === 'radio'">
         <div ng-repeat="i in $ctrl.output.items track by $index">
             <input type="{{ $ctrl.type }}"/>

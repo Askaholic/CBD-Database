@@ -37,10 +37,8 @@ require_once( DP_PLUGIN_DIR . 'class.theme.php' );
 //set session
 require_once( DP_PLUGIN_DIR . 'class.danceparty_session.php' );
 function dp_session() {
-
 	global $session;
 	$session = new DanceParty_Session();
-
 }
 add_action( 'init', 'dp_session' );
 

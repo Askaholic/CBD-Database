@@ -10,6 +10,9 @@ $sql_types = array(
     'select' => '',
 );
 
+$error;
+$info;
+
 if ( isset($_POST['event_schema']) ) {
     try {
         $field_info = json_decode(stripslashes($_POST['event_schema']), true);
@@ -43,24 +46,27 @@ if ( isset($_POST['event_schema']) ) {
         ));
 
         if ($schema === $schema1) {
-            DanceParty::render_view( 'create_event.php', array('error' => "Cannot insert empty Event"));
-            exit();
+            throw new Exception( 'Cannot insert empty event' );
         }
+        
         $event->commit();
     }
     catch (PDOException $e) {
         error_log($e);
-        DanceParty::render_view( 'create_event.php', array('error' => 'Database error') );
-        exit();
+        $error = 'Database error';
     }
     catch (Exception $e) {
-        DanceParty::render_view( 'create_event.php', array('error' => $e->getMessage()) );
-        exit();
+        $error = $e->getMessage();
     }
     print_r($schema);
 }
-else {
-    DanceParty::render_view( 'create_event.php' );
-}
+
+
+DanceParty::render_view_with_template( 'create_event.php',
+    array(
+        'error' => $error,
+        'info' => $info
+    )
+);
 
 ?>

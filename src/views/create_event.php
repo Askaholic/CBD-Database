@@ -1,7 +1,3 @@
-
-<link rel="stylesheet" href="<?php echo DanceParty::ASSET_URL . 'fallback.css' ?>">
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js" charset="utf-8"></script>
-<script src="<?php echo DanceParty::ASSET_URL . 'event_creator.js' ?>" charset="utf-8"></script>
 <style media="screen">
     .border-light {
         border: 1px solid grey;
@@ -27,16 +23,7 @@
         padding-top: .2em !important;
     }
 </style>
-<div class="wrap" ng-app="EventCreator" ng-controller="formBuilder">
-    <?php
-    if (isset($error)) {
-    ?>
-        <div class="error">
-            <p><?php echo $error ?></p>
-        </div>
-    <?php
-    }
-    ?>
+<div ng-app="EventCreator" ng-controller="formBuilder">
     <h1>Create a new event</h1>
     <hr/>
 

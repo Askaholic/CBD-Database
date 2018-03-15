@@ -50,7 +50,6 @@ if ( isset( $_POST['signup_nonce'] ) ) {
 
 DanceParty::render_view_with_template( 'signup_view.php',
     array(
-        'title' => 'Sign Up',
         'error' => $error,
         'info' => $info
     ) );

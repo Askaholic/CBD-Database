@@ -41,6 +41,8 @@ if ( isset( $_POST['signup_nonce'] ) ) {
         $info = "Account created";
     }
     catch (Exception $e) {
+        error_log($e);
+        
         $error = $e->getMessage();
         if ( get_class($e) === PDOException) {
             $error = "Database error";

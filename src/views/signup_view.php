@@ -18,9 +18,8 @@
 
     function setPasswordMessage(message, color='red') {
         let messageElement = document.getElementById("error");
-        console.log(messageElement)
-        messageElement.innerHTML = message;
 
+        messageElement.innerHTML = message;
         messageElement.style.color = color;
     }
 </script>

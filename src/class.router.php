@@ -1,7 +1,7 @@
 <?php
 
-require_once(DP_PLUGIN_DIR . 'class.danceparty.php');
-require_once(DP_PLUGIN_DIR . 'helpers.php' );
+require_once( DP_PLUGIN_DIR . 'class.danceparty.php' );
+require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
 /**
  * Router

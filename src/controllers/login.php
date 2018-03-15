@@ -1,10 +1,9 @@
 <?php
 
-require_once(DP_PLUGIN_DIR . 'class.passwordhash.php');
-require_once(DP_PLUGIN_DIR . 'models/user.php');
+require_once( DP_PLUGIN_DIR . 'class.passwordhash.php' );
+require_once( DP_PLUGIN_DIR . 'models/user.php' );
 
-if(isset($_POST['login_nonce']) && !wp_verify_nonce($_POST['login_nonce'], 'submit'))
-{
+if( isset( $_POST['login_nonce'] ) && !wp_verify_nonce( $_POST['login_nonce'], 'submit' ) ) {
     die( 'Bad token' );
 }
 
@@ -24,7 +23,8 @@ if ( isset( $_POST['login_nonce'] ) ) {
     if ( !empty( $email ) && !empty( $password ) ) {
         print_r($member->email);
         if ( $email == $member->email) {
-            Password::verify($password, $password_hash);        }
+            Password::verify($password, $password_hash);
+        }
     }
 }
 

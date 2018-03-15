@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="<?php echo DanceParty::ASSET_URL . 'fallback.css' ?>">
-
 <div class="wrap">
     <?php if ( isset( $error ) && $error !== '' ) { ?>
         <div class="error">

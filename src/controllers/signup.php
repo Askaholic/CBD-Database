@@ -15,8 +15,8 @@ $info = '';
 
 if ( isset( $_POST['signup_nonce'] ) ) {
     try {
-        $first = valid_name(not_empty($_POST['first']));
-        $last = valid_name(not_empty($_POST['last']));
+        $first = valid_name(not_empty($_POST['first_name']));
+        $last = valid_name(not_empty($_POST['last_name']));
         $email = valid_email(not_empty($_POST['email']));
         $pass = valid_password(not_empty($_POST['password']));
         $pass2 = not_empty($_POST['confirm_password']);

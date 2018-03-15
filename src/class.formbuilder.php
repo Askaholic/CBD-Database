@@ -10,11 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 class FormBuilder
 {
 
-    private static function _input( $type, $id, $extraattrs) {
+    private static function _input( $type, $id, $extraattrs = '') {
         return '<input type="' . $type . '" id="' . $id . '" name="' . $id . '" ' .  $extraattrs . ' />';
     }
     /* Create an input field with a label */
-    static function input( $type, $id, $display_text, $extraattrs, $echo = true ) {
+    static function input( $type, $id, $display_text, $extraattrs = '', $echo = true ) {
         $label = '<label for="' . $id . '">' . $display_text . '</label>';
         $input = self::_input( $type, $id, $extraattrs);
         $html = $label . $input;

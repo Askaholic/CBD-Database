@@ -46,8 +46,10 @@
             ?>
             <h1>Create a new event</h1>
             <hr/>
-
             <editable tag="h3" form-value="form.name"></editable>
+
+            <editable
+
             <div ng-repeat="f in form.fields">
                 <div class="border-light">
                     <div class="inline-container">

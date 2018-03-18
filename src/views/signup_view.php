@@ -1,30 +1,5 @@
 <h1>Create your Contra Borealis Dance account</h1>
-<!-- <script>
-    function checkPasswordsMatch() {
-        let password = document.getElementById('password').value;
-        let confirm_pass = document.getElementById('confirm_password').value;
-        console.log(password, confirm_pass)
-        if (password !== confirm_pass) {
-            disableSubmit();
-            setPasswordMessage('Passwords do not match', 'red');
-            return;
-        }
-        enableSubmit();
-        setPasswordMessage('');
-    }
-    function disableSubmit() {
-        document.getElementsByName("submit")[0].disabled = true;
-    }
-    function enableSubmit() {
-        document.getElementsByName("submit")[0].disabled = false;
-    }
-    function setPasswordMessage(message, color='red') {
-        let messageElement = document.getElementById("error");
-        console.log(messageElement)
-        messageElement.innerHTML = message;
-        messageElement.style.color = color;
-    }
-</script> -->
+
 <form method="post" action="">
 <?php
     wp_nonce_field('submit', 'signup_nonce');

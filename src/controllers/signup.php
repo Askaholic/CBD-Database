@@ -34,15 +34,24 @@ if ( isset( $_POST['signup_nonce'] ) ) {
             'role_id' => 1
         );
 
-        // TODO: Check that the email address is not taken already
-        $user = new User($userData);
-        $user->commit();
+        // Check that the email address is not taken already
+        $inuse = User::query_id_from_email($email);
+        if(count($inuse) === 0)
+        {
+          $user = new User($userData);
+          $user->commit();
 
-        $info = "Account created";
+          $info = "Account created";
+        }
+        else
+        {
+          $error = "$email already has associated account";
+          // TODO consider refilling input values minus email
+        }
     }
     catch (Exception $e) {
         error_log($e);
-        
+
         $error = $e->getMessage();
         if ( get_class($e) === PDOException) {
             $error = "Database error";

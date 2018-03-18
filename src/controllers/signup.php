@@ -15,16 +15,17 @@ $info = '';
 
 if ( isset( $_POST['signup_nonce'] ) ) {
     try {
-        $first = valid_name(not_empty($_POST['first_name']));
-        $last = valid_name(not_empty($_POST['last_name']));
-        $email = valid_email(not_empty($_POST['email']));
-        $pass = valid_password(not_empty($_POST['password']));
-        $pass2 = not_empty($_POST['confirm_password']);
+        $first = valid_name( not_empty( $_POST['first_name'] ) );
+        $last =  valid_name( not_empty( $_POST['last_name'] ) );
+        $email = valid_email( not_empty( $_POST['email'] ) );
+        $pass =  valid_password( not_empty( $_POST['password'] ) );
+        $pass2 = not_empty( $_POST['confirm_password'] );
 
-        if($pass !== $pass2)
-            throw new Exception("Passwords do not match");
+        if ( $pass !== $pass2 ) {
+            throw new Exception( "Passwords do not match" );
+        }
 
-        $hash = Password::hash($pass);
+        $hash = Password::hash( $pass );
 
         $userData = array(
             'first_name' => $first,
@@ -34,26 +35,23 @@ if ( isset( $_POST['signup_nonce'] ) ) {
             'role_id' => 1
         );
 
-        // Check that the email address is not taken already
-        $inuse = User::query_id_from_email($email);
-        if(count($inuse) === 0)
-        {
-          $user = new User($userData);
-          $user->commit();
+        // TODO: Rename this function and make it return User object(s)
+        $ids = User::query_id_from_email( $email );
+        if ( count( $ids ) !== 0 ) {
+            throw new Exception( "$email already has associated account" );
+            // TODO: consider refilling input values minus email
+        }
+        
+        $user = new User( $userData );
+        $user->commit();
 
-          $info = "Account created";
-        }
-        else
-        {
-          $error = "$email already has associated account";
-          // TODO consider refilling input values minus email
-        }
+        $info = "Account created";
     }
-    catch (Exception $e) {
+    catch ( Exception $e ) {
         error_log($e);
 
         $error = $e->getMessage();
-        if ( get_class($e) === PDOException) {
+        if ( get_class( $e ) === PDOException ) {
             $error = "Database error";
         }
     }

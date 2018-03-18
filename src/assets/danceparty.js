@@ -3,10 +3,16 @@ function checkPasswordsMatch() {
     let confirm_pass = document.getElementById('confirm_password').value;
 
     if (password !== confirm_pass) {
+        disableSubmit();
         setPasswordMessage('Passwords do not match', 'red');
         return;
     }
+    enableSubmit();
     setPasswordMessage('');
+}
+
+function enableSubmit() {
+    document.getElementsByName("submit")[0].disabled = false;
 }
 
 function disableSubmit() {

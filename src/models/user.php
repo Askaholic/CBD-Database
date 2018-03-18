@@ -21,6 +21,19 @@ class User extends Model {
         FOREIGN KEY (role_id) REFERENCES roles(id)
     ';
 
+    public static function query_id_from_email($email) {
+      $user_table = User::TABLE_NAME;
+      $result = self::query(
+        "SELECT id FROM $user_table WHERE email = '$email';"
+      );
+      $ids = array();
+      foreach($result as $row) {
+          $obj = new static ( $row );
+          array_push($ids, $obj);
+      }
+      return $ids;
+    }
+
     public static function query_all_with_membership() {
         $table = static::TABLE_NAME;
         $membership_table = Membership::TABLE_NAME;
@@ -77,7 +90,7 @@ class User extends Model {
                 SELECT user_id AS id, MAX(expiration_date) as expiration_date FROM
                     $membership_table GROUP BY id) AS i
                 INNER JOIN $table AS u ON
-                    u.id = i.id 
+                    u.id = i.id
                 WHERE
                     i.expiration_date < CURDATE()
                 ;"

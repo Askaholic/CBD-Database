@@ -35,7 +35,7 @@ if ( isset( $_POST['signup_nonce'] ) ) {
         );
 
         // Check that the email address is not taken already
-        $inuse = User::query_id_from_email($email);
+        $inuse = User::query_user_from_email($email);
         if(count($inuse) === 0)
         {
           $user = new User($userData);

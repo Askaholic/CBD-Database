@@ -1,5 +1,9 @@
 <?php
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+
 require_once(DP_PLUGIN_DIR . 'class.danceparty.php');
 
 /* ------------------------------------------------------------------------ *

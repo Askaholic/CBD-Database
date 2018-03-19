@@ -1,6 +1,19 @@
 <?php
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 require_once( DP_PLUGIN_DIR . 'class.router.php' );
+require_once( DP_PLUGIN_DIR . 'helpers.php' );
+
+/*
+ * Need to define constants because old versions of php (which iPage appraently
+ * still uses) do not support concatenating constant values and strings...
+ */
+
+define( 'DP_CONTROLLER_DIR', DP_PLUGIN_DIR . 'controllers/' );
+define( 'DP_VIEW_DIR', DP_PLUGIN_DIR . 'views/' );
+define( 'DP_ASSET_URL', DP_PLUGIN_URL . 'assets/' );
 
 /**
  * DanceParty
@@ -9,10 +22,10 @@ class DanceParty
 {
     const NAME = 'Dance Party';
     const OPTION_GROUP = 'danceparty-options';
-    const CONTROLLER_DIR = DP_PLUGIN_DIR . 'controllers/';
-    const VIEW_DIR = DP_PLUGIN_DIR . 'views/';
+    const CONTROLLER_DIR = DP_CONTROLLER_DIR;
+    const VIEW_DIR = DP_VIEW_DIR;
 
-    const ASSET_URL = DP_PLUGIN_URL . 'assets/';
+    const ASSET_URL = DP_ASSET_URL;
 
     private static $init_done = false;
 
@@ -24,6 +37,8 @@ class DanceParty
 
     static function init_hooks() {
         Router::init_hooks();
+
+        add_action( 'wp_enqueue_scripts', array( 'DanceParty', 'enqueue_scripts_and_styles' ) );
 
         $init_done = true;
     }
@@ -51,10 +66,17 @@ class DanceParty
         Role::create_table();
     }
 
+    public static function enqueue_scripts_and_styles() {
+        wp_enqueue_style( 'fallback-css', self::ASSET_URL . 'fallback.css' );
+        wp_enqueue_script( 'angularjs-1.6.7', 'https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js' );
+        wp_enqueue_script( 'app-event-creator', self::ASSET_URL . 'event_creator.js' );
+        wp_enqueue_script( 'danceparty', self::ASSET_URL . 'danceparty.js' );
+    }
+
     public static function render_view( $view, $context = array() ) {
         include_once( 'class.formbuilder.php' );
         // Escape dangerous characters
-        array_map("htmlspecialchars", $context);
+        array_map("recurse_htmlspecialchars", $context);
         extract($context);
 
         include DanceParty::VIEW_DIR . $view;

@@ -29,6 +29,7 @@ class Event extends Model
 
         $table_name = $this->id . '_' . clean_name($this->name);
         $column_strings = implode(',', $schema->columns);
+        $column_string = json_schema_to_column_string( $schema );
 
         $sql = "CREATE TABLE IF NOT EXISTS $table_name (
             $column_strings
@@ -37,5 +38,27 @@ class Event extends Model
     }
 }
 
+
+function json_schema_to_column_string( $schema ) {
+    return implode(
+        ',',
+        array_map(
+            'json_column_to_string',
+            $schema->columns
+        )
+    );
+}
+
+function json_column_to_string( $column ) {
+    $name = $column->name;
+    $constraints = $column->constraints;
+
+    $type = $column->type;
+    if ( $type === 'multivalued' ) {
+        $type = 'varchar(255)';
+    }
+
+    return "$name $type $constraints";
+}
 
 ?>

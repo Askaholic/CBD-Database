@@ -13,20 +13,20 @@ class Role extends Model {
     const ROLE_IDS = array(
         'MEMBER' => 1,
         'DOOR_HOST' => 2,
-        'ADIM' => 3
+        'ADMIN' => 3
     );
 
     const ROLES = array(
         array(
-            'id' => ROLE_IDS['MEMBER'],
+            'id' => self::ROLE_IDS['MEMBER'],
             'name' => 'MEMBER'
         ),
         array(
-            'id' => ROLE_IDS['DOOR_HOST'],
+            'id' => self::ROLE_IDS['DOOR_HOST'],
             'name' => 'DOOR_HOST'
         ),
         array(
-            'id' => ROLE_IDS['ADMIN'],
+            'id' => self::ROLE_IDS['ADMIN'],
             'name' => 'ADMIN'
         )
     );

@@ -4,6 +4,7 @@ try {
     DanceParty::create_tables();
     $e = '';
 } catch (PDOException $e) {
+    error_log($e);
     $e = 'Error connecting to database. Please double check that the config options are correct.';
 }
 

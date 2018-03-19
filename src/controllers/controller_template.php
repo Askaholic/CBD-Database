@@ -67,14 +67,14 @@ if ( isset( $_POST[$nonce_name] ) ) {
          */
         $info = "Success";
     }
-    catch (Exception $e) {
+    catch ( Exception $e ) {
         error_log($e);
         /*
          * Display an error message if something goes wrong
          */
         $error = $e->getMessage();
 
-        if ( get_class($e) === PDOException) {
+        if ( get_class( $e ) === PDOException ) {
             $error = "Database error";
         }
     }

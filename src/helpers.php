@@ -4,6 +4,12 @@
  * Misc little helper functions that may be usefull throughout the plugin
  */
 
+/**
+ *
+ */
+class BadInputException extends Exception {}
+
+
 
 function recurse_htmlspecialchars($input) {
     if ( is_array($input) ) {
@@ -37,7 +43,7 @@ function clean_name($name) {
 /* Returns the string, throws an exception if it is empty */
 function not_empty($str) {
     if ($str == '' || empty($str) ) {
-        throw new Exception("Invalid input: Cannot be empty.");
+        throw new BadInputException("Invalid input: Cannot be empty.");
     }
     return $str;
 }
@@ -51,7 +57,7 @@ function is_valid_name($name) {
 
 function valid_name($name) {
     if (! is_valid_name($name) ) {
-        throw new Exception("Invalid name");
+        throw new BadInputException("Invalid name");
     }
     return $name;
 }
@@ -64,7 +70,7 @@ function is_valid_email($email) {
 
 function valid_email($email) {
     if (! is_valid_email($email) ) {
-        throw new Exception("Invalid email");
+        throw new BadInputException("Invalid email");
     }
     return $email;
 }
@@ -78,7 +84,7 @@ function is_valid_password($pass) {
 
 function valid_password($pass) {
     if (! is_valid_password($pass) ) {
-        throw new Exception("Invalid password");
+        throw new BadInputException("Invalid password");
     }
     return $pass;
 }
@@ -92,7 +98,7 @@ function is_valid_date($date) {
 
 function valid_date($date) {
     if (! is_valid_date($date) ) {
-        throw new Exception("Invalid date");
+        throw new BadInputException("Invalid date");
     }
     return $date;
 }
@@ -105,7 +111,7 @@ function is_valid_id($id) {
 
 function valid_id($id) {
     if (! is_valid_id($id) ) {
-        throw new Exception("Invalid id");
+        throw new BadInputException("Invalid id");
     }
     return $id;
 }

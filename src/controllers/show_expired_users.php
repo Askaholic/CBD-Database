@@ -32,8 +32,8 @@ if ( isset( $_POST['renew_member_nonce'] ) ) {
                 )
             );
             $usr->pull();
-        } catch (Exception $e) {
-            throw new Exception("User with id $id does not exist");
+        } catch ( Exception $e ) {
+            throw new BadInputException("User with id $id does not exist");
         }
 
         $memberData = array(
@@ -44,6 +44,10 @@ if ( isset( $_POST['renew_member_nonce'] ) ) {
         $member->commit();
 
     } catch ( Exception $e ) {
+        if ( get_class( $e ) !== BadInputException ) {
+            error_log($e);
+        }
+
         $error = $e->getMessage();
 
         if ( get_class($e) === PDOException) {

@@ -68,7 +68,9 @@ if ( isset( $_POST[$nonce_name] ) ) {
         $info = "Success";
     }
     catch ( Exception $e ) {
-        error_log($e);
+        if ( get_class( $e ) !== BadInputException ) {
+            error_log($e);
+        }
         /*
          * Display an error message if something goes wrong
          */

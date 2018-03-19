@@ -69,12 +69,16 @@ if ( isset($_POST['event_schema']) ) {
 
         $event->commit();
     }
-    catch (PDOException $e) {
-        error_log($e);
-        $error = 'Database error';
-    }
     catch (Exception $e) {
+        if ( get_class( $e ) !== BadInputException ) {
+            error_log($e);
+        }
+
         $error = $e->getMessage();
+
+        if ( get_class( $e ) === PDOException ) {
+            $error = "Database error";
+        }
     }
 }
 

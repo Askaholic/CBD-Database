@@ -21,6 +21,4 @@ class Password
     }
 }
 
-
-
- ?>
+?>

@@ -1,13 +1,22 @@
 <?php
 
+$error;
+$info;
+
 try {
     DanceParty::create_tables();
-    $e = '';
+    $info = 'Settings updated successfully';
 } catch (PDOException $e) {
     error_log($e);
-    $e = 'Error connecting to database. Please double check that the config options are correct.';
+    $error = 'Error connecting to database. Please double check that the config options are correct.';
 }
 
-DanceParty::render_view( 'plugin_admin.php', array( 'error' => $e ) );
+DanceParty::render_view(
+    'plugin_admin.php',
+    array(
+        'error' => $error,
+        'info' => $info
+    )
+);
 
 ?>

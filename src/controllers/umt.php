@@ -28,7 +28,7 @@ end
 );
 
 $schema2 = json_decode(<<<end
-{"columns": [{"name": "lodging", "type": "multivalued", "constraints": "", "description": "Choose your lodging option"}]}
+{"columns": [{"name": "some_checkbox", "type": "checkbox", "options": ["thing_1", "thing_2", "thing_3"], "required": true, "constraints": "", "description": "Enter your misc options"}]}
 end
 );
 

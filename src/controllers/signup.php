@@ -22,7 +22,7 @@ if ( isset( $_POST['signup_nonce'] ) ) {
         $pass2 = not_empty( $_POST['confirm_password'] );
 
         if ( $pass !== $pass2 ) {
-            throw new Exception( "Passwords do not match" );
+            throw new BadInputException( "Passwords do not match" );
         }
 
         $hash = Password::hash( $pass );
@@ -38,17 +38,19 @@ if ( isset( $_POST['signup_nonce'] ) ) {
         // TODO: Rename this function and make it return User object(s)
         $ids = User::query_id_from_email( $email );
         if ( count( $ids ) !== 0 ) {
-            throw new Exception( "$email already has associated account" );
+            throw new BadInputException( "$email already has associated account" );
             // TODO: consider refilling input values minus email
         }
-        
+
         $user = new User( $userData );
         $user->commit();
 
         $info = "Account created";
     }
     catch ( Exception $e ) {
-        error_log($e);
+        if ( get_class( $e ) !== BadInputException ) {
+            error_log($e);
+        }
 
         $error = $e->getMessage();
         if ( get_class( $e ) === PDOException ) {

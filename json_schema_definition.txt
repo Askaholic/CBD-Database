@@ -6,17 +6,31 @@ This file contains an example of the schema
             "name": "first_name",
             "description": "",
             "type": "text",
-            "constraints": "not null"
+            "required": true,
+            "constraints": ""
         },
         {
             "name": "lodging",
             "description": "",
             "type": "multivalued",
-            "constraints": "not null default='tent'",
+            "constraints": "default='tent'",
             "options" : [
                 "tent",
                 "cabin_male",
                 "cabin_female"
+            ]
+        },
+        {
+            "name": "misc_info",
+            "description": "",
+            "type": "checkbox",
+            "constraints": "",
+            "options": [
+                "provide_housing",
+                "help_cleanup",
+                "help_pre_camp",
+                "vegetarian",
+                "alergic"
             ]
         }
     ]

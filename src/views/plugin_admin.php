@@ -11,10 +11,18 @@
         ?>
     </form>
     <?php
-    if( isset($context['error']) and $context['error'] != '' ) {
+    if( isset($error) and $error != '' ) {
     ?>
         <div class="error">
-            <p><?php echo $context['error'] ?></p>
+            <p><?php echo $error ?></p>
+        </div>
+    <?php
+    }
+
+    if( isset($info) and $info != '' ) {
+    ?>
+        <div class="updated notice">
+            <p><?php echo $info ?></p>
         </div>
     <?php
     }

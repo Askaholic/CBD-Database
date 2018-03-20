@@ -46,17 +46,12 @@ if ( isset($_POST['event_schema']) ) {
                 }, $field_info['fields'] )
         );
 
-        // TODO: Make this an empty schema. This is still just copy and pasted
-        // from above, so of course it's always going to be equal...
-        $schema1 = array(
-            'columns' => array_map( function($value) {
-                    $col_name = not_empty(clean_name($value['name']));
-                    $col_type = not_empty(clean_name($value['type']));
-
-                    return "$col_name $col_type";
-                }, $field_info['fields'] )
+        $empty_schema = array(
+            'columns' => array()
         );
-
+        if ( $schema === $empty_schema ) {
+            throw new BadInputException( 'Cannot insert empty event' );
+        }
 
         $event = new Event(array(
             'name' => $event_name,
@@ -64,10 +59,6 @@ if ( isset($_POST['event_schema']) ) {
             'user_id' => 1, /* TODO: Make this the id of the logged in user */
             'schema_info' => json_encode($schema)
         ));
-
-        // if ($schema === $schema1) {
-        //     throw new BadInputException( 'Cannot insert empty event' );
-        // }
 
         $event->commit();
     }

@@ -6,7 +6,7 @@ $schema_types = array(
     'text' => 'text',
     'number' => 'int',
     'radio' => 'multivalued',
-    'checkbox' => '',
+    'checkbox' => 'checkbox',
     'select' => 'multivalued',
 );
 
@@ -26,19 +26,21 @@ if ( isset($_POST['event_schema']) ) {
             'columns' => array_map( function($value) use( &$schema_types ) {
                     $col_name = not_empty(clean_name($value['name']));
                     $col_type = not_empty(clean_name($value['type']));
-                    $col_desc = $value['desc'];
-                    if ( !is_string($col_desc) ) {
+                    $col_desc = reg_chars($value['desc']);
+                    $col_options = array_map( 'clean_name', $value['items'] );
+
+                    if ( !is_string( $col_desc ) ) {
                         $col_desc = '';
                     }
-                    $col_desc = htmlspecialchars($col_desc);
-
-                    // TODO: Handle checkbox
+                    $col_desc = htmlspecialchars( $col_desc );
                     $col_type = $schema_types[$col_type];
 
                     return array(
                         'name' => $col_name,
                         'type' => $col_type,
                         'description' => $col_desc,
+                        'required' => true,
+                        'options' => $col_options,
                         'constraints' => ''
                     );
                 }, $field_info['fields'] )
@@ -64,14 +66,14 @@ if ( isset($_POST['event_schema']) ) {
         ));
 
         // if ($schema === $schema1) {
-        //     throw new Exception( 'Cannot insert empty event' );
+        //     throw new BadInputException( 'Cannot insert empty event' );
         // }
 
         $event->commit();
     }
     catch (Exception $e) {
         if ( get_class( $e ) !== BadInputException ) {
-            error_log($e);
+            error_log( $e );
         }
 
         $error = $e->getMessage();

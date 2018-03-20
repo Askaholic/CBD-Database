@@ -63,6 +63,7 @@ if ( isset($_POST['event_schema']) ) {
         ));
 
         $event->commit();
+        $info = 'Event Submitted';
     }
     catch (Exception $e) {
         if ( get_class( $e ) !== BadInputException ) {

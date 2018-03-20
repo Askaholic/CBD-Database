@@ -27,6 +27,8 @@
     <h1>Create a new event</h1>
     <hr/>
 
+    <default-form output="$parent.newField"></default-form>
+
     <editable tag="h3" form-value="form.name"></editable>
     <div ng-repeat="f in form.fields">
         <div class="border-light">

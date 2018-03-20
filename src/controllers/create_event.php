@@ -68,6 +68,7 @@ if ( isset($_POST['event_schema']) ) {
         // }
 
         $event->commit();
+        $info = 'Event Submitted';
     }
     catch (PDOException $e) {
         error_log($e);

@@ -61,7 +61,7 @@ app.component('editable', {
         }
     },
     template: function ($element, $attrs) {
-        if ($attrs.tag == undefined) { $attrs.tag = "label" }
+        if ($attrs.tag === undefined) { $attrs.tag = "label" }
 
         return `
             <div>
@@ -109,14 +109,18 @@ app.component('formChange', {
     <editable tag="i" form-value="$ctrl.output.desc" nullable="true"></editable>
     <div ng-if="$ctrl.type === 'checkbox' || $ctrl.type === 'radio'">
         <div ng-repeat="i in $ctrl.output.items track by $index">
-            <input type="{{ $ctrl.type }}"/>
+            <input type="{{ $ctrl.type }}" name="{{ $ctrl.output.name }}"/>
             <editable form-value="$ctrl.output.items[$index]"></editable>
         </div>
         <button class="button secondary" type="button" ng-click="$ctrl.createBox()">+</button>
         <button class="button secondary" type="button" ng-click="$ctrl.discardBox()">-</button>
     </div>
-    <div  ng-if="!($ctrl.type === 'checkbox' || $ctrl.type === 'radio')">
-        <input type="{{ $ctrl.type }}"/>    </div>
+    <div ng-if="$ctrl.type === 'textarea'">
+        <textarea></textarea>
+    </div>
+    <div ng-if="!($ctrl.type === 'checkbox' || $ctrl.type === 'radio' || $ctrl.type === 'textarea')">
+        <input type="{{ $ctrl.type }}"/>
+    </div>
     `
 });
 

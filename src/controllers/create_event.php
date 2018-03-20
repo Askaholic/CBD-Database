@@ -4,6 +4,7 @@ require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
 $schema_types = array(
     'text' => 'text',
+    'textarea' => 'text',
     'number' => 'int',
     'radio' => 'multivalued',
     'checkbox' => 'checkbox',

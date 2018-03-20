@@ -29,6 +29,7 @@ if ( isset($_POST['event_schema']) ) {
                     $col_type = not_empty(clean_name($value['type']));
                     $col_desc = reg_chars($value['desc']);
                     $col_options = array_map( 'clean_name', $value['items'] );
+                    $col_required = not_empty(valid_bool($value['required']));
 
                     if ( !is_string( $col_desc ) ) {
                         $col_desc = '';
@@ -40,7 +41,7 @@ if ( isset($_POST['event_schema']) ) {
                         'name' => $col_name,
                         'type' => $col_type,
                         'description' => $col_desc,
-                        'required' => true,
+                        'required' => $col_required,
                         'options' => $col_options,
                         'constraints' => ''
                     );

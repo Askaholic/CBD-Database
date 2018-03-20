@@ -89,6 +89,7 @@ app.component('formChange', {
             this.output = {
                 "name": "Name",
                 "desc": "Description",
+                "required": true,
                 "items": []
             }
         }

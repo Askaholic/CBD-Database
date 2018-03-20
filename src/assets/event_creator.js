@@ -76,18 +76,16 @@ app.component('editable', {
     }
 });
 
-app.component('formList', {
+app.component('defaultForm', {
     bindings: {
         output: '=',
 
     },
     controller: function() {
         this.$onInit = () => {
-            this.textString = "Label";
 
             this.output = {
-                "name": "Name",
-                "desc": "Description",
+                "desc": "Members: ",
                 "items": []
             }
             this.eachElement = {
@@ -95,6 +93,7 @@ app.component('formList', {
                 "lastName": "Last Name",
                 "age": 0
             }
+            this.output.items.push(this.eachElement);
         }
 
         this.createBox = () => {
@@ -109,12 +108,12 @@ app.component('formList', {
     },
     template:
    `
-    <editable form-value="$ctrl.output.name"></editable>
-    <editable tag="i" form-value="$ctrl.output.desc"></editable>
+    <editable form-value="$ctrl.output.desc"></editable>
 
     <div ng-repeat="i in $ctrl.output.items track by $index">
-        <input type="{{ $ctrl.type }}"/>
-        <editable form-value="$ctrl.output.items[$index]"></editable>
+        <editable form-value="$ctrl.output.items[$index].lastName"></editable>
+        <editable form-value="$ctrl.output.items[$index].firstName"></editable>
+        <input type="number" name="input" ng-model="$ctrl.output.items[$index].age" min="0" max="200">
     </div>
     <button class="button secondary" type="button" ng-click="$ctrl.createBox()">+</button>
     <button class="button secondary" type="button" ng-click="$ctrl.discardBox()">-</button>

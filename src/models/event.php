@@ -52,13 +52,22 @@ function json_schema_to_column_string( $schema ) {
 function json_column_to_string( $column ) {
     $name = $column->name;
     $constraints = $column->constraints;
+    $required = $column->required ? ' not null ' : '';
 
     $type = $column->type;
     if ( $type === 'multivalued' ) {
         $type = 'varchar(255)';
     }
+    else if ( $type === 'checkbox' ) {
+        $cols = array();
+        foreach ( $column->options as $i => $value ) {
+            array_push( $cols, "$value BOOLEAN $required $constraints" );
+        }
+        
+        return implode( ',', $cols );
+    }
 
-    return "$name $type $constraints";
+    return "$name $type $required $constraints";
 }
 
 ?>

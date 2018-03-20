@@ -61,7 +61,7 @@ app.component('editable', {
         }
     },
     template: function ($element, $attrs) {
-        if ($attrs.tag == undefined) { $attrs.tag = "label" }
+        if ($attrs.tag === undefined) { $attrs.tag = "label" }
 
         return `
             <div>
@@ -76,19 +76,65 @@ app.component('editable', {
     }
 });
 
-app.component('formChange', {
+app.component('defaultForm', {
     bindings: {
-        type: '=',
         output: '=',
 
     },
     controller: function() {
         this.$onInit = () => {
-            if(this.textString === undefined) { this.textString = "Label" }
+
+            this.output = {
+                "desc": "Members: ",
+                "items": []
+            }
+            this.eachElement = {
+                "firstName": "First Name",
+                "lastName": "Last Name",
+                "age": 0
+            }
+            this.output.items.push(this.eachElement);
+        }
+
+        this.createBox = () => {
+            this.output.items.push(this.eachElement);
+        }
+        this.discardBox = () => {
+            if(this.numItems !== 0) {
+                this.output.items.pop();
+            }
+        }
+
+    },
+    template:
+   `
+    <editable form-value="$ctrl.output.desc"></editable>
+
+    <div ng-repeat="i in $ctrl.output.items track by $index">
+        <editable form-value="$ctrl.output.items[$index].lastName"></editable>
+        <editable form-value="$ctrl.output.items[$index].firstName"></editable>
+        <input type="number" name="input" ng-model="$ctrl.output.items[$index].age" min="0" max="200">
+    </div>
+    <button class="button secondary" type="button" ng-click="$ctrl.createBox()">+</button>
+    <button class="button secondary" type="button" ng-click="$ctrl.discardBox()">-</button>
+
+    `
+});
+
+app.component('formChange', {
+    bindings: {
+        type: '<',
+        output: '=',
+
+    },
+    controller: function() {
+        this.$onInit = () => {
+            this.textString = "Label";
 
             this.output = {
                 "name": "Name",
                 "desc": "Description",
+                "required": true,
                 "items": []
             }
         }
@@ -109,14 +155,18 @@ app.component('formChange', {
     <editable tag="i" form-value="$ctrl.output.desc" nullable="true"></editable>
     <div ng-if="$ctrl.type === 'checkbox' || $ctrl.type === 'radio'">
         <div ng-repeat="i in $ctrl.output.items track by $index">
-            <input type="{{ $ctrl.type }}"/>
+            <input type="{{ $ctrl.type }}" name="{{ $ctrl.output.name }}"/>
             <editable form-value="$ctrl.output.items[$index]"></editable>
         </div>
         <button class="button secondary" type="button" ng-click="$ctrl.createBox()">+</button>
         <button class="button secondary" type="button" ng-click="$ctrl.discardBox()">-</button>
     </div>
-    <div  ng-if="!($ctrl.type === 'checkbox' || $ctrl.type === 'radio')">
-        <input type="{{ $ctrl.type }}"/>    </div>
+    <div ng-if="$ctrl.type === 'textarea'">
+        <textarea></textarea>
+    </div>
+    <div ng-if="!($ctrl.type === 'checkbox' || $ctrl.type === 'radio' || $ctrl.type === 'textarea')">
+        <input type="{{ $ctrl.type }}"/>
+    </div>
     `
 });
 

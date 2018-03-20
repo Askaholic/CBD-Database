@@ -55,18 +55,7 @@ class User extends Model {
         );
         $retval = array();
         foreach ($result as $row) {
-            $column_values = array();
-            foreach (static::$columns as $name => $type) {
-                if (is_int($name)) { continue; }
-                $column_values[$name] = $row[$name];
-            }
-            foreach (Membership::$columns as $name => $type) {
-                if (is_int($name) || $name == 'user_id') { continue; }
-                $column_values[$name] = $row[$name];
-            }
-            $obj = new static(
-                $column_values
-            );
+            $obj = create_instance_from_row_with_membership( $row );
             array_push($retval, $obj);
         }
         return $retval;
@@ -97,21 +86,26 @@ class User extends Model {
         );
         $retval = array();
         foreach ($result as $row) {
-            $column_values = array();
-            foreach (static::$columns as $name => $type) {
-                if (is_int($name)) { continue; }
-                $column_values[$name] = $row[$name];
-            }
-            foreach (Membership::$columns as $name => $type) {
-                if (is_int($name) || $name == 'user_id') { continue; }
-                $column_values[$name] = $row[$name];
-            }
-            $obj = new static(
-                $column_values
-            );
-            array_push($retval, $obj);
+            $obj = create_instance_from_row_with_membership( $row );
+            array_push( $retval, $obj );
         }
         return $retval;
+    }
+
+    protected static function create_instance_from_row_with_membership( $row ) {
+        $column_values = array();
+        foreach ( static::$columns as $name => $type ) {
+            if ( is_int( $name ) ) { continue; }
+            $column_values[$name] = $row[$name];
+        }
+        foreach ( Membership::$columns as $name => $type ) {
+            if ( is_int( $name ) || $name == 'user_id' ) { continue; }
+            $column_values[$name] = $row[$name];
+        }
+        $obj = new static(
+            $column_values
+        );
+        return $obj;
     }
 }
 

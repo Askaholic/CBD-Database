@@ -4,9 +4,10 @@ require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
 $schema_types = array(
     'text' => 'text',
+    'textarea' => 'text',
     'number' => 'int',
     'radio' => 'multivalued',
-    'checkbox' => '',
+    'checkbox' => 'checkbox',
     'select' => 'multivalued',
 );
 
@@ -26,35 +27,33 @@ if ( isset($_POST['event_schema']) ) {
             'columns' => array_map( function($value) use( &$schema_types ) {
                     $col_name = not_empty(clean_name($value['name']));
                     $col_type = not_empty(clean_name($value['type']));
-                    $col_desc = $value['desc'];
-                    if ( !is_string($col_desc) ) {
+                    $col_desc = reg_chars($value['desc']);
+                    $col_options = array_map( 'clean_name', $value['items'] );
+                    $col_required = not_empty(valid_bool($value['required']));
+
+                    if ( !is_string( $col_desc ) ) {
                         $col_desc = '';
                     }
-                    $col_desc = htmlspecialchars($col_desc);
-
-                    // TODO: Handle checkbox
+                    $col_desc = htmlspecialchars( $col_desc );
                     $col_type = $schema_types[$col_type];
 
                     return array(
                         'name' => $col_name,
                         'type' => $col_type,
                         'description' => $col_desc,
+                        'required' => $col_required,
+                        'options' => $col_options,
                         'constraints' => ''
                     );
                 }, $field_info['fields'] )
         );
 
-        // TODO: Make this an empty schema. This is still just copy and pasted
-        // from above, so of course it's always going to be equal...
-        $schema1 = array(
-            'columns' => array_map( function($value) {
-                    $col_name = not_empty(clean_name($value['name']));
-                    $col_type = not_empty(clean_name($value['type']));
-
-                    return "$col_name $col_type";
-                }, $field_info['fields'] )
+        $empty_schema = array(
+            'columns' => array()
         );
-
+        if ( $schema === $empty_schema ) {
+            throw new BadInputException( 'Cannot insert empty event' );
+        }
 
         $event = new Event(array(
             'name' => $event_name,
@@ -63,18 +62,19 @@ if ( isset($_POST['event_schema']) ) {
             'schema_info' => json_encode($schema)
         ));
 
-        // if ($schema === $schema1) {
-        //     throw new Exception( 'Cannot insert empty event' );
-        // }
-
         $event->commit();
-    }
-    catch (PDOException $e) {
-        error_log($e);
-        $error = 'Database error';
+        $info = 'Event Submitted';
     }
     catch (Exception $e) {
+        if ( get_class( $e ) !== BadInputException ) {
+            error_log( $e );
+        }
+
         $error = $e->getMessage();
+
+        if ( get_class( $e ) === PDOException ) {
+            $error = "Database error";
+        }
     }
 }
 

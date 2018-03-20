@@ -47,6 +47,10 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
         $info = "$email account created, with expiry date $expiry";
     }
     catch (Exception $e) {
+        if ( get_class( $e ) !== BadInputException ) {
+            error_log($e);
+        }
+        
         $error = $e->getMessage();
 
         if ( get_class($e) === PDOException) {

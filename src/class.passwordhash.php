@@ -13,10 +13,12 @@ class Password
     }
 
     public static function verify($unhashed, $hashed) {
+        if ( $hashed === '' || !is_string( $hashed ) || !is_string( $unhashed )) {
+            return false;
+        }
+
         return password_verify( $unhashed, $hashed );
     }
 }
 
-
-
- ?>
+?>

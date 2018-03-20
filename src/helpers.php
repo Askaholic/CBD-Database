@@ -104,6 +104,14 @@ function valid_date($date) {
 }
 
 
+function valid_bool($bool) {
+    if (! is_bool($bool) ) {
+        throw new BadInputException("Invalid boolean");
+    }
+    return $bool;
+}
+
+
 function is_valid_id($id) {
     return preg_match('/^[0-9]*$/', $id) !== false;
 }

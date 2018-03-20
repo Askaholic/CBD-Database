@@ -38,13 +38,16 @@
             <editable form-value="f.name"></editable>
             <editable tag="i" form-value="f.desc"></editable>
             <br/>
-            <div ng-if="f.type == 'checkbox' || f.type == 'radio'">
+            <div ng-if="f.type === 'checkbox' || f.type === 'radio'">
                 <div ng-repeat="label in f.items track by $index">
                     <input type="{{ f.type }}" name="{{ f.short_name }}">
                     <editable form-value="label"></editable>
                 </div>
             </div>
-            <div ng-if="!(f.type == 'checkbox' || f.type == 'radio')">
+            <div ng-if="f.type === 'textarea'">
+                <textarea></textarea>
+            </div>
+            <div ng-if="!(f.type === 'checkbox' || f.type === 'radio' || f.type === 'textarea')">
                 <input type="{{ f.type }}" id="{{ f.short_name }}" name="{{ f.short_name }}">
             </div>
         </div>
@@ -61,6 +64,7 @@
         <!--  -->
         <select ng-model="$parent.newFieldType">
             <option value="text">Text Field</option>
+            <option value="textarea">Text Area</option>
             <option value="checkbox">Checkbox</option>
             <option value="radio">Radio Box</option>
             <option value="number">number</option>

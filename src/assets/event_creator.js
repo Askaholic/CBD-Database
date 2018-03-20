@@ -76,15 +76,60 @@ app.component('editable', {
     }
 });
 
-app.component('formChange', {
+app.component('defaultForm', {
     bindings: {
-        type: '=',
         output: '=',
 
     },
     controller: function() {
         this.$onInit = () => {
-            if(this.textString === undefined) { this.textString = "Label" }
+
+            this.output = {
+                "desc": "Members: ",
+                "items": []
+            }
+            this.eachElement = {
+                "firstName": "First Name",
+                "lastName": "Last Name",
+                "age": 0
+            }
+            this.output.items.push(this.eachElement);
+        }
+
+        this.createBox = () => {
+            this.output.items.push(this.eachElement);
+        }
+        this.discardBox = () => {
+            if(this.numItems !== 0) {
+                this.output.items.pop();
+            }
+        }
+
+    },
+    template:
+   `
+    <editable form-value="$ctrl.output.desc"></editable>
+
+    <div ng-repeat="i in $ctrl.output.items track by $index">
+        <editable form-value="$ctrl.output.items[$index].lastName"></editable>
+        <editable form-value="$ctrl.output.items[$index].firstName"></editable>
+        <input type="number" name="input" ng-model="$ctrl.output.items[$index].age" min="0" max="200">
+    </div>
+    <button class="button secondary" type="button" ng-click="$ctrl.createBox()">+</button>
+    <button class="button secondary" type="button" ng-click="$ctrl.discardBox()">-</button>
+
+    `
+});
+
+app.component('formChange', {
+    bindings: {
+        type: '<',
+        output: '=',
+
+    },
+    controller: function() {
+        this.$onInit = () => {
+            this.textString = "Label";
 
             this.output = {
                 "name": "Name",

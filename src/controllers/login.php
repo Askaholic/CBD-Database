@@ -27,11 +27,6 @@ if ( isset( $_POST['login_nonce'] ) ) {
     }
 
     $GLOBALS['session']->set( 'user', $usr[0] );
-    $user = $GLOBALS['session']->get( 'user' );
-    if(empty($user))
-		echo 'No session id found.';
-	else
-		echo 'Session id: ' . $GLOBALS['session']->get( 'user' );
 }
 
 DanceParty::render_view_with_template( 'login.php' );

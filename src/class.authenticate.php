@@ -16,8 +16,8 @@ class Authenticate {
 	}
 
 	public static function is_admin() {
-		$role_id = $GLOBALS['session']->get( 'role_id' );
-		if( empty( $role_id ) || $role_id !== Role::ROLE_IDS['ADMIN'])
+		$user = $GLOBALS['session']->get( 'user' );
+		if( empty( $user ) || $user->role_id !== Role::ROLE_IDS['ADMIN'])
 			return false;
 		return true;
 	}

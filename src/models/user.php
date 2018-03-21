@@ -21,17 +21,17 @@ class User extends Model {
         FOREIGN KEY (role_id) REFERENCES roles(id)
     ';
 
-    public static function query_id_from_email($email) {
+    public static function query_user_from_email($email) {
       $user_table = User::TABLE_NAME;
       $result = self::query(
-        "SELECT id FROM $user_table WHERE email = '$email';"
+        "SELECT * FROM $user_table WHERE email = '$email';"
       );
-      $ids = array();
+      $users = array();
       foreach($result as $row) {
-          $obj = new static ( $row );
-          array_push($ids, $obj);
+          $obj = User::create_instance_from_row( $row );
+          array_push($users, $obj);
       }
-      return $ids;
+      return $users;
     }
 
     public static function query_all_with_membership() {

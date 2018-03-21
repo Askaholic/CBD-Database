@@ -17,7 +17,6 @@ $viewParams = array(
     'info'  => $info,
     'first' => '',
     'last'  => '',
-    'email' => '',
     'pass'  => '',
     'pass2' => ''
 );

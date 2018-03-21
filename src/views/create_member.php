@@ -3,10 +3,10 @@
 <form method="post" action="">
 <?php
     wp_nonce_field('submit', 'create_member_nonce');
-    FormBuilder::input('text', 'first', 'First Name', 'pattern="[A-Za-z]{2,128}" required title="First name, letters only"');
-    FormBuilder::input('text', 'last', 'Last Name', 'pattern="[A-Za-z]{2,128}" required title="Last Name, letters only"');
+    FormBuilder::input('text', 'first', 'First Name', 'pattern="[A-Za-z]{2,128}" required title="First name, letters only" value="' . $first . '"');
+    FormBuilder::input('text', 'last', 'Last Name', 'pattern="[A-Za-z]{2,128}" required title="Last Name, letters only" value="' . $last . '"');
     FormBuilder::input('email', 'email', 'Email Address', 'required title="Enter valid email address"');
-    FormBuilder::input('date', 'expiry', 'Expires', 'required');
+    FormBuilder::input('date', 'expiry', 'Expires', 'required value="' . $expiry . '"');
 ?>
     <input type="submit" value="Create Member">
 </form>

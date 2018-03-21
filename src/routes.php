@@ -14,6 +14,7 @@ Router::route_post( 'Create Member', 'create_member', 'create_member.php' );
 Router::route_post( 'Show Members', 'show_members', 'show_members.php' );
 Router::route_post( 'Show Expired Members', 'show_expired_members', 'show_expired_users.php' );
 Router::route_post( 'Create Event', 'create_event', 'create_event.php' );
+Router::route_post( 'Review Events', 'review_events', 'review_events.php' );
 Router::route_post( 'Login', 'login', 'login.php' );
 
 ?>

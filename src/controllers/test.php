@@ -27,11 +27,11 @@ echo "<iframe src='$menu' width='100%' height='50%'></iframe>";
 <?php
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 
-	$GLOBALS['session']->set( 'id', '1234' );
+  $user = $GLOBALS['session']->get( 'user' );
+  print_r($user);
 
 //echo Authenticate()->logged_in();
-	$id = $GLOBALS['session']->get( 'id' );
-	if(empty($id))
+	if(empty($user))
 		echo 'No session id found.';
 	else
 		echo 'Session id: ' . $GLOBALS['session']->get( 'id' );

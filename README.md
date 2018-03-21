@@ -17,6 +17,8 @@ Team:
 #### Style Guidelines
 - Use soft tabs set at **4 spaces**.
 - Use single quotes for strings unless intentionally injecting variables
+- Use the same name for associated controller and view names. (For example if the
+  controller is called `foo.php`, then the view must also be called `foo.php`)
 
 ### Pulling latest changes
 A lot of times you will want to pull the latest changest from the main repo. The easiest way to do

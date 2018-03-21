@@ -26,7 +26,8 @@ if ( isset( $_POST['login_nonce'] ) ) {
         die( 'Invalid Password!' );
     }
 
-    $GLOBALS['session']->set( 'user', $usr[0] );
+    $_SESSION['user'] = $usr[0]->role_id;
+    //$GLOBALS['session']->set( 'user', $usr[0] );
 }
 
 DanceParty::render_view_with_template( 'login.php' );

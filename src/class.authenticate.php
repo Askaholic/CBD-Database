@@ -6,9 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 require_once( DP_PLUGIN_DIR . 'models/roles.php' );
 
-class Authenticate {
-
-	public static function logged_in() {
+class Authenticate
+{
+	public static function is_logged_in() {
 		$id = $GLOBALS['session']->get( 'id' );
 		if( empty( $id ) )
 			return false;

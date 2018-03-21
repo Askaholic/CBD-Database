@@ -25,7 +25,7 @@ require_once( DP_PLUGIN_DIR . 'helpers.php' );
 /*
  * Keep this part if you need the user to be logged in
  */
-if ( ! Authenticate::logged_in() ) {
+if ( ! Authenticate::is_logged_in() ) {
     // TODO: Redirect to login page
 }
 

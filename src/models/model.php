@@ -213,7 +213,7 @@ abstract class Model extends PDORepository {
         );
         $retval = array();
         foreach ($result as $row) {
-            $obj = create_instance_from_row($row);
+            $obj = self::create_instance_from_row($row);
             array_push($retval, $obj);
         }
         return $retval;

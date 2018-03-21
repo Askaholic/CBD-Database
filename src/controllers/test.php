@@ -30,8 +30,9 @@ require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
   $user = $GLOBALS['session']->get( 'user' );
   print_r($user);
 
-//echo Authenticate()->logged_in();
-	if(empty($user))
+//echo Authenticate()->is_logged_in();
+	$id = $GLOBALS['session']->get( 'id' );
+	if(empty($id))
 		echo 'No session id found.';
 	else
 		echo 'Session id: ' . $GLOBALS['session']->get( 'id' );

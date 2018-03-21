@@ -25,7 +25,7 @@ require_once( DP_PLUGIN_DIR . 'helpers.php' );
 /*
  * Keep this part if you need the user to be logged in
  */
-if ( ! Authenticate::logged_in() ) {
+if ( ! Authenticate::is_logged_in() ) {
     // TODO: Redirect to login page
 }
 
@@ -46,7 +46,6 @@ if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'sub
     die( 'Bad token' );
 }
 
-$title = 'Change This';
 $error;
 $info;
 
@@ -84,7 +83,6 @@ if ( isset( $_POST[$nonce_name] ) ) {
 
 DanceParty::render_view_with_template( 'view.php',
     array(
-        'title' => $title,
         'error' => $error,
         'info' => $info
     )

@@ -13,6 +13,14 @@ if ( isset( $_POST['create_member_nonce'] ) &&
 
 $error;
 $info;
+$viewParams = array(
+    'title' => 'New Member',
+    'error' => $error,
+    'info'  => $info,
+    'first' => '',
+    'last'  => '',
+    'expiry'=> '',
+);
 
 if ( isset( $_POST['create_member_nonce'] ) ) {
     try {
@@ -27,7 +35,7 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
             throw new Exception( "$email already has associated account" );
             // TODO: consider refilling input values minus email
         }
-        
+
         $user = new User( array(
             'first_name' => $first,
             'last_name' => $last,
@@ -50,21 +58,32 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
         if ( get_class( $e ) !== BadInputException ) {
             error_log($e);
         }
-        
+
         $error = $e->getMessage();
 
         if ( get_class($e) === PDOException) {
             $error = "Database error";
         }
+        #set all params except email
+        #duplicate email should be the only reason for Exception
+        $viewParams['error'] = $error;
+        $viewParams['info'] = $info;
+        $viewParams['first'] = $first;
+        $viewParams['last'] = $last;
+        $viewParams['expiry'] = $expiry;
     }
+    #always set error and info
+    $viewParams['error'] = $error;
+    $viewParams['info'] = $info;
 }
 
 DanceParty::render_view_with_template( 'create_member.php',
-    array(
-        'title' => 'New Member',
-        'error' => $error,
-        'info' => $info
-    )
+    // array(
+    //     'title' => 'New Member',
+    //     'error' => $error,
+    //     'info' => $info
+    // )
+    $viewParams
 );
 
 ?>

@@ -27,17 +27,17 @@ echo "<iframe src='$menu' width='100%' height='50%'></iframe>";
 <?php
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 
-  $user = $GLOBALS['session']->get( 'user' );
-  print_r($user);
+  print_r(Authenticate::is_logged_in());
 
-//echo Authenticate()->is_logged_in();
-	$id = $GLOBALS['session']->get( 'id' );
-	if(empty($id))
-		echo 'No session id found.';
-	else
-		echo 'Session id: ' . $GLOBALS['session']->get( 'id' );
+  //Authenticate::is_logged_in();
+  //$id = $GLOBALS['session']->get( 'user' );
+  //if(empty($id))
+	//	echo 'No session id found.';
+	//else
+	//	echo 'Session id: ' . $GLOBALS['session']->get( 'user' );
 
 ?>
+
 <hr>
   <h3>Footer</h3>
   <?php wp_footer(); ?>

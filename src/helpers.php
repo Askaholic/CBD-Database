@@ -5,10 +5,10 @@
  */
 
 /**
- *
+ * Exception class for throwning exceptions that will not be logged to the error
+ * log.
  */
 class BadInputException extends Exception {}
-
 
 
 function recurse_htmlspecialchars($input) {

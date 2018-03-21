@@ -22,7 +22,12 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
         $expiry = not_empty($_POST['expiry']);
         $pass = ''; // empty pass for admin-created members
 
-
+        $ids = User::query_user_from_email( $email );
+        if ( count( $ids ) !== 0 ) {
+            throw new Exception( "$email already has associated account" );
+            // TODO: consider refilling input values minus email
+        }
+        
         $user = new User( array(
             'first_name' => $first,
             'last_name' => $last,

@@ -33,7 +33,6 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
         $ids = User::query_user_from_email( $email );
         if ( count( $ids ) !== 0 ) {
             throw new Exception( "$email already has associated account" );
-            // TODO: consider refilling input values minus email
         }
 
         $user = new User( array(

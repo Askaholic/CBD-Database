@@ -4,32 +4,56 @@ require_once( DP_PLUGIN_DIR . 'class.passwordhash.php' );
 require_once( DP_PLUGIN_DIR . 'models/user.php' );
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 
-if( isset( $_POST['login_nonce'] ) && !wp_verify_nonce( $_POST['login_nonce'], 'submit' ) ) {
+$nonce_name = 'login_nonce';
+if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'submit' ) ) {
     die( 'Bad token' );
 }
 
-if ( isset( $_POST['login_nonce'] ) ) {
-    $email = $_POST['email'];
+$error = '';
+$info = '';
+
+if ( isset( $_POST[$nonce_name] ) ) {
+    try {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        
+		if ( empty( $email ) || empty( $password ) ) {
+			throw new BadInputException( "Field empty" );
+		}
     
-    $usr = User::query_user_from_email($email);
-    if ( count( $usr ) === 0 ) {
-        throw new BadInputException( "$email does not have an associated account" );
-        // TODO
-    }
-    $password_hash = $usr[0]->password;
-    $password = $_POST['password'];
+		$usr = User::query_user_from_email($email);
+		if ( count( $usr ) === 0 ) {
+		    throw new BadInputException( "$email does not have an associated account" );
+		}
+		$password_hash = $usr[0]->password;
 
-    if ( empty( $email ) || empty( $password ) ) {
-        die( 'Field empty');
-    }
-    if ( !Password::verify($password, $password_hash) ) {
-        die( 'Invalid Password!' );
-    }
+		if ( !Password::verify($password, $password_hash) ) {
+			throw new BadInputException( "Invalid password" );
+		}
 
-    $_SESSION['user'] = $usr[0]->role_id;
-    //$GLOBALS['session']->set( 'user', $usr[0] );
+		$_SESSION['id'] = $usr[0]->id;
+		$_SESSION['role'] = $usr[0]->role_id;
+		
+        $info = "Login successful.";
+    }
+    catch ( Exception $e ) {
+        if ( get_class( $e ) !== BadInputException ) {
+            error_log($e);
+        }
+
+        $error = $e->getMessage();
+
+        if ( get_class( $e ) === PDOException ) {
+            $error = "Database error";
+        }
+    }
 }
 
-DanceParty::render_view_with_template( 'login.php' );
+DanceParty::render_view_with_template( 'login.php',
+    array(
+        'error' => $error,
+        'info' => $info
+    )
+);
 
 ?>

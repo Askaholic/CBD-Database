@@ -46,8 +46,8 @@ if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'sub
     die( 'Bad token' );
 }
 
-$error;
-$info;
+$error = '';
+$info = '';
 
 if ( isset( $_POST[$nonce_name] ) ) {
     try {

@@ -84,11 +84,11 @@ class DancePartyAdmin
         );
 	register_setting( $option_group, 'db_password', 'database_settings_validate');
 
-	//HOSTNAME
+	//DATABASE
 
 	add_settings_field(
             'db_name',
-            'Hostname',
+            'Database',
             array( 'DancePartyAdmin', 'db_name_field_html' ),
             $option_group,
             $db_section

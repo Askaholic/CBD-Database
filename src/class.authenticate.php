@@ -5,30 +5,38 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 require_once( DP_PLUGIN_DIR . 'models/roles.php' );
+require_once( DP_PLUGIN_DIR . 'models/user.php' );
 
 class Authenticate
 {
+	private static function start() {
+		if (session_status() == PHP_SESSION_NONE)
+    		session_start();
+    }
+
 	public static function is_logged_in() {
-		$id = $_SESSION['user'];
-		//$id = $GLOBALS['session']->get( 'id' );
-		if( empty( $id ) ) {
-			return false;
-		}
-		return true;
+		Authenticate::start();
+		if (isset($_SESSION['user']))
+			return true;
+		return false;
 	}
 
 	public static function is_admin() {
-		$id = $_SESSION['user'];
-		if( empty( $id ) || $id !== '3')
-			return false;
-		return true;
+		Authenticate::start();
+		if (isset($_SESSION['user'])) {
+			if (isset($_SESSION['role']) && $_SESSION['role'] == '3')
+				return true;
+		}
+		return false;
 	}
 
 
 	public static function is_door_host() {
-		$id = $_SESSION['user'];
-		if( empty( $id ) || $id !== '2' || $id !== '3')
-			return false;
-		return true;
+		Authenticate::start();
+		if (isset($_SESSION['user'])) {
+			if (isset($_SESSION['role']) && ($_SESSION['role'] == '2' || $_SESSION['role'] == '3'))
+				return true;
+		}
+		return false;
 	}
 }

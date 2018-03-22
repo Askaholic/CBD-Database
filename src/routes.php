@@ -16,5 +16,7 @@ Router::route_post( 'Show Expired Members', 'show_expired_members', 'show_expire
 Router::route_post( 'Create Event', 'create_event', 'create_event.php' );
 Router::route_post( 'Review Events', 'review_events', 'review_events.php' );
 Router::route_post( 'Login', 'login', 'login.php' );
+Router::route_post( 'Forgot Password', 'forgot_password', 'forgot_password.php' );
+Router::route_post( 'Reset Password', 'reset_password', 'reset_password.php' );
 
 ?>

@@ -55,7 +55,7 @@ class User extends Model {
         );
         $retval = array();
         foreach ($result as $row) {
-            $obj = create_instance_from_row_with_membership( $row );
+            $obj = self::create_instance_from_row_with_membership( $row );
             array_push($retval, $obj);
         }
         return $retval;
@@ -86,7 +86,7 @@ class User extends Model {
         );
         $retval = array();
         foreach ($result as $row) {
-            $obj = create_instance_from_row_with_membership( $row );
+            $obj = self::create_instance_from_row_with_membership( $row );
             array_push( $retval, $obj );
         }
         return $retval;

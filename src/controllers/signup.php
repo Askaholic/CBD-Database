@@ -13,8 +13,6 @@ if ( isset( $_POST['signup_nonce'] ) && !wp_verify_nonce( $_POST['signup_nonce']
 $error = '';
 $info = '';
 $viewParams = array(
-    'error' => $error,
-    'info'  => $info,
     'first' => '',
     'last'  => '',
     'pass'  => '',
@@ -61,26 +59,16 @@ if ( isset( $_POST['signup_nonce'] ) ) {
         if ( get_class( $e ) === PDOException ) {
             $error = "Database error";
         }
-        #set all params except email
-        #duplicate email should be the only reason for Exception
-        $viewParams['error'] = $error;
-        $viewParams['info'] = $info;
+
         $viewParams['first'] = $first;
         $viewParams['last'] = $last;
-        // User should type in password again, this is alo a common approach on other websites
-        //$viewParams['pass'] = $pass;
-        //$viewParams['pass2'] = $pass2;
     }
-    #always set error and info
+
     $viewParams['error'] = $error;
     $viewParams['info'] = $info;
 }
 
-DanceParty::render_view_with_template( 'signup_view.php',
-    // array(
-    //     'error' => $error,
-    //     'info' => $info
-    // ) );
+DanceParty::render_view_with_template( 'signup.php',
     $viewParams );
 
 ?>

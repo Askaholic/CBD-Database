@@ -1,16 +1,12 @@
 <?php
-
 /* show_members.php
  * Rohan Weeden
  * Created: March 12 , 2018
  */
-
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'models/user.php' );
-
-
 if ( ! Authenticate::is_logged_in() ) {
-    // TODO: Redirect to login page
+    redirect('http://localhost/login');
 }
 
 if ( ! Authenticate::is_door_host() ) {

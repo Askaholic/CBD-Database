@@ -1,24 +1,18 @@
 <?php
-
 /* review_events.php
  * Rohan Weeden
  * Created: March 20 , 2018
  *
  * Page for allowing an admin to accept or decline an event.
  */
-
-
 /*
  * Require dependencies here
  */
-
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'helpers.php' );
 require_once( DP_PLUGIN_DIR . 'models/event.php' );
-
-
 if ( ! Authenticate::is_logged_in() ) {
-    // TODO: Redirect to login page
+    redirect('http://localhost/login');
 }
 
 if ( ! Authenticate::is_admin() ) {

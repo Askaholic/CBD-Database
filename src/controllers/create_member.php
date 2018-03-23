@@ -1,9 +1,18 @@
 <?php
 
+require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once(DP_PLUGIN_DIR . 'models/user.php');
 require_once(DP_PLUGIN_DIR . 'models/roles.php');
 require_once(DP_PLUGIN_DIR . 'helpers.php');
 
+
+if ( ! Authenticate::is_logged_in() ) {
+    // TODO: Redirect to login page
+}
+
+if ( ! Authenticate::is_admin() ) {
+    die( 'Unauthorized' );
+}
 
 if ( isset( $_POST['create_member_nonce'] ) &&
     !wp_verify_nonce( $_POST['create_member_nonce'], 'submit' ) ) {
@@ -14,9 +23,6 @@ if ( isset( $_POST['create_member_nonce'] ) &&
 $error;
 $info;
 $viewParams = array(
-    'title' => 'New Member',
-    'error' => $error,
-    'info'  => $info,
     'first' => '',
     'last'  => '',
     'expiry'=> '',
@@ -27,11 +33,11 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
         $first = valid_name(not_empty($_POST['first']));
         $last = valid_name(not_empty($_POST['last']));
         $email = valid_email(not_empty($_POST['email']));
-        $expiry = not_empty($_POST['expiry']);
+        $expiry = valid_date(not_empty($_POST['expiry']));
         $pass = ''; // empty pass for admin-created members
 
-        $ids = User::query_user_from_email( $email );
-        if ( count( $ids ) !== 0 ) {
+        $users = User::query_users_from_email( $email );
+        if ( count( $users ) !== 0 ) {
             throw new Exception( "$email already has associated account" );
         }
 
@@ -63,25 +69,17 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
         if ( get_class($e) === PDOException) {
             $error = "Database error";
         }
-        #set all params except email
-        #duplicate email should be the only reason for Exception
-        $viewParams['error'] = $error;
-        $viewParams['info'] = $info;
+
         $viewParams['first'] = $first;
         $viewParams['last'] = $last;
         $viewParams['expiry'] = $expiry;
     }
-    #always set error and info
-    $viewParams['error'] = $error;
-    $viewParams['info'] = $info;
 }
 
+$viewParams['error'] = $error;
+$viewParams['info'] = $info;
+
 DanceParty::render_view_with_template( 'create_member.php',
-    // array(
-    //     'title' => 'New Member',
-    //     'error' => $error,
-    //     'info' => $info
-    // )
     $viewParams
 );
 

@@ -5,12 +5,15 @@
  *
  * Page for allowing an admin to accept or decline an event.
  */
+
 /*
  * Require dependencies here
  */
+
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'helpers.php' );
 require_once( DP_PLUGIN_DIR . 'models/event.php' );
+
 if ( ! Authenticate::is_logged_in() ) {
     redirect('login');
 }
@@ -18,10 +21,6 @@ if ( ! Authenticate::is_logged_in() ) {
 if ( ! Authenticate::is_admin() ) {
     // die( 'Unauthorized' );
 }
-
-/*
- * Keep this part if you need to handle form data
- */
 
 $nonce_name = 'event_review_nonce';
 if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'submit' ) ) {

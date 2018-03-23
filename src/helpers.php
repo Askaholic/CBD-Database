@@ -128,9 +128,13 @@ function valid_id($id) {
     return $id;
 }
 
-function redirect($title/*, $statusCode = 303*/) {
-    $url = get_permalink( get_page_by_title($title) );
-    die('<script type="text/javascript">window.location=\''.$url.'\';</script>');
+function redirect($title = '/') {
+    if ($title === '/') {
+        wp_redirect('/');
+    }
+    else {
+        wp_redirect( get_permalink( get_page_by_title($title) ) );
+    }
 }
 
 ?>

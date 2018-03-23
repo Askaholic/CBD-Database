@@ -12,7 +12,7 @@ require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'helpers.php' );
 require_once( DP_PLUGIN_DIR . 'models/event.php' );
 if ( ! Authenticate::is_logged_in() ) {
-    redirect('http://localhost/login');
+    redirect('login');
 }
 
 if ( ! Authenticate::is_admin() ) {

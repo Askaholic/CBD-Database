@@ -1,7 +1,12 @@
 <?php
+
 require_once( DP_PLUGIN_DIR . 'class.passwordhash.php' );
 require_once( DP_PLUGIN_DIR . 'models/user.php' );
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
+
+if ( ! Authenticate::is_logged_in() ) {
+    redirect();
+}
 
 $nonce_name = 'login_nonce';
 if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'submit' ) ) {
@@ -33,8 +38,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
 		$_SESSION['id'] = $usr[0]->id;
 		$_SESSION['role'] = $usr[0]->role_id;
         
-        $info = "Login successful.";
-        redirect("test");
+        redirect();
     }
     catch ( Exception $e ) {
         if ( get_class( $e ) !== BadInputException ) {

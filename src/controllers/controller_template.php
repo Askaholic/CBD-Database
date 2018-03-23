@@ -20,7 +20,8 @@ require_once( DP_PLUGIN_DIR . 'helpers.php' );
  * Keep this part if you need the user to be logged in
  */
 if ( ! Authenticate::is_logged_in() ) {
-    redirect('login');
+    // no parameter, links to homepage
+    redirect('change_this');
 }
 
 /*

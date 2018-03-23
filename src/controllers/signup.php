@@ -15,8 +15,6 @@ $info = '';
 $viewParams = array(
     'first' => '',
     'last'  => '',
-    'pass'  => '',
-    'pass2' => ''
 );
 if ( isset( $_POST['signup_nonce'] ) ) {
     try {

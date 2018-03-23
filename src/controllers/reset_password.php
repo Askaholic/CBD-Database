@@ -16,13 +16,24 @@ if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'sub
 	die( 'Bad token' );
 }
 
+if (!isset($_GET['q'])){
+	die( 'Bad access path.' );
+}
+else{
+	//TODO: check for token match in database before allowing change
+	$token = $_GET['q'];
+	if($token == 123) // DUMMY VALUE
+    {
+    	die("Good token.");
+    }
+    	else die("Incorrect link or password already changed.");
+}
+
 $error = '';
 $info = '';
 
 if ( isset( $_POST[$nonce_name] ) ) {
     try {
-    	$token = isset($_GET['q']) ? $_GET['q'] : null;
-    	//TODO: check for token match in database before allowing change
     	$email = null; // TODO: get email from database, stored with token
     
 		$newpass =  valid_password( not_empty( $_POST['new_password'] ) );
@@ -34,12 +45,13 @@ if ( isset( $_POST[$nonce_name] ) ) {
 
 		$hash = Password::hash( $newpass );
 		
-    	$user = User::query_users_from_email( $email );
-        if ( empty( $user )) {
+
+        $user = User::query_users_from_email( $email );
+        if ( count( $user ) == 0 ) {
             throw new BadInputException( "Email address not registered to an account." );
         }
-		$user->password = $newpass;
-		$user->commit();
+		$user[0]->password = $newpass;
+		$user[0]->commit();
 
         $info = "Change succesful. Please login with your new password.";
     }

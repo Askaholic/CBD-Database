@@ -1,5 +1,4 @@
 <?php
-
 /* controller_template.php
  * Rohan Weeden
  * Created: March 7 , 2018
@@ -25,14 +24,16 @@ require_once( DP_PLUGIN_DIR . 'helpers.php' );
 /*
  * Keep this part if you need the user to be logged in
  */
+
 if ( ! Authenticate::is_logged_in() ) {
-    // TODO: Redirect to login page
+    redirect('change_this');
 }
 
 
 /*
  * Keep this part if you need the user to be an admin
  */
+
 if ( ! Authenticate::is_admin() ) {
     die( 'Unauthorized' );
 }

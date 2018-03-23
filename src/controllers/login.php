@@ -21,7 +21,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
 			throw new BadInputException( "Field empty" );
 		}
     
-		$usr = User::query_user_from_email($email);
+		$usr = User::query_users_from_email($email);
 		if ( count( $usr ) === 0 ) {
 		    throw new BadInputException( "$email does not have an associated account" );
 		}

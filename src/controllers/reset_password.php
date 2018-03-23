@@ -34,7 +34,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
 
 		$hash = Password::hash( $newpass );
 		
-    	$user = User::query_user_from_email( $email );
+    	$user = User::query_users_from_email( $email );
         if ( empty( $user )) {
             throw new BadInputException( "Email address not registered to an account." );
         }

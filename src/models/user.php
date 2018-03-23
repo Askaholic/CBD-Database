@@ -21,7 +21,7 @@ class User extends Model {
         FOREIGN KEY (role_id) REFERENCES roles(id)
     ';
 
-    public static function query_user_from_email($email) {
+    public static function query_users_from_email($email) {
       $user_table = User::TABLE_NAME;
       $result = self::query(
         "SELECT * FROM $user_table WHERE email = '$email';"

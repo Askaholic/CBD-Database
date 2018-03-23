@@ -59,7 +59,7 @@ if ( isset( $_POST['renew_member_nonce'] ) ) {
 
 $members = User::query_all_without_membership();
 
-DanceParty::render_view_with_template( 'show_expired_users.php',
+DanceParty::render_view_with_template( 'show_expired_members.php',
     array(
         'members' => $members,
         'error' => $error,

@@ -22,6 +22,7 @@ if ( ! Authenticate::is_admin() ) {
     // die( 'Unauthorized' );
 }
 
+
 $nonce_name = 'event_review_nonce';
 if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'submit' ) ) {
     die( 'Bad token' );

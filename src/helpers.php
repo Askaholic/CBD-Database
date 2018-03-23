@@ -128,7 +128,7 @@ function valid_id($id) {
     return $id;
 }
 
-function redirect($title = '/') {
+function redirect($title) {
     if ($title === '/') {
         wp_redirect('/');
     }

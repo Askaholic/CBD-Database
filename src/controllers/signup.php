@@ -40,8 +40,8 @@ if ( isset( $_POST['signup_nonce'] ) ) {
             'role_id' => Role::ROLE_IDS['MEMBER']
         );
 
-        $ids = User::query_user_from_email( $email );
-        if ( count( $ids ) !== 0 ) {
+        $users = User::query_users_from_email( $email );
+        if ( count( $users ) !== 0 ) {
             throw new BadInputException( "$email already has associated account" );
         }
 

@@ -51,7 +51,8 @@ function not_empty($str) {
 
 function is_valid_name($name) {
     // Alpha numeric characters, length between 2-255
-    return preg_match('/^[A-Za-z]{2,255}$/', $name) !== false;
+    $match = preg_match('/^[A-Za-z]{2,255}$/', $name);
+    return $match !== false && $match !== 0;
 }
 
 
@@ -77,8 +78,9 @@ function valid_email($email) {
 
 
 function is_valid_password($pass) {
-    //password criteria should be more complex, must be mirrored in check() js function
-    return preg_match('/^.{6,100}$/', $pass) !== false;
+    // Password criteria should be more complex, must be mirrored in check() js function
+    $match = preg_match('/^.{6,100}$/', $pass);
+    return $match !== false && $match !== 0;
 }
 
 
@@ -92,7 +94,8 @@ function valid_password($pass) {
 
 function is_valid_date($date) {
     // yyyy-mm-dd
-    return preg_match('/^[0-9]{4}-[0-9]-{2}[0-9]{2}$/', $date) !== false;
+    $match = preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date);
+    return $match !== false && $match !== 0;
 }
 
 
@@ -113,7 +116,8 @@ function valid_bool($bool) {
 
 
 function is_valid_id($id) {
-    return preg_match('/^[0-9]*$/', $id) !== false;
+    $match = preg_match('/^[0-9]*$/', $id);
+    return $match !== false && $match !== 0;
 }
 
 
@@ -123,8 +127,6 @@ function valid_id($id) {
     }
     return $id;
 }
-
-
 
 function redirect($title/*, $statusCode = 303*/) {
     $url = get_permalink( get_page_by_title($title) );

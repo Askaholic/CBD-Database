@@ -23,7 +23,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
     
     	/* Check to see if a user exists with this email */
     	$email = valid_email( not_empty( $_POST['email'] ) );
-    	$user = User::query_user_from_email( $email );
+    	$user = User::query_users_from_email( $email );
         if ( empty( $user )) {
             throw new BadInputException( "There is no user registered with that email address." );
         }

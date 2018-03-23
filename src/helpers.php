@@ -126,16 +126,9 @@ function valid_id($id) {
 
 
 
-function redirect($url, $statusCode = 303) {
-    // This if branch requires javascript to be enabled on users browser
-    if (headers_sent()) {
-        die('<script type="text/javascript">window.location=\''.$url.'\';</script>');
-    }
-    // if headers have not been sent yet, this will be executed.
-    else {
-        header('Location: ' . $url, true, $statusCode);
-        die();
-    }
+function redirect($title/*, $statusCode = 303*/) {
+    $url = get_permalink( get_page_by_title($title) );
+    die('<script type="text/javascript">window.location=\''.$url.'\';</script>');
 }
 
 ?>

@@ -17,8 +17,6 @@ $viewParams = array(
     'info'  => $info,
     'first' => '',
     'last'  => '',
-    'pass'  => '',
-    'pass2' => ''
 );
 if ( isset( $_POST['signup_nonce'] ) ) {
     try {
@@ -67,9 +65,6 @@ if ( isset( $_POST['signup_nonce'] ) ) {
         $viewParams['info'] = $info;
         $viewParams['first'] = $first;
         $viewParams['last'] = $last;
-        // User should type in password again, this is alo a common approach on other websites
-        //$viewParams['pass'] = $pass;
-        //$viewParams['pass2'] = $pass2;
     }
     #always set error and info
     $viewParams['error'] = $error;
@@ -77,10 +72,6 @@ if ( isset( $_POST['signup_nonce'] ) ) {
 }
 
 DanceParty::render_view_with_template( 'signup_view.php',
-    // array(
-    //     'error' => $error,
-    //     'info' => $info
-    // ) );
     $viewParams );
 
 ?>

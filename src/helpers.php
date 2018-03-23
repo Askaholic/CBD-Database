@@ -128,12 +128,16 @@ function valid_id($id) {
     return $id;
 }
 
+function url_for($title) {
+    get_permalink( get_page_by_title($title) );
+}
+
 function redirect($title) {
     if ($title === '/') {
         wp_redirect('/');
     }
     else {
-        wp_redirect( get_permalink( get_page_by_title($title) ) );
+        wp_redirect( url_for($title) );
     }
 }
 

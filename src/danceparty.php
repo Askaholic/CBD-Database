@@ -34,6 +34,19 @@ if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 //set theme
 require_once( DP_PLUGIN_DIR . 'class.theme.php' );
 
+//https://profilepress.net/register-login-logout-links-wordpress-menu/
+function add_login_logout_register_menu( $items, $args ) {
+	if( $args->theme_location != 'primary' ) {
+		return $items;
+	}
+
+	$items .= '<li><a href="' . wp_logout_url() . '">' . __( 'Log Out' ) . '</a></li>';
+
+	return $items;
+}
+
+add_filter( 'wp_nav_menu_items', 'add_login_logout_register_menu', 199, 2);
+
 //set session
 //require_once( DP_PLUGIN_DIR . 'class.danceparty_session.php' );
 function dp_session() {

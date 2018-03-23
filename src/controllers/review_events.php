@@ -25,9 +25,6 @@ if ( ! Authenticate::is_admin() ) {
     // die( 'Unauthorized' );
 }
 
-/*
- * Keep this part if you need to handle form data
- */
 
 $nonce_name = 'event_review_nonce';
 if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'submit' ) ) {

@@ -41,6 +41,7 @@ class DanceParty
         add_action( 'wp_enqueue_scripts', array( 'DanceParty', 'enqueue_scripts_and_styles' ) );
 
         $init_done = true;
+        ob_start();
     }
 
     /* Called when the plugin is activated through the admin panel */

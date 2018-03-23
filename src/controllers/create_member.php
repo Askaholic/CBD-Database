@@ -7,7 +7,7 @@ require_once(DP_PLUGIN_DIR . 'helpers.php');
 
 
 if ( ! Authenticate::is_logged_in() ) {
-    redirect('login');
+    redirect( 'login' );
 }
 
 if ( ! Authenticate::is_admin() ) {

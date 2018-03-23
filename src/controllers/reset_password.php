@@ -17,7 +17,7 @@ if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'sub
 }
 
 if (!isset($_GET['q'])){
-	die( 'Bad token.' );
+	die( 'Bad access path.' );
 }
 else{
 	//TODO: check for token match in database before allowing change
@@ -47,7 +47,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
 		
 
         $user = User::query_users_from_email( $email );
-        if ( count( $user ) == 0 )) {
+        if ( count( $user ) == 0 ) {
             throw new BadInputException( "Email address not registered to an account." );
         }
 		$user[0]->password = $newpass;

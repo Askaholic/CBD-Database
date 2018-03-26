@@ -26,7 +26,7 @@ require_once( DP_PLUGIN_DIR . 'helpers.php' );
  */
 
 if ( ! Authenticate::is_logged_in() ) {
-    redirect('change_this');
+    wp_redirect('change_this');
 }
 
 

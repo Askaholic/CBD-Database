@@ -5,7 +5,7 @@ require_once( DP_PLUGIN_DIR . 'models/user.php' );
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 
 if ( Authenticate::is_logged_in() ) {
-    redirect('/');
+    wp_redirect('/');
 }
 
 $nonce_name = 'login_nonce';
@@ -38,7 +38,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
 		$_SESSION['id'] = $usr[0]->id;
 		$_SESSION['role'] = $usr[0]->role_id;
         
-        redirect('/');
+        wp_redirect('/');
     }
     catch ( Exception $e ) {
         if ( get_class( $e ) !== BadInputException ) {

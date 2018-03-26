@@ -15,7 +15,7 @@ require_once( DP_PLUGIN_DIR . 'helpers.php' );
 require_once( DP_PLUGIN_DIR . 'models/event.php' );
 
 if ( ! Authenticate::is_logged_in() ) {
-    redirect('login');
+    wp_redirect('login');
 }
 
 if ( ! Authenticate::is_admin() ) {

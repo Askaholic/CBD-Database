@@ -1,3 +1,4 @@
+<h1>Available</h1>
 <?php
 foreach ($events as $event) {
 ?>

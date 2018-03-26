@@ -4,11 +4,7 @@ require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
 if ( ! Authenticate::is_logged_in() ) {
-<<<<<<< HEAD
-    redirect('/login');
-=======
     wp_redirect('login');
->>>>>>> 50d6ea9704b21589f077d2db047c2b02b7bc1186
 }
 
 $schema_types = array(

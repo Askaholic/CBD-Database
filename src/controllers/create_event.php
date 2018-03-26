@@ -4,7 +4,7 @@ require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
 if ( ! Authenticate::is_logged_in() ) {
-    redirect('login');
+    redirect('/login');
 }
 
 $schema_types = array(
@@ -59,10 +59,17 @@ if ( isset($_POST['event_schema']) ) {
             throw new BadInputException( 'Cannot insert empty event' );
         }
 
+        if ( isset($_SESSION['id']) ) {
+            $user_id = $_SESSION['id'];
+        }
+        else {
+            throw new Exception( 'User creating event not logged in' );
+        }
+
         $event = new Event(array(
             'name' => $event_name,
             'enabled' => 0,
-            'user_id' => 1, /* TODO: Make this the id of the logged in user */
+            'user_id' => $user_id,
             'schema_info' => json_encode($schema)
         ));
 

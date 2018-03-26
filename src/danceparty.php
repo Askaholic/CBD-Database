@@ -40,7 +40,7 @@ function add_login_logout_register_menu( $items, $args ) {
 		return $items;
 	}
 
-	$items .= '<li><a href="' . wp_logout_url() . '">' . __( 'Log Out' ) . '</a></li>';
+	$items .= '<li><a href=login"' . '">' . __( 'Log In' ) . '</a></li>';
 
 	return $items;
 }

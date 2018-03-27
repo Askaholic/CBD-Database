@@ -42,7 +42,7 @@ function clean_name($name) {
 
 /* Returns the string, throws an exception if it is empty */
 function not_empty($str) {
-    if ($str == '' || empty($str) ) {
+    if ( $str === '' || $str === array() ) {
         throw new BadInputException("Invalid input: Cannot be empty.");
     }
     return $str;

@@ -4,10 +4,6 @@
         border-radius: .2rem;
         padding: 1rem;
     }
-
-    .pull-right {
-        float: right;
-    }
     .inline-container {
         position: relative;
     }

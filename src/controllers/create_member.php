@@ -57,6 +57,11 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
         ));
         $member->commit();
 
+        $link = ""; // need to generate link with token here
+        $subject = "Your new Contra Borealis membership";
+        $body = "A new Contra Borealis account with a membership expiring on $expiry has been created for you. Click here to complete your registration $link";
+        send_email($email, $subject, $body);
+
         $info = "$email account created, with expiry date $expiry";
     }
     catch (Exception $e) {

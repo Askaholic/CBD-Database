@@ -33,9 +33,9 @@ class DanceParty
     public static function add_login_logout_menu($items, $args) {
         if( Authenticate::is_logged_in() )
             $link = '<a href="' . '/logout' . '" title="Logout">' . __( 'Logout' ) . '</a>';
-        else  
+        else
             $link = '<a href="' . '/login' . '" title="Login">' . __( 'Login' ) . '</a>';
-    
+
         return $items .= '<li id="login_logout_menu-link" class="menu-item menu-type-link">'. $link . '</li>';
     }
 
@@ -99,6 +99,18 @@ class DanceParty
         extract($context);
 
         include DanceParty::VIEW_DIR . 'layout.php';
+    }
+
+    public static function render_view_for_event( $events, $context = array() ) {
+
+        if( empty($events) ) {
+             self::render_view_with_template('event_not_found.php');
+        }
+        else {
+            $context['events'] = $events;
+            self::render_view_with_template( 'show_event.php' , $context );
+        }
+
     }
 
     public static function run_controller( $controller ) {

@@ -36,8 +36,21 @@ class Event extends Model
         );";
         self::query($sql);
     }
-}
 
+    //this will return possible multiple events (unless name is changed to primary key)
+    public static function query_events_from_name($name) {
+      $event_table = Event::TABLE_NAME;
+      $result = self::query(
+        "SELECT * FROM $event_table WHERE name = '$name';"
+      );
+      $events = array();
+      foreach($result as $row) {
+          $obj = Event::create_instance_from_row( $row );
+          array_push($events, $obj);
+      }
+      return $events;
+    }
+}
 
 function json_schema_to_column_string( $schema ) {
     return implode(
@@ -63,7 +76,7 @@ function json_column_to_string( $column ) {
         foreach ( $column->options as $i => $value ) {
             array_push( $cols, "$value BOOLEAN $required $constraints" );
         }
-        
+
         return implode( ',', $cols );
     }
 

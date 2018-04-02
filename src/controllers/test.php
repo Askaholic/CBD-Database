@@ -39,6 +39,26 @@ require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 
 ?>
 
+<h3>Email Test</h3>
+
+<?php
+
+require_once(DP_PLUGIN_DIR . 'helpers.php');
+
+  echo "Testing email functionality... \n";
+
+  $address = "example@email.com";
+  $subject = "Hello!";
+  $body = "Email message body";
+
+  if (send_email($address, $subject, $body)) {
+    echo "Email sent successfully \n";
+  } else {
+    echo "Email failed to send \n";
+  }
+?>
+
+
 <hr>
   <h3>Footer</h3>
   <?php wp_footer(); ?>

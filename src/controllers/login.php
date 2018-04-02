@@ -6,7 +6,7 @@ require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 
 
 if ( Authenticate::is_logged_in() ) {
-    wp_redirect('/');
+    wp_redirect(get_home_url());
 }
 
 $nonce_name = 'login_nonce';
@@ -48,7 +48,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
         }
         else {
             //or just go home
-            wp_redirect('/');
+            wp_redirect(get_home_url());
         }
     }
     catch ( Exception $e ) {

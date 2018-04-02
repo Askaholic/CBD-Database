@@ -6,6 +6,10 @@ require_once(DP_PLUGIN_DIR . 'models/user.php');
 require_once(DP_PLUGIN_DIR . 'class.passwordhash.php');
 require_once(DP_PLUGIN_DIR . 'models/roles.php');
 
+if ( Authenticate::is_logged_in() ) {
+    wp_redirect(get_home_url());
+}
+
 if ( isset( $_POST['signup_nonce'] ) && !wp_verify_nonce( $_POST['signup_nonce'], 'submit' ) ) {
     die( 'Bad token' );
 }
@@ -35,7 +39,7 @@ if ( isset( $_POST['signup_nonce'] ) ) {
             'last_name' => $last,
             'email' => $email,
             'password' => $hash,
-            'role_id' => Role::ROLE_IDS['MEMBER']
+            'role_id' => Role::$ROLE_IDS['MEMBER']
         );
 
         $users = User::query_users_from_email( $email );

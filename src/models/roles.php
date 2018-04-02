@@ -5,28 +5,32 @@ require_once( 'model.php' );
 class Role extends Model {
     const TABLE_NAME = 'roles';
 
+    const MEMBER = 1;
+    const DOOR_HOST = 2;
+    const ADMIN = 3;
+
     public static $columns = array(
         'id' => 'int NOT NULL PRIMARY KEY AUTO_INCREMENT',
         'name' => 'VARCHAR(45) NOT NULL'
     );
 
-    const ROLE_IDS = array(
-        'MEMBER' => 1,
-        'DOOR_HOST' => 2,
-        'ADMIN' => 3
+    public static $ROLE_IDS = array(
+        'MEMBER' => self::MEMBER,
+        'DOOR_HOST' => self::DOOR_HOST,
+        'ADMIN' => self::ADMIN
     );
 
-    const ROLES = array(
+    public static $ROLES = array(
         array(
-            'id' => self::ROLE_IDS['MEMBER'],
+            'id' => self::MEMBER,
             'name' => 'MEMBER'
         ),
         array(
-            'id' => self::ROLE_IDS['DOOR_HOST'],
+            'id' => self::DOOR_HOST,
             'name' => 'DOOR_HOST'
         ),
         array(
-            'id' => self::ROLE_IDS['ADMIN'],
+            'id' => self::ADMIN,
             'name' => 'ADMIN'
         )
     );
@@ -45,7 +49,7 @@ class Role extends Model {
             ', ',
             array_fill(
                 0,
-                count(static::ROLES),
+                count(static::$ROLES),
                 '(' . $placeholders . ')')
         );
         $args = array_reduce(
@@ -53,7 +57,7 @@ class Role extends Model {
                 function($role) {
                     return array($role['id'], $role['name']);
                 },
-                static::ROLES ),
+                static::$ROLES ),
                 'array_merge',
                 array()
         );

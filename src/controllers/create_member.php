@@ -46,7 +46,7 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
             'last_name' => $last,
             'email' => $email,
             'password' => $pass,
-            'role_id' => Role::ROLE_IDS['MEMBER']
+            'role_id' => Role::$ROLE_IDS['MEMBER']
         ));
         $new_id = $user->commit_id();
 

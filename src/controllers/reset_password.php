@@ -8,34 +8,47 @@
  */
 
 require_once( DP_PLUGIN_DIR . 'class.passwordhash.php' );
-require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'models/user.php' );
+require_once( DP_PLUGIN_DIR . 'models/tokens.php' );
+require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
 $nonce_name = 'reset_nonce';
 if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'submit' ) ) {
 	die( 'Bad token' );
 }
 
-if (!isset($_GET['q'])){
+/* Check if token is set */
+if (!isset($_GET['q']) || $_GET['q'] == NULL){
 	die( 'Bad access path.' );
 }
-else{
-	//TODO: check for token match in database before allowing change
-	$token = $_GET['q'];
-	if($token == 123) // DUMMY VALUE
-    {
-    	die("Good token.");
-    }
-    	else die("Incorrect link or password already changed.");
-}
 
+/* Check if token is valid */
+$token = $_GET['q'];
+$result = Token::query_from_token( $token );
+if ( count( $result ) == 0 ) {
+		die( "Incorrect link or password already changed." );
+}
+		
 $error = '';
 $info = '';
 
 if ( isset( $_POST[$nonce_name] ) ) {
     try {
-    	$email = null; // TODO: get email from database, stored with token
+		/* Check if email is valid */
+		$email = valid_email( not_empty( $_POST['email'] ) );
+    	$user = User::query_users_from_email( $email );
+        if ( count( $user ) == 0 ) {
+            throw new BadInputException( "Incorrect or unregistered email address." );
+        }
+        
+        /* Check if ID matches */
+		$id = $result[0]->user_id;
+		$request_id = $user[0]->id;
+		if ( $request_id != $id ) {
+			throw new BadInputException( "Data mismatch. Please submit a new reset request." );
+		}
     
+    	/* Retrieve new password and replace old */
 		$newpass =  valid_password( not_empty( $_POST['new_password'] ) );
 		$newpass2 = not_empty( $_POST['confirm_password'] );
 
@@ -45,15 +58,14 @@ if ( isset( $_POST[$nonce_name] ) ) {
 
 		$hash = Password::hash( $newpass );
 		
-
         $user = User::query_users_from_email( $email );
         if ( count( $user ) == 0 ) {
             throw new BadInputException( "Email address not registered to an account." );
         }
-		$user[0]->password = $newpass;
-		$user[0]->commit();
+		// TODO:  Need method to update value by id in 'users' table
+		//$user[0]->commit();
 
-        $info = "Change succesful. Please login with your new password.";
+        $info = "Your password has been updated (Not really).";
     }
     catch ( Exception $e ) {
         if ( get_class( $e ) !== BadInputException ) {

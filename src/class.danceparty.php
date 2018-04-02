@@ -72,11 +72,13 @@ class DanceParty
         require_once( DP_PLUGIN_DIR . 'models/user.php' );
         require_once( DP_PLUGIN_DIR . 'models/event.php' );
         require_once( DP_PLUGIN_DIR . 'models/roles.php' );
+        require_once( DP_PLUGIN_DIR . 'models/tokens.php' );
 
         User::create_table();
         Membership::create_table();
         Event::create_table();
         Role::create_table();
+        Token::create_table();
     }
 
     public static function enqueue_scripts_and_styles() {

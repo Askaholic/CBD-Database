@@ -4,10 +4,10 @@
 
 <h1>Forgot Your Password?</h1>
 
-<form method="post" action="send_link.php">
+<form method="post" action="">
 <p>Enter the email address affiliated with your account and we'll send you a link to reset your password.</p>
 <?php
-    wp_nonce_field('submit', 'forgot_nonce');
+    wp_nonce_field( 'submit', 'forgot_nonce' );
     FormBuilder::input( 'email', 'email', 'Email' );
 ?>
     <input type="submit" value="Submit">

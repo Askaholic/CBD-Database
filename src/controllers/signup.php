@@ -39,7 +39,7 @@ if ( isset( $_POST['signup_nonce'] ) ) {
             'last_name' => $last,
             'email' => $email,
             'password' => $hash,
-            'role_id' => Role::ROLE_IDS['MEMBER']
+            'role_id' => Role::$ROLE_IDS['MEMBER']
         );
 
         $users = User::query_users_from_email( $email );

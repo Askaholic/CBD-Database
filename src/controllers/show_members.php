@@ -6,7 +6,7 @@
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'models/user.php' );
 if ( ! Authenticate::is_logged_in() ) {
-    wp_redirect('login');
+    wp_redirect('login/?afterlog=show_members');
 }
 
 if ( ! Authenticate::is_door_host() ) {

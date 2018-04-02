@@ -10,6 +10,7 @@
  
 require_once( DP_PLUGIN_DIR . 'models/user.php' );
 require_once( DP_PLUGIN_DIR . 'models/tokens.php' );
+require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
 $nonce_name = 'forgot_nonce';
 if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'submit' ) ) {
@@ -26,22 +27,35 @@ if ( isset( $_POST[$nonce_name] ) ) {
     	$email = valid_email( not_empty( $_POST['email'] ) );
     	$user = User::query_users_from_email( $email );
         if ( count( $user ) == 0 ) {
-            throw new BadInputException( "There is no user registered with that email address." );
+            throw new BadInputException( "Incorrect or unregistered email address." );
         }
 		
 		/* Create a unique user password reset token */
 		$length = 32;
-		$expiry = 15; // how many minutes till token expires
-		$token = 123;//bin2hex(random_bytes($length));
-		$expiry_timestamp = time() + $expiry*60; // time is in seconds
-		$expiry_date = new DateTime(DATE_RSS, $expiry_timestamp);
+		$timespan = 15; // minutes till expiry
+		$token = 123;//bin2hex(random_bytes($length)); PHP 7 ONLY, NEED random_compat LIBRARY
+		$expires = new DateTime('NOW');
+		$expires->add(new DateInterval('PT'.$timespan.'M'));
+		$expiration_date = $expires->format('Y-m-d H:i:s');
 		
-		$recovery_token = new Token( array(
-            'user_id' => $user[0]->id,
+		$id = $user[0]->id;
+		$email = $user[0]->email;
+		
+		$result = Token::query_from_id( $id );
+		if ( count( $result ) == 0 ) {
+            $recovery_token = new Token( array(
+            'user_id' => $id,
             'recovery_token' => $token,
-            'expiration_date' => $expiry_timestamp
-        ));
-        $recovery_token->commit();
+            'expiration_date' => $expiration_date
+        	));
+        	$recovery_token->commit();
+        }
+        else{
+        	$user[0]->recovery_token = $token;
+        	$user[0]->expiration_date = $expiration_date;
+			$user[0]->commit();
+        }
+		
 		
 		/*		
 		// Create a reset link
@@ -57,7 +71,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
 		$message .= $pwurl . "\n\nThis link will expire in " .$expiry. " minutes.";
 		mail($to, "Contra Borealis - Password Reset", $message);*/
 		
-        $info = "A password recovery token has been sent to your email address.";
+        $info = "Request recieved. Please check your email.";
     }
     catch ( Exception $e ) {
         if ( get_class( $e ) !== BadInputException ) {

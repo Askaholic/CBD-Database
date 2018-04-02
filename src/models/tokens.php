@@ -15,19 +15,31 @@ class Token extends Model {
         FOREIGN KEY (user_id) references users(id)
     ';
 
-    public static function query_token($token) {
-      $token_table = Token::TABLE_NAME;
-      $result = self::query(
-        "SELECT * FROM $token_table WHERE recovery_token = '$token';"
-      );
-      $tokens = array();
-      foreach($result as $row) {
-          $obj = Token::create_instance_from_row( $row );
-          array_push($tokens, $obj);
-      }
-      return $tokens;
+    public static function query_from_token($token) {
+		$token_table = Token::TABLE_NAME;
+		$result = self::query(
+		"SELECT * FROM $token_table WHERE recovery_token = '$token';"
+	);
+		$tokens = array();
+		foreach($result as $row) {
+			$obj = Token::create_instance_from_row( $row );
+			array_push($tokens, $obj);
+		}
+		return $tokens;
     }
-
+    
+    public static function query_from_id($id) {
+		$token_table = Token::TABLE_NAME;
+		$result = self::query(
+		"SELECT * FROM $token_table WHERE user_id = '$id';"
+		);
+		$ids = array();
+		foreach($result as $row) {
+			$obj = Token::create_instance_from_row( $row );
+			array_push($ids, $obj);
+		}
+		return $ids;
+	}
 }
 
 ?>

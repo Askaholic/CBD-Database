@@ -4,8 +4,10 @@
 <form method="post" action="">
 <?php
     wp_nonce_field('submit', 'reset_nonce');
-    FormBuilder::input( 'new_password', 'new_password', 'New Password' );
-    FormBuilder::input( 'confirm_password', 'confirm_password', 'Confirm Password' );
+    FormBuilder::input( 'email', 'email', 'Email' );
+    // TODO: Proper password input
+    FormBuilder::input( 'password', 'new_password', 'New Password' );
+    FormBuilder::input( 'password', 'confirm_password', 'Confirm Password' );
 ?>
     <br><input type="submit" value="Update Password"><br>
     <br><span id="error"></span><br>

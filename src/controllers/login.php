@@ -48,7 +48,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
         }
         else {
             //or just go home
-            wp_redirect('/');
+            wp_redirect(get_home_url());
         }
     }
     catch ( Exception $e ) {

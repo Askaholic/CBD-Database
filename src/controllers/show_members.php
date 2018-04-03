@@ -5,6 +5,8 @@
  */
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'models/user.php' );
+require_once( DP_PLUGIN_DIR . 'helpers.php' );
+
 if ( ! Authenticate::is_logged_in() ) {
     wp_redirect('login/?afterlog=show_members');
 }
@@ -22,29 +24,18 @@ $info;
 
 if ( isset( $_POST['change_role_nonce'] ) ) {
     try {
-        $email = not_empty($_POST['email']);
-        $role = not_empty($_POST['role']);
-     
-        // Check that the user actually exists
-        try {
-            $usr = new User(
-                array(
-                    'id' => $id
-                )
-            );
-            $usr->pull();
-        } catch ( Exception $e ) {
-            throw new BadInputException("User with id $id does not exist");
+        $email = valid_email( not_empty( $_POST['email'] ) );
+        $role = not_empty( $_POST['role'] );
+
+        $user = User::query_users_from_email( $email );
+
+        if ( count( $user ) == 0 ) {
+            throw new BadInputException( "Incorrect or unregistered email address." );
         }
 
-        $link = mysqli_connect("localhost","pluginadmin","pluginadminpass","cbdplugin");
+        $user[0]->update('role_id', $role, 'email', $email );
 
-        $query = "UPDATE users SET role_id = '" . $role . "' WHERE email = '" . $email . "';";
-
-        if( ! mysqli_query($link, $query) ) {
-            printf("Error: %s\n", mysqli_error($link));
-        }
-
+        $info = "Role changed successfully.";
     } catch ( Exception $e ) {
         if ( get_class( $e ) !== BadInputException ) {
             error_log($e);

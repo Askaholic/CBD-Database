@@ -1,10 +1,15 @@
-<h1>Current Members</h1>
+<?php
+    require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
+?>
+
+<h1>Members</h1>
 
 <table>
     <tr>
         <th>First</th>
         <th>Last</th>
         <th>Expires</th>
+        <th>Role</th>
     </tr>
 <?php
 $display_members = array();
@@ -19,10 +24,30 @@ foreach ( $context['members'] as $usr ) {
     $display_members[$id] = $usr;
 }
 foreach ( $display_members as $usr ) { ?>
+    <form method="post" action="" onsubmit="return confirm('Are you sure?')">
+    <?php wp_nonce_field('submit', 'change_role_nonce'); ?>
     <tr>
         <td><?php echo $usr->first_name ?></td>
         <td><?php echo $usr->last_name ?></td>
         <td><?php echo date_format(date_create($usr->expiration_date), 'M. j, Y') ?></td>
+        <?php 
+        if ( ! Authenticate::is_admin() ) {
+            if ($usr->role_id === "1") echo "<td>Member</td>";
+            if ($usr->role_id === "2") echo "<td>Door Host</td>";
+            if ($usr->role_id === "3") echo "<td>Admin</td>";
+        } 
+        else { ?>
+            <td style="width: 200px">
+                <select name="role" style="width: 100px">
+                    <option value="1" <?php if ($usr->role_id === "1") echo "selected"; ?>>Member</option>
+                    <option value="2" <?php if ($usr->role_id === "2") echo "selected"; ?>>Door Host</option>
+                    <option value="3" <?php if ($usr->role_id === "3") echo "selected"; ?>>Admin</option>
+                </select>
+                <input type="hidden" name="email" value="<?php echo $usr->email; ?>"/>
+            </td>
+            <td><input type="submit" id="submit" value="Change"></td>
+        <?php } ?>
     </tr>
+    </form>
 <?php } ?>
 </table>

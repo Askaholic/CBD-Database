@@ -62,10 +62,10 @@ if ( isset( $_POST[$nonce_name] ) ) {
         if ( count( $user ) == 0 ) {
             throw new BadInputException( "Email address not registered to an account." );
         }
-		// TODO:  Need method to update value by id in 'users' table
-		//$user[0]->commit();
+		
+		$user[0]->update('password', $hash, 'id', $id );
 
-        $info = "Your password has been updated (Not really).";
+        $info = "Your password has been updated.";
     }
     catch ( Exception $e ) {
         if ( get_class( $e ) !== BadInputException ) {

@@ -45,7 +45,7 @@ try {
         $event->pull();
 
         if ($action_type === 'preview') {
-            DanceParty::render_view_with_template( 'render_event_form.php',
+            DanceParty::render_view( 'render_event_form.php',
                 array(
                     'event' => $event
                 )
@@ -53,7 +53,18 @@ try {
             $info = "Preview for " . htmlspecialchars($event->name);
         }
         else if($action_type === 'schedule') {
-           $info = "Successfuly scheduled ". htmlspecialchars($event->name);
+            $sched_event = new ScheduledEvent(
+                array(
+                    'event_id' => $event_id,
+                    // 'register_start_date' => '',
+                    // 'register_end_date' => '',
+                    'start_date' => '2001-01-01',
+                    'end_date' => '2001-01-02'
+                )
+            );
+            $sched_event->commit();
+
+            $info = "Successfuly scheduled ". htmlspecialchars($event->name);
         }
         else {
             throw new BadInputException("Unknown action");

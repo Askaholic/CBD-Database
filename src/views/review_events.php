@@ -1,22 +1,20 @@
 <h1>Available</h1>
+<form action="" method="post">
+    <input type="hidden" name="action_type" value="schedule" id='type-input'>
+    <?php
+    wp_nonce_field('submit', 'event_review_nonce');
+    ?>
+    <select name="event_id">
 <?php
 foreach ($events as $event) {
 ?>
-<br/>
-<div class="event-preview">
-    <h3><?php echo htmlspecialchars( $event->name ); ?></h3>
-    <a href="#">Preview</a>
+<option value="<?php echo $event->id ?>"><?php echo htmlspecialchars( $event->name ); ?></option>
 
-    <form action="" method="post">
-    <?php
-        wp_nonce_field('submit', 'event_review_nonce');
-    ?>
-    <input type="hidden" name="id" value="<?php echo $event->id ?>">
-    <input type="hidden" name="enabled" value="<?php echo $event->enabled === true ? "true" : "false"; ?>">
-    <input type="submit" value="<?php echo $event->enabled === true ? "Disable" : "Enable"; ?>">
-    </form>
-</div>
-<hr/>
 <?php
 }
 ?>
+    </select>
+<input type="submit" value="Schedule" onclick="setType('schedule')">
+<input type="submit" value="Preview" onclick="setType('preview')">
+
+</form>

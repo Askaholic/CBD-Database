@@ -19,7 +19,7 @@ if ( ! Authenticate::is_logged_in() ) {
 }
 
 if ( ! Authenticate::is_admin() ) {
-    // die( 'Unauthorized' );
+    die( 'Unauthorized' );
 }
 
 
@@ -34,20 +34,41 @@ $events;
 
 try {
     if ( isset( $_POST[$nonce_name] ) ) {
-        /*
-         * Get and validate arguments
-         */
-        $var = valid_name(not_empty($_POST['var']));
+        $event_id = valid_id(not_empty($_POST['event_id']));
+        $action_type = not_empty($_POST['action_type']);
 
-        /*
-         * Do some logic
-         */
+        $event = new Event(
+            array(
+                'id' => $event_id
+            )
+        );
+        $event->pull();
 
+        if ($action_type === 'preview') {
+            DanceParty::render_view( 'render_event_form.php',
+                array(
+                    'event' => $event
+                )
+            );
+            $info = "Preview for " . htmlspecialchars($event->name);
+        }
+        else if($action_type === 'schedule') {
+            $sched_event = new ScheduledEvent(
+                array(
+                    'event_id' => $event_id,
+                    // 'register_start_date' => '',
+                    // 'register_end_date' => '',
+                    'start_date' => '2001-01-01',
+                    'end_date' => '2001-01-02'
+                )
+            );
+            $sched_event->commit();
 
-        /*
-         * Display a confirmation message
-         */
-        $info = "Success";
+            $info = "Successfuly scheduled ". htmlspecialchars($event->name);
+        }
+        else {
+            throw new BadInputException("Unknown action");
+        }
     }
 
     $events = Event::query_all();

@@ -77,6 +77,7 @@ class DanceParty
         User::create_table();
         Membership::create_table();
         Event::create_table();
+        ScheduledEvent::create_table();
         Role::create_table();
         Token::create_table();
     }

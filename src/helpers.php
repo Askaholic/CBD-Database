@@ -42,7 +42,7 @@ function clean_name($name) {
 
 /* Returns the string, throws an exception if it is empty */
 function not_empty($str) {
-    if ($str == '' || empty($str) ) {
+    if ( $str === '' || $str === array() ) {
         throw new BadInputException("Invalid input: Cannot be empty.");
     }
     return $str;
@@ -126,6 +126,14 @@ function valid_id($id) {
         throw new BadInputException("Invalid id");
     }
     return $id;
+}
+
+function send_email($address, $subject, $body) {
+    if (! is_valid_email($address)) {
+        throw new BadInputException("Invalid email");
+    }
+    $header = 'From: /usr/sbin/sendmail'."\r\n";
+    return mail($address, $subject, $body, $header);
 }
 
 ?>

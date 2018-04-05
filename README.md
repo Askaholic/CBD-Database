@@ -65,3 +65,10 @@ module. This is pretty simple, but just requires a few steps.
 Hopefully that should work now (make sure that you've restarted Apache!)
 You can test if it works by going to `localhost/test`. If you get the test page
 it works!
+
+#### Module Usage
+
+Event viewing -- goto event url and enter variable for event name as in database
+eg. http://localhost/index.php/events/?event=testevent
+because name is not distinct currently takes first event in db by that name
+Note: be sure to restart plugin for event route 

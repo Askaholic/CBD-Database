@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 require_once( DP_PLUGIN_DIR . 'class.router.php' );
 require_once( DP_PLUGIN_DIR . 'helpers.php' );
+require_once( DP_PLUGIN_DIR . 'class.authenticate.php');
 
 /*
  * Need to define constants because old versions of php (which iPage appraently
@@ -29,6 +30,15 @@ class DanceParty
 
     private static $init_done = false;
 
+    public static function add_login_logout_menu($items, $args) {
+        if( Authenticate::is_logged_in() )
+            $link = '<a href="' . '/logout' . '" title="Logout">' . __( 'Logout' ) . '</a>';
+        else
+            $link = '<a href="' . '/login' . '" title="Login">' . __( 'Login' ) . '</a>';
+
+        return $items .= '<li id="login_logout_menu-link" class="menu-item menu-type-link">'. $link . '</li>';
+    }
+
     static function init() {
         if ( !self::$init_done) {
             self::init_hooks();
@@ -39,6 +49,8 @@ class DanceParty
         Router::init_hooks();
 
         add_action( 'wp_enqueue_scripts', array( 'DanceParty', 'enqueue_scripts_and_styles' ) );
+
+        add_filter( 'wp_nav_menu_items', array( 'DanceParty','add_login_logout_menu'), 20, 5);
 
         $init_done = true;
         ob_start();
@@ -60,11 +72,13 @@ class DanceParty
         require_once( DP_PLUGIN_DIR . 'models/user.php' );
         require_once( DP_PLUGIN_DIR . 'models/event.php' );
         require_once( DP_PLUGIN_DIR . 'models/roles.php' );
+        require_once( DP_PLUGIN_DIR . 'models/tokens.php' );
 
         User::create_table();
         Membership::create_table();
         Event::create_table();
         Role::create_table();
+        Token::create_table();
     }
 
     public static function enqueue_scripts_and_styles() {
@@ -87,6 +101,18 @@ class DanceParty
         extract($context);
 
         include DanceParty::VIEW_DIR . 'layout.php';
+    }
+
+    public static function render_view_for_event( $events, $context = array() ) {
+
+        if( empty($events) ) {
+             self::render_view_with_template('event_not_found.php');
+        }
+        else {
+            $context['events'] = $events;
+            self::render_view_with_template( 'show_event.php' , $context );
+        }
+
     }
 
     public static function run_controller( $controller ) {

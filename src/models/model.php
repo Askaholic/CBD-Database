@@ -229,6 +229,16 @@ abstract class Model extends PDORepository {
         );
         return $obj;
     }
+    
+    public function update($column1, $value1, $column2, $value2) {
+        $table = static::TABLE_NAME;
+
+        $this->query(
+            "UPDATE $table 
+             SET $column1 = '" .$value1. "'
+             WHERE $column2 = '" .$value2."';"
+        );
+    }
 }
 
 class Column {

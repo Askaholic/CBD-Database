@@ -2,7 +2,10 @@
 
 <form method="post" action="">
     <?php
-    wp_nonce_field('submit', 'login_nonce');
+    wp_nonce_field( 'submit', 'login_nonce' );
+    if( not_empty( $afterlog ) ) {
+        FormBuilder::input( 'hidden', 'afterlog', '', 'value=' . $afterlog );
+    }
     FormBuilder::input( 'email', 'email', 'Email' );
     FormBuilder::input( 'password', 'password', 'Password' );
     ?>

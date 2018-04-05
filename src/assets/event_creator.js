@@ -85,7 +85,6 @@ app.component('defaultForm', {
         this.$onInit = () => {
 
             this.output = {
-                "desc": "Members: ",
                 "items": []
             }
             this.eachElement = {
@@ -93,7 +92,6 @@ app.component('defaultForm', {
                 "lastName": "Last Name",
                 "age": 0
             }
-            this.output.items.push(this.eachElement);
         }
 
         this.createBox = () => {
@@ -104,16 +102,16 @@ app.component('defaultForm', {
                 this.output.items.pop();
             }
         }
-
     },
     template:
    `
-    <editable form-value="$ctrl.output.desc"></editable>
+    <h5>Number of Members:</h5>
 
     <div ng-repeat="i in $ctrl.output.items track by $index">
-        <editable form-value="$ctrl.output.items[$index].lastName"></editable>
         <editable form-value="$ctrl.output.items[$index].firstName"></editable>
-        <input type="number" name="input" ng-model="$ctrl.output.items[$index].age" min="0" max="200">
+        <editable form-value="$ctrl.output.items[$index].lastName"></editable>
+        <label for="UserAge">Age:</label>
+        <input type="number" id="UserAge" ng-model="$ctrl.output.items[$index].age" min="0" max="200">
     </div>
     <button class="button secondary" type="button" ng-click="$ctrl.createBox()">+</button>
     <button class="button secondary" type="button" ng-click="$ctrl.discardBox()">-</button>
@@ -151,6 +149,13 @@ app.component('formChange', {
     },
     template:
    `
+   <div class="pull-right">
+    <label for="checkbox1">Required to Answer:</label>
+     <label class="switch">
+         <input type="checkbox" id="checkbox1" ng-model="$ctrl.output.required" checked>
+         <span class="slider round"></span>
+     </label>
+   </div>
     <editable form-value="$ctrl.output.name"></editable>
     <editable tag="i" form-value="$ctrl.output.desc" nullable="true"></editable>
     <div ng-if="$ctrl.type === 'checkbox' || $ctrl.type === 'radio'">

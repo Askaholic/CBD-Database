@@ -25,8 +25,9 @@ echo "<iframe src='$menu' width='100%' height='50%'></iframe>";
 <h3>Session Test</h3>
 
 <?php
-
+require_once( DP_PLUGIN_DIR . 'class.passwordhash.php' );
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
+
 
   echo "Logged in: ";
   print_r(Authenticate::is_logged_in());
@@ -37,6 +38,26 @@ require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
   print_r(Authenticate::is_door_host());
 
 ?>
+
+<h3>Email Test</h3>
+
+<?php
+
+require_once(DP_PLUGIN_DIR . 'helpers.php');
+
+  echo "Testing email functionality... \n";
+
+  $address = "example@email.com";
+  $subject = "Hello!";
+  $body = "Email message body";
+
+  if (send_email($address, $subject, $body)) {
+    echo "Email sent successfully \n";
+  } else {
+    echo "Email failed to send \n";
+  }
+?>
+
 
 <hr>
   <h3>Footer</h3>

@@ -7,7 +7,7 @@ require_once(DP_PLUGIN_DIR . 'helpers.php');
 
 
 if ( ! Authenticate::is_logged_in() ) {
-    wp_redirect( 'login' );
+    wp_redirect( 'login/?afterlog=create_member' );
 }
 
 if ( ! Authenticate::is_admin() ) {
@@ -46,7 +46,7 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
             'last_name' => $last,
             'email' => $email,
             'password' => $pass,
-            'role_id' => Role::ROLE_IDS['MEMBER']
+            'role_id' => Role::$ROLE_IDS['MEMBER']
         ));
         $new_id = $user->commit_id();
 
@@ -56,6 +56,11 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
             'expiration_date' => $expiry
         ));
         $member->commit();
+
+        $link = ""; // need to generate link with token here
+        $subject = "Your new Contra Borealis membership";
+        $body = "A new Contra Borealis account with a membership expiring on $expiry has been created for you. Click here to complete your registration $link";
+        send_email($email, $subject, $body);
 
         $info = "$email account created, with expiry date $expiry";
     }

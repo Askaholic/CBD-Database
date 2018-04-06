@@ -32,11 +32,18 @@ class DanceParty
 
     public static function add_login_logout_menu($items, $args) {
         if( Authenticate::is_logged_in() )
-            $link = '<a href="' . '/logout' . '" title="Logout">' . __( 'Logout' ) . '</a>';
+            $link .= '<a href="' . '/logout' . '" title="Logout">' . __( 'Logout' ) . '</a>';
         else
             $link = '<a href="' . '/login' . '" title="Login">' . __( 'Login' ) . '</a>';
 
         return $items .= '<li id="login_logout_menu-link" class="menu-item menu-type-link">'. $link . '</li>';
+    }
+
+    public static function add_profile_menu($items, $args) {
+        if( Authenticate::is_logged_in() )
+            $link .= '<a href="' . '/profile' . '" title="Profile">' . __( 'Profile' ) . '</a>';
+
+        return $items .= '<li id="profile_menu-link" class="menu-item menu-type-link">'. $link . '</li>';
     }
 
     static function init() {
@@ -49,9 +56,11 @@ class DanceParty
         Router::init_hooks();
 
         add_action( 'wp_enqueue_scripts', array( 'DanceParty', 'enqueue_scripts_and_styles' ) );
+        
+        add_filter( 'wp_nav_menu_items', array( 'DanceParty','add_profile_menu'), 20, 5);
 
         add_filter( 'wp_nav_menu_items', array( 'DanceParty','add_login_logout_menu'), 20, 5);
-
+            
         $init_done = true;
         ob_start();
     }

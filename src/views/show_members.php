@@ -47,7 +47,8 @@ foreach ( $display_members as $usr ) { ?>
                 </select>
                 <input type="hidden" name="email" value="<?php echo $usr->email; ?>"/>
             </td>
-            <td><input type="submit" id="submit" value="Change"></td>
+            <td><input type="submit" id="submit" value="Change Role"></td>
+            <td><a href="user/?user_id=<?php echo $usr->id; ?>">View User</a></td>
         <?php } ?>
     </tr>
     </form>

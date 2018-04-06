@@ -34,6 +34,19 @@ class User extends Model {
       return $users;
     }
 
+    public static function query_users_from_id($id) {
+        $user_table = User::TABLE_NAME;
+        $result = self::query(
+          "SELECT * FROM $user_table WHERE id = '$id';"
+        );
+        $users = array();
+        foreach($result as $row) {
+            $obj = User::create_instance_from_row( $row );
+            array_push($users, $obj);
+        }
+        return $users;
+    }
+
     public static function query_all_with_membership() {
         $table = static::TABLE_NAME;
         $membership_table = Membership::TABLE_NAME;

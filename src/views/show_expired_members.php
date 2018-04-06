@@ -22,6 +22,7 @@
     <tr>
         <th>First</th>
         <th>Last</th>
+        <th>Email Address</th>
         <th>Expires</th>
         <th>Renew</th>
     </tr>
@@ -32,6 +33,7 @@
         <tr>
             <td><?php echo $usr->first_name ?></td>
             <td><?php echo $usr->last_name ?></td>
+            <td><?php echo $usr->email ?></td>
             <td><?php echo date_format(date_create($usr->expiration_date), 'M. j, Y') ?></td>
             <td style="width: 200px">
                 <input class="default-date" type="date" name="expiry">

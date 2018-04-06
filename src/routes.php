@@ -20,4 +20,5 @@ Router::route_post( 'Login', 'login', 'login.php' );
 Router::route_post( 'Forgot Password', 'forgot_password', 'forgot_password.php' );
 Router::route_post( 'Reset Password', 'reset_password', 'reset_password.php' );
 Router::route_post( 'Logout', 'logout', 'logout.php' );
+Router::route_post( 'Profile', 'profile', 'profile.php' );
 ?>

@@ -31,7 +31,7 @@ require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 
   echo "Logged in: ";
   print_r(Authenticate::is_logged_in());
-  echo "\n ID: " .$_SESSION['id']. "\nRole: " .$_SESSION['role'];
+  echo "\n ID: " .$_SESSION['usr']->id. "\nRole: " .$_SESSION['usr']->role_id;
   echo "\nAdmin?: ";
   print_r(Authenticate::is_admin());
   echo "\nDoor Host?: ";

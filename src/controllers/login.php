@@ -38,8 +38,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
 			throw new BadInputException( "Invalid password" );
 		}
 
-		$_SESSION['id'] = $usr[0]->id;
-		$_SESSION['role'] = $usr[0]->role_id;
+		$_SESSION['usr'] = $usr[0];
 
         $afterlog = $_POST['afterlog'];
         if(not_empty($afterlog)) {

@@ -8,6 +8,7 @@
     <tr>
         <th>First</th>
         <th>Last</th>
+        <th>Email Address</th>
         <th>Expires</th>
         <th>Role</th>
     </tr>
@@ -29,6 +30,7 @@ foreach ( $display_members as $usr ) { ?>
     <tr>
         <td><?php echo $usr->first_name ?></td>
         <td><?php echo $usr->last_name ?></td>
+        <td><?php echo $usr->email ?></td>
         <td><?php echo date_format(date_create($usr->expiration_date), 'M. j, Y') ?></td>
         <?php 
         if ( ! Authenticate::is_admin() ) {

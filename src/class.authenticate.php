@@ -31,15 +31,15 @@ class Authenticate
 
 	public static function is_logged_in() {
 		Authenticate::dp_start_session();
-		if (isset($_SESSION['id']))
+		if (isset($_SESSION['usr']))
 			return true;
 		return false;
 	}
 
 	public static function is_admin() {
 		Authenticate::dp_start_session();
-		if (isset($_SESSION['id'])) {
-			if (isset($_SESSION['role']) && $_SESSION['role'] == '3')
+		if (isset($_SESSION['usr'])) {
+			if (isset($_SESSION['usr']) && $_SESSION['usr']->role_id == '3')
 				return true;
 		}
 		return false;
@@ -48,8 +48,8 @@ class Authenticate
 
 	public static function is_door_host() {
 		Authenticate::dp_start_session();
-		if (isset($_SESSION['id'])) {
-			if (isset($_SESSION['role']) && ($_SESSION['role'] == '2' || $_SESSION['role'] == '3'))
+		if (isset($_SESSION['usr'])) {
+			if (isset($_SESSION['usr']) && ($_SESSION['usr']->role_id == '2' || $_SESSION['usr']->role_id == '3'))
 				return true;
 		}
 		return false;

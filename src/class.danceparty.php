@@ -101,13 +101,13 @@ class DanceParty
         include DanceParty::VIEW_DIR . 'layout.php';
     }
 
-    public static function render_view_for_event( $events, $context = array() ) {
+    public static function render_view_for_event( $event, $context = array() ) {
 
-        if( empty($events) ) {
+        if( empty($event) ) {
              self::render_view_with_template('event_not_found.php');
         }
         else {
-            $context['events'] = $events;
+            $context['event'] = $event;
             self::render_view_with_template( 'show_event.php' , $context );
         }
 

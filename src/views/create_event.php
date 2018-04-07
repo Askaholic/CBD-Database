@@ -20,18 +20,18 @@
     }
 </style>
 <div ng-app="EventCreator" ng-controller="formBuilder">
-    <h1>Create a new event</h1>
-    <hr/>
+    <!-- <h1>Create a new event</h1>
+    <hr/> -->
 
-    <default-form output="$parent.newField"></default-form>
+    <!--default-form output="$parent.newField"></default-form-->
 
     <editable tag="h3" form-value="form.name"></editable>
     <div ng-repeat="f in form.fields">
         <div class="border-light">
-            <div class="inline-container">
+            <div ng-if="!(f.nodelete === true)" class="inline-container">
                 <input class="button-sm button secondary input-inline" type="button" value="Delete" ng-click="deleteField($index)">
             </div>
-            <editable form-value="f.name"></editable>
+            <editable ng-if="!(f.type === 'userinfo' || f.type === 'eventdesc')" form-value="f.name"></editable>
             <editable tag="i" form-value="f.desc"></editable>
             <br/>
             <div ng-if="f.type === 'checkbox' || f.type === 'radio'">
@@ -43,8 +43,11 @@
             <div ng-if="f.type === 'textarea'">
                 <textarea></textarea>
             </div>
-            <div ng-if="!(f.type === 'checkbox' || f.type === 'radio' || f.type === 'textarea')">
+            <div ng-if="!(f.type === 'eventdesc' f.type === 'userinfo' || f.type === 'checkbox' || f.type === 'radio' || f.type === 'textarea')">
                 <input type="{{ f.type }}" id="{{ f.short_name }}" name="{{ f.short_name }}">
+            </div>
+            <div ng-if="(f.type === 'userinfo')">
+                <?php FormBuilder::userInfoForm() ?>
             </div>
         </div>
         <br/>

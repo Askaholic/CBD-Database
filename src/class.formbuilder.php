@@ -9,6 +9,20 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 class FormBuilder
 {
+    /* Event template form functions */
+    //TODO set this to match in create event
+    static function eventDescription($desc) {
+        $html = '<p> '.$desc . '</p>';
+        echo $html;
+        return $html;
+    }
+
+    static function userInfoForm() {
+        $name = self::input('text', 'first_name', 'First Name', '', false ) . self::input('text', 'last_name', 'Last Name', '', false );
+        echo $name;
+        $html .= $name;
+        return $html;
+    }
 
     private static function _input( $type, $id, $extraattrs = '') {
         return '<input type="' . $type . '" id="' . $id . '" name="' . $id . '" ' .  $extraattrs . ' />';

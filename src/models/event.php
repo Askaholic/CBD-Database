@@ -38,17 +38,16 @@ class Event extends Model
     }
 
     //this will return possible multiple events (unless name is changed to primary key)
-    public static function query_events_from_name($name) {
+    public static function query_events_from_id($id) {
       $event_table = Event::TABLE_NAME;
       $result = self::query(
-        "SELECT * FROM $event_table WHERE name = '$name';"
+        "SELECT * FROM $event_table WHERE id = '$id';"
       );
-      $events = array();
-      foreach($result as $row) {
-          $obj = Event::create_instance_from_row( $row );
-          array_push($events, $obj);
-      }
-      return $events;
+      //id is primary key so there can be only one
+      foreach($result as $row)
+        $event = Event::create_instance_from_row($row);
+      return $event;
+
     }
 }
 

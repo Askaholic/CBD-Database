@@ -20,8 +20,8 @@
     }
 </style>
 <div ng-app="EventCreator" ng-controller="formBuilder">
-    <h1>Create a new event</h1>
-    <hr/>
+    <!-- <h1>Create a new event</h1>
+    <hr/> -->
 
     <!--default-form output="$parent.newField"></default-form-->
 

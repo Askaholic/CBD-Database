@@ -6,7 +6,7 @@ function makeShortName(name) {
 
 app.controller("formBuilder", function($scope, $http) {
     $scope.form = {
-        name: 'Untitled Event',
+        name: 'Name your Event',
         fields: []
     }
 
@@ -19,7 +19,7 @@ app.controller("formBuilder", function($scope, $http) {
     //user info and required(not deletable) template demo
     $scope.form.fields.push({'name':'userinfo', 'type':'userinfo', 'desc': 'Sign up for Event', 'nodelete':true, 'required':true, 'items':[]});
     //TODO make default pay like userinfo
-    //TODO make addable types like allergies, lodging 
+    //TODO make addable types like allergies, lodging
 
     $scope.showCreateField = false;
 

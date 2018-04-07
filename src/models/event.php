@@ -47,12 +47,7 @@ class Event extends Model
       foreach($result as $row)
         $event = Event::create_instance_from_row($row);
       return $event;
-      // $events = array();
-      // foreach($result as $row) {
-      //     $obj = Event::create_instance_from_row( $row );
-      //     array_push($events, $obj);
-      // }
-      // return $events;
+
     }
 }
 

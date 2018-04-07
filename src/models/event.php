@@ -37,7 +37,6 @@ class Event extends Model
         self::query($sql);
     }
 
-    //this will return possible multiple events (unless name is changed to primary key)
     public static function query_events_from_id($id) {
       $event_table = Event::TABLE_NAME;
       $result = self::query(
@@ -69,6 +68,18 @@ class ScheduledEvent extends Model
     protected static $constraints = '
         FOREIGN KEY (event_id) references events(id)
     ';
+
+    public static function query_events_from_id($id) {
+      $event_table = ScheduledEvent::TABLE_NAME;
+      $result = self::query(
+        "SELECT * FROM $event_table WHERE id = '$id';"
+      );
+      //id is primary key so there can be only one
+      foreach($result as $row)
+        $event = ScheduledEvent::create_instance_from_row($row);
+      return $event;
+
+    }
 }
 
 function json_schema_to_column_string( $schema ) {

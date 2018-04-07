@@ -18,7 +18,7 @@ class FormBuilder
     }
 
     static function userInfoForm() {
-        $name = self::input('text', 'first_name', 'First Name', '', false ) . self::input('text', 'last_name', 'Last Name', '', false );
+        $name = self::input('text', 'first_name', 'First Name', 'required', false ) . self::input('text', 'last_name', 'Last Name', 'required', false );
         echo $name;
         $html .= $name;
         return $html;

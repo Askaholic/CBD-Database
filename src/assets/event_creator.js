@@ -13,9 +13,9 @@ app.controller("formBuilder", function($scope, $http) {
     //add template form to fields
     //$scope.form.fields.push({});
     //editable event description
-    //TODO better entry field for eventDescription, what is textarea?
+    //TODO better entry field for eventDescription
     //TODO find out how to pass field variable to formBuilder calls in create_event.php
-    $scope.form.fields.push({'name':'eventdesc', 'type':'eventdesc', 'desc': 'Describe your Event', 'nodelete':true});
+    $scope.form.fields.push({'name':'eventdesc', 'type':'eventdesc', 'desc': 'Describe your Event', 'nodelete':true, 'items':[]});
     //user info and required(not deletable) template demo
     $scope.form.fields.push({'name':'userinfo', 'type':'userinfo', 'desc': 'Sign up for Event', 'nodelete':true, 'required':true, 'items':[]});
     //TODO make default pay like userinfo

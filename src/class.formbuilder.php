@@ -12,7 +12,7 @@ class FormBuilder
     /* Event template form functions */
     //TODO set this to match in create event
     static function eventDescription($desc) {
-        $html = '<p> '.$desc . '</p>';
+        $html = '<p> '.$desc . '</p><br>';
         echo $html;
         return $html;
     }

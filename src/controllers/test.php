@@ -22,12 +22,14 @@ if (isset($_POST['menu']) && !empty($_POST['menu'])) {
 echo "<iframe src='$menu' width='100%' height='50%'></iframe>";
 ?>
 
+
 <h3>Session Test</h3>
 
 <?php
 require_once( DP_PLUGIN_DIR . 'class.passwordhash.php' );
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 
+    echo Password::hash("123456") . '<br>';
 
   echo "Logged in: ";
   print_r(Authenticate::is_logged_in());

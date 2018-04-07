@@ -14,6 +14,8 @@ $schema_types = array(
     'radio' => 'multivalued',
     'checkbox' => 'checkbox',
     'select' => 'multivalued',
+    'userinfo' => 'userinfo',
+    'eventdesc' => 'eventdesc',
 );
 
 $error;
@@ -59,7 +61,7 @@ if ( isset($_POST['event_schema']) ) {
             throw new BadInputException( 'Cannot insert empty event' );
         }
 
-        if ( isset($_SESSION['usr']->id) ) {
+        if ( Authenticate::is_logged_in() ) {
             $user_id = $_SESSION['usr']->id;
         }
         else {

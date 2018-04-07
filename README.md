@@ -68,7 +68,13 @@ it works!
 
 #### Module Usage
 
-Event viewing -- goto event url and enter variable for event id as in database
-eg. http://localhost/index.php/events/?event=1
-events must be enabled or you must be admin to view
-Note: be sure to restart plugin for event route
+Event viewing
+- goto event url and enter variable for scheduled event id as in database
+- eg. http://localhost/index.php/events/?event=1
+- events must be enabled or you must be admin to view
+- can schedule events through review_events page
+- to view unscheduled events as admin set unscheduled variable
+- eg. http://localhost/index.php/events/?event=1&unscheduled=true
+Notes:
+- be sure to restart plugin for event route
+- need to reenter db info in plugin options page to create new dbs

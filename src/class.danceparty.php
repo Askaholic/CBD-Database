@@ -56,11 +56,11 @@ class DanceParty
         Router::init_hooks();
 
         add_action( 'wp_enqueue_scripts', array( 'DanceParty', 'enqueue_scripts_and_styles' ) );
-        
+
         add_filter( 'wp_nav_menu_items', array( 'DanceParty','add_profile_menu'), 20, 5);
 
         add_filter( 'wp_nav_menu_items', array( 'DanceParty','add_login_logout_menu'), 20, 5);
-            
+
         $init_done = true;
         ob_start();
     }
@@ -84,6 +84,7 @@ class DanceParty
         require_once( DP_PLUGIN_DIR . 'models/tokens.php' );
 
         User::create_table();
+        UserInvoices::create_table();
         Membership::create_table();
         Event::create_table();
         ScheduledEvent::create_table();

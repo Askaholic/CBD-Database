@@ -137,4 +137,23 @@ class Membership extends Model {
     ';
 }
 
+class UserInvoices extends Model {
+    const TABLE_NAME = 'user_invoices';
+
+    public static $columns = array(
+        'user_id' => 'int NOT NULL',
+        'scheduled_event_id' => 'int NOT NULL',
+        'guest_amount' => 'int',
+        'invoice_amount' => 'DOUBLE',
+        'amount_paid' => 'DOUBLE',
+        'extra_info' => 'JSON'
+    );
+
+    protected static $constraints = '
+        PRIMARY KEY (user_id),
+        FOREIGN KEY (user_id) REFERENCES users(id),
+        FOREIGN KEY (scheduled_event_id) REFERENCES scheduled_events(id)
+    ';
+}
+
 ?>

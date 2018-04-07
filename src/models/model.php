@@ -69,7 +69,7 @@ abstract class Model extends PDORepository {
 
     protected function set_values($row) {
         foreach (static::$columns as $name => $type) {
-            $this->cols[$name] = $row[$name];
+            $this->cols[$name]->value = $row[$name];
         }
     }
 
@@ -118,9 +118,10 @@ abstract class Model extends PDORepository {
 
     public function pull() {
         $table = static::TABLE_NAME;
+        $columns = static::get_sql_column_strings()['names'];
 
         $result = $this->query(
-            "SELECT * FROM $table where id = ?;",
+            "SELECT $columns FROM $table where id = ?;",
             array($this->id)
         );
 
@@ -228,6 +229,16 @@ abstract class Model extends PDORepository {
             $column_values
         );
         return $obj;
+    }
+
+    public function update($column1, $value1, $column2, $value2) {
+        $table = static::TABLE_NAME;
+
+        $this->query(
+            "UPDATE $table
+             SET $column1 = '" .$value1. "'
+             WHERE $column2 = '" .$value2."';"
+        );
     }
 }
 

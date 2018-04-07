@@ -56,6 +56,26 @@ class Event extends Model
     }
 }
 
+/**
+ * ScheduledEvent. Table for keeping track of when events are scheduled
+ */
+class ScheduledEvent extends Model
+{
+    const TABLE_NAME = 'scheduled_events';
+
+    protected static $columns = array(
+        'id' => 'int NOT NULL PRIMARY KEY AUTO_INCREMENT',
+        'event_id' => 'int NOT NULL',
+        'register_start_date' => 'date',
+        'register_end_date' => 'date',
+        'start_date' => 'date NOT NULL',
+        'end_date' => 'date NOT NULL'
+    );
+    protected static $constraints = '
+        FOREIGN KEY (event_id) references events(id)
+    ';
+}
+
 function json_schema_to_column_string( $schema ) {
     return implode(
         ',',

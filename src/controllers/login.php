@@ -6,7 +6,7 @@ require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 
 
 if ( Authenticate::is_logged_in() ) {
-    wp_redirect('/');
+    wp_redirect(get_home_url());
 }
 
 $nonce_name = 'login_nonce';
@@ -38,8 +38,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
 			throw new BadInputException( "Invalid password" );
 		}
 
-		$_SESSION['id'] = $usr[0]->id;
-		$_SESSION['role'] = $usr[0]->role_id;
+		$_SESSION['usr'] = $usr[0];
 
         $afterlog = $_POST['afterlog'];
         if(not_empty($afterlog)) {
@@ -48,7 +47,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
         }
         else {
             //or just go home
-            wp_redirect('/');
+            wp_redirect(get_home_url());
         }
     }
     catch ( Exception $e ) {

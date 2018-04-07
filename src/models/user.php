@@ -34,15 +34,28 @@ class User extends Model {
       return $users;
     }
 
+    public static function query_users_from_id($id) {
+        $user_table = User::TABLE_NAME;
+        $result = self::query(
+          "SELECT * FROM $user_table WHERE id = '$id';"
+        );
+        $users = array();
+        foreach($result as $row) {
+            $obj = User::create_instance_from_row( $row );
+            array_push($users, $obj);
+        }
+        return $users;
+    }
+
     public static function query_all_with_membership() {
         $table = static::TABLE_NAME;
         $membership_table = Membership::TABLE_NAME;
         $columns_string = '';
         foreach ( static::$columns as $name => $type ) {
-            $columns_string .= "$name,";
+            $columns_string .= "u.$name,";
         }
         foreach ( Membership::$columns as $name => $type ) {
-            $columns_string .= "$name,";
+            $columns_string .= "m.$name,";
         }
         // Remove last comma
         $columns_string = substr($columns_string, 0, -1);
@@ -51,6 +64,7 @@ class User extends Model {
             "SELECT $columns_string FROM $table AS u
                 INNER JOIN $membership_table as m ON
                     u.id = m.user_id
+                ORDER By u.first_name
             ;"
         );
         $retval = array();

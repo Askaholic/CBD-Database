@@ -25,3 +25,7 @@ function setPasswordMessage(message, color='red') {
     messageElement.innerHTML = message;
     messageElement.style.color = color;
 }
+
+function setType(value) {
+    document.getElementById("type-input").value = value;
+}

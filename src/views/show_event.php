@@ -18,10 +18,9 @@ foreach($cols as $fields) {
         $type = $field->type;
         if( $type === "int" )
             $type = "number";
-        $constraints = $field->constraints;
-        $required = $field->required;
-        if( $required )
-            $constraints = $constraints . " required";
+        $extra = '';
+        if($field->required)
+            $extra = 'required';
         $description = $field->description;
         if( $type === 'eventdesc' ) {
             FormBuilder::eventDescription($description);
@@ -30,7 +29,7 @@ foreach($cols as $fields) {
             FormBuilder::userInfoForm($user);
         }
         else {
-            FormBuilder::input($type, $name, $description, $constraints);
+            FormBuilder::input($type, $name, $description, $extra);
         }
     }
 }

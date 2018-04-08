@@ -17,10 +17,19 @@ class FormBuilder
         return $html;
     }
 
-    static function userInfoForm() {
-        $name = self::input('text', 'first_name', 'First Name', 'required', false ) . self::input('text', 'last_name', 'Last Name', 'required', false );
-        echo $name;
+    static function userInfoForm($user = NULL) {
+        $first = '';
+        $last = '';
+
+        if( $user ) {
+            $first = $user->first_name;
+            $last = $user->last_name;
+        }
+        $name = self::input('text', 'first_name', 'First Name', "required value='$first'", false )
+                . self::input('text', 'last_name', 'Last Name', "required value='$last'" , false );
         $html .= $name;
+        $html .= '<p>Not you? <a href="logout"> logout</a></p>';
+        echo $html;
         return $html;
     }
 

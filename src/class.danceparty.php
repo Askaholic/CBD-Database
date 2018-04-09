@@ -32,9 +32,9 @@ class DanceParty
 
     public static function add_login_logout_menu($items, $args) {
         if( Authenticate::is_logged_in() )
-            $link .= '<a href="' . '/logout' . '" title="Logout">' . __( 'Logout' ) . '</a>';
+            $link .= '<a href="' . get_page_link(get_page_by_title('logout')) . '" title="Logout">' . __( 'Logout' ) . '</a>';
         else
-            $link = '<a href="' . '/login' . '" title="Login">' . __( 'Login' ) . '</a>';
+            $link = '<a href="' . get_page_link(get_page_by_title('login')) . '" title="Login">' . __( 'Login' ) . '</a>';
 
         return $items .= '<li id="login_logout_menu-link" class="menu-item menu-type-link">'. $link . '</li>';
     }

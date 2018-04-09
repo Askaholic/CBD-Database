@@ -76,7 +76,6 @@ if( isset( $_POST['event_nonce']) && !$unscheduled) {
             'guest_amount' => 0,
             'invoice_amount' => 0.00,
             'amount_paid' => 0.00,
-            'extra_info' => $json
         );
 
         //enter in database

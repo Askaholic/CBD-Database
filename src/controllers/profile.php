@@ -1,18 +1,5 @@
 
 <?php
-/* controller_template.php
- * Rohan Weeden
- * Created: March 7 , 2018
- *
- * General rules for a controller
- *  Controllers handle backend logic and interaction with the data.
- *  - This file should not contain ANY HTML! (That goes in the view)
- *
- * Modify these comments to reflect your controller purpose. It's pretty obvious
- * that you either forgot to do this, or can't read because this comment is still
- * here...
- */
-
 
 /*
  * Require dependencies here
@@ -47,7 +34,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
         /*
          * Get and validate arguments
          */
-        $first =  not_empty( $_POST['first'] );
+        $first = not_empty( $_POST['first'] );
         $last = not_empty( $_POST['last'] );
 
         $user = User::query_users_from_email( $_SESSION['usr']->email );
@@ -55,7 +42,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
          * Do some logic
          */
         $user[0]->update('first_name', $first, 'email', $user[0]->email);
-            
+
         $user[0]->update('last_name', $last, 'email', $user[0]->email);
 
         /*

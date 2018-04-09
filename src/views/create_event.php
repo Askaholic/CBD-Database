@@ -43,7 +43,7 @@
             <div ng-if="f.type === 'textarea'">
                 <textarea></textarea>
             </div>
-            <div ng-if="!(f.type === 'eventdesc' f.type === 'userinfo' || f.type === 'checkbox' || f.type === 'radio' || f.type === 'textarea')">
+            <div ng-if="!(f.type === 'eventdesc' || f.type === 'userinfo' || f.type === 'checkbox' || f.type === 'radio' || f.type === 'textarea')">
                 <input type="{{ f.type }}" id="{{ f.short_name }}" name="{{ f.short_name }}">
             </div>
             <div ng-if="(f.type === 'userinfo')">

@@ -33,6 +33,16 @@ class FormBuilder
         return $html;
     }
 
+    static function childForm() {
+        ?><script>
+        function add()
+        {
+
+        }
+        </script>
+        <?php
+    }
+
     private static function _input( $type, $id, $extraattrs = '') {
         return '<input type="' . $type . '" id="' . $id . '" name="' . $id . '" ' .  $extraattrs . ' />';
     }

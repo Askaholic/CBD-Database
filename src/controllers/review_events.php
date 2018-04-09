@@ -45,7 +45,7 @@ try {
         $event->pull();
 
         if ($action_type === 'preview') {
-            DanceParty::render_view( 'render_event_form.php',
+            DanceParty::render_view( 'event_snippet.php',
                 array(
                     'event' => $event
                 )

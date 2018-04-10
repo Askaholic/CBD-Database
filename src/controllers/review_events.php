@@ -33,6 +33,8 @@ $info;
 $events;
 
 try {
+    $events = Event::query_all();
+
     if ( isset( $_POST[$nonce_name] ) ) {
         $event_id = valid_id(not_empty($_POST['event_id']));
         $action_type = not_empty($_POST['action_type']);
@@ -45,21 +47,21 @@ try {
         $event->pull();
 
         if ($action_type === 'preview') {
-            DanceParty::render_view( 'render_event_form.php',
+            DanceParty::render_view( 'event_snippet.php',
                 array(
                     'event' => $event
                 )
             );
-            $info = "Preview for " . htmlspecialchars($event->name);
         }
         else if($action_type === 'schedule') {
+            $start_date = valid_date(not_empty($_POST['start_date']));
+            $end_date = valid_date(not_empty($_POST['end_date']));
+
             $sched_event = new ScheduledEvent(
                 array(
                     'event_id' => $event_id,
-                    // 'register_start_date' => '',
-                    // 'register_end_date' => '',
-                    'start_date' => '2001-01-01',
-                    'end_date' => '2001-01-02'
+                    'start_date' => $start_date,
+                    'end_date' => $end_date
                 )
             );
             $sched_event->commit();
@@ -71,7 +73,6 @@ try {
         }
     }
 
-    $events = Event::query_all();
 }
 catch ( Exception $e ) {
     if ( get_class( $e ) !== BadInputException ) {

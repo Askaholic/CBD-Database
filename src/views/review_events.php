@@ -14,7 +14,12 @@ foreach ($events as $event) {
 }
 ?>
     </select>
+
+    <input type="submit" value="Preview" onclick="setType('preview')">
+<?php
+FormBuilder::input('date', 'start_date', 'Start Date');
+FormBuilder::input('date', 'end_date', 'End Date');
+?>
 <input type="submit" value="Schedule" onclick="setType('schedule')">
-<input type="submit" value="Preview" onclick="setType('preview')">
 
 </form>

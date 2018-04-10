@@ -60,8 +60,6 @@ class ScheduledEvent extends Model
     protected static $columns = array(
         'id' => 'int NOT NULL PRIMARY KEY AUTO_INCREMENT',
         'event_id' => 'int NOT NULL',
-        'register_start_date' => 'date',
-        'register_end_date' => 'date',
         'start_date' => 'date NOT NULL',
         'end_date' => 'date NOT NULL'
     );

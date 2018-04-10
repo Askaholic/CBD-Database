@@ -40,11 +40,22 @@ function clean_name($name) {
 }
 
 
+function is_empty($str) {
+    return $str === '' || $str === array();
+}
+
+
 /* Returns the string, throws an exception if it is empty */
 function not_empty($str) {
-    if ( $str === '' || $str === array() ) {
+    if ( is_empty($str) ) {
         throw new BadInputException("Invalid input: Cannot be empty.");
     }
+    return $str;
+}
+
+
+function null_on_empty($str) {
+    if ( is_empty($str) ) return null;
     return $str;
 }
 
@@ -93,6 +104,9 @@ function valid_password($pass) {
 
 
 function is_valid_date($date) {
+    if ( empty($date) ) {
+        return true;
+    }
     // yyyy-mm-dd
     $match = preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date);
     return $match !== false && $match !== 0;

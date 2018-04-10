@@ -19,8 +19,6 @@ foreach ($events as $event) {
 <?php
 FormBuilder::input('date', 'start_date', 'Start Date');
 FormBuilder::input('date', 'end_date', 'End Date');
-FormBuilder::input('date', 'reg_start_date', 'Registration Start Date');
-FormBuilder::input('date', 'reg_end_date', 'Registration End Date');
 ?>
 <input type="submit" value="Schedule" onclick="setType('schedule')">
 

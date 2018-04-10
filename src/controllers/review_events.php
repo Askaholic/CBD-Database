@@ -56,14 +56,10 @@ try {
         else if($action_type === 'schedule') {
             $start_date = valid_date(not_empty($_POST['start_date']));
             $end_date = valid_date(not_empty($_POST['end_date']));
-            $reg_start_date = valid_date(null_on_empty($_POST['reg_start_date']));
-            $reg_end_date = valid_date(null_on_empty($_POST['reg_end_date']));
 
             $sched_event = new ScheduledEvent(
                 array(
                     'event_id' => $event_id,
-                    'register_start_date' => $reg_start_date,
-                    'register_end_date' => $reg_end_date,
                     'start_date' => $start_date,
                     'end_date' => $end_date
                 )

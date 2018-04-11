@@ -16,6 +16,7 @@ $schema_types = array(
     'select' => 'multivalued',
     'userinfo' => 'userinfo',
     'eventdesc' => 'eventdesc',
+    'childinfo' => 'childinfo',
 );
 
 $error;

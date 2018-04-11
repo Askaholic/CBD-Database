@@ -32,15 +32,10 @@ class FormBuilder
         echo $html;
         return $html;
     }
-
-    static function childForm() {
-        ?><script>
-        function add()
-        {
-
-        }
-        </script>
-        <?php
+    static function childInfoForm(){
+        $people = self::input('number', 'children', 'Children (Ages 6-12)', ' min="0" max="200" value="0" ',true)
+                . self::input('number', 'young_adults', 'Young Adults (Ages 13-25)', ' min="0" max="200" value="0" ',true)
+                . self::input('number', 'adults', 'Adults (Ages 25+)', ' min="0" max="200" value="0" ',true);
     }
 
     private static function _input( $type, $id, $extraattrs = '') {

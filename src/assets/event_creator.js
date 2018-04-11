@@ -20,6 +20,7 @@ app.controller("formBuilder", function($scope, $http) {
     $scope.form.fields.push({'name':'userinfo', 'type':'userinfo', 'desc': 'Sign up for Event', 'nodelete':true, 'required':true, 'items':[]});
     //TODO make default pay like userinfo
     //TODO make addable types like allergies, lodging
+    $scope.form.fields.push({'name':'childinfo', 'type':'childinfo', 'desc': 'Number of people attending', 'nodelete':false, 'required':true, 'items':[]});
 
     $scope.showCreateField = false;
 

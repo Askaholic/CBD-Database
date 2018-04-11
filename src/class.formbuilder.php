@@ -32,6 +32,11 @@ class FormBuilder
         echo $html;
         return $html;
     }
+    static function childInfoForm(){
+        $people = self::input('number', 'children', 'Children (Ages 6-12)')
+                . self::input('number', 'young_adults', 'Young Adults (Ages 13-25)')
+                . self::input('number', 'adults', 'Adults (Ages 25+)');
+    }
 
     static function childForm() {
         ?><script>

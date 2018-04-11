@@ -31,7 +31,7 @@
             <div ng-if="!(f.nodelete === true)" class="inline-container">
                 <input class="button-sm button secondary input-inline" type="button" value="Delete" ng-click="deleteField($index)">
             </div>
-            <editable ng-if="!(f.type === 'userinfo' || f.type === 'eventdesc')" form-value="f.name"></editable>
+            <editable ng-if="!(f.type === 'userinfo' || f.type === 'childinfo' || f.type === 'eventdesc')" form-value="f.name"></editable>
             <editable tag="i" form-value="f.desc"></editable>
             <br/>
             <div ng-if="f.type === 'checkbox' || f.type === 'radio'">
@@ -43,11 +43,14 @@
             <div ng-if="f.type === 'textarea'">
                 <textarea></textarea>
             </div>
-            <div ng-if="!(f.type === 'eventdesc' || f.type === 'userinfo' || f.type === 'checkbox' || f.type === 'radio' || f.type === 'textarea')">
+            <div ng-if="!(f.type === 'eventdesc' || f.type === 'userinfo' || f.type === 'childinfo' || f.type === 'checkbox' || f.type === 'radio' || f.type === 'textarea')">
                 <input type="{{ f.type }}" id="{{ f.short_name }}" name="{{ f.short_name }}">
             </div>
             <div ng-if="(f.type === 'userinfo')">
                 <?php FormBuilder::userInfoForm() ?>
+            </div>
+            <div ng-if="(f.type === 'childinfo')">
+                <?php FormBuilder::childInfoForm() ?>
             </div>
         </div>
         <br/>

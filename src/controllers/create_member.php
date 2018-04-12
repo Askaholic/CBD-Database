@@ -3,6 +3,7 @@
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once(DP_PLUGIN_DIR . 'models/user.php');
 require_once(DP_PLUGIN_DIR . 'models/roles.php');
+require_once( DP_PLUGIN_DIR . 'models/tokens.php' );
 require_once(DP_PLUGIN_DIR . 'helpers.php');
 
 
@@ -57,9 +58,35 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
         ));
         $member->commit();
 
-        $link = ""; // need to generate link with token here
+        /* Create a password reset token for the new user */
+        $length = 32;
+        $timespan = 15 ; // days till expiry
+        $token = 123;//bin2hex(random_bytes($length)); PHP 7 ONLY, NEED random_compat LIBRARY
+        $expires = new DateTime('NOW');
+        $expires->add(new DateInterval('P' . $timespan . 'D'));
+        $expiration_date = $expires->format('Y-m-d H:i:s');
+                
+        $result = Token::query_from_id( $new_id );
+        if ( count( $result ) == 0 ) {
+            $recovery_token = new Token( array(
+            'user_id' => $new_id,
+            'recovery_token' => $token,
+            'expiration_date' => $expiration_date
+            ));
+            $recovery_token->commit();
+        }
+        else{
+            $user[0]->recovery_token = $token;
+            $user[0]->expiration_date = $expiration_date;
+            $user[0]->commit();
+        }
+        
+        $link = get_page_link(get_page_by_title('reset password')) . '?token=' . $token;
         $subject = "Your new Contra Borealis membership";
-        $body = "A new Contra Borealis account with a membership expiring on $expiry has been created for you. Click here to complete your registration $link";
+        $body = "A new Contra Borealis account with a membership expiring on $expiry has been created for you. \n\n";
+        $body .= "Click the link below to set your password. \n\n";
+        $body .= "$link \n\n";
+        $body .= "This link will expire in $timespan days.";
         send_email($email, $subject, $body);
 
         $info = "$email account created, with expiry date $expiry";

@@ -59,27 +59,19 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
         $member->commit();
 
         /* Create a password reset token for the new user */
-        $length = 32;
         $timespan = 15 ; // days till expiry
-        $token = 123;//bin2hex(random_bytes($length)); PHP 7 ONLY, NEED random_compat LIBRARY
+        $token = bin2hex(openssl_random_pseudo_bytes(Token::LENGTH));
         $expires = new DateTime('NOW');
         $expires->add(new DateInterval('P' . $timespan . 'D'));
         $expiration_date = $expires->format('Y-m-d H:i:s');
                 
-        $result = Token::query_from_id( $new_id );
-        if ( count( $result ) == 0 ) {
-            $recovery_token = new Token( array(
-            'user_id' => $new_id,
-            'recovery_token' => $token,
-            'expiration_date' => $expiration_date
-            ));
-            $recovery_token->commit();
-        }
-        else{
-            $user[0]->recovery_token = $token;
-            $user[0]->expiration_date = $expiration_date;
-            $user[0]->commit();
-        }
+        // insert token into database (updates on duplicate reset request)
+        $recovery_token = new Token( array(
+        'user_id' => $new_id,
+        'recovery_token' => $token,
+        'expiration_date' => $expiration_date
+        ));
+        $recovery_token->commit();
         
         $link = get_page_link(get_page_by_title('reset password')) . '?token=' . $token;
         $subject = "Your new Contra Borealis membership";

@@ -31,9 +31,8 @@ if ( isset( $_POST[$nonce_name] ) ) {
         }
 		
 		/* Create a unique user password reset token */
-		$length = 32;
 		$timespan = 15; // minutes till expiry
-		$token = 123;//bin2hex(random_bytes($length)); PHP 7 ONLY, NEED random_compat LIBRARY
+		$token = bin2hex(openssl_random_pseudo_bytes(Token::LENGTH));
 		$expires = new DateTime('NOW');
 		$expires->add(new DateInterval('PT' . $timespan . 'M'));
 		$expiration_date = $expires->format('Y-m-d H:i:s');
@@ -41,21 +40,14 @@ if ( isset( $_POST[$nonce_name] ) ) {
 		$id = $user[0]->id;
 		$email = $user[0]->email;
 		
-		$result = Token::query_from_id( $id );
-		if ( count( $result ) == 0 ) {
-            $recovery_token = new Token( array(
-            'user_id' => $id,
-            'recovery_token' => $token,
-            'expiration_date' => $expiration_date
-        	));
-        	$recovery_token->commit();
-        }
-        else{
-        	$user[0]->recovery_token = $token;
-        	$user[0]->expiration_date = $expiration_date;
-			$user[0]->commit();
-        }
-		
+		// insert token into database (updates on duplicate reset request)
+        $recovery_token = new Token( array(
+        'user_id' => $id,
+        'recovery_token' => $token,
+        'expiration_date' => $expiration_date
+    	));
+    	$recovery_token->commit();
+
 		$link = get_page_link(get_page_by_title('reset password')) . '?token=' . $token;
         $subject = "Password Reset";
         $body = "You recently requested to reset your Contraborealis password. ";

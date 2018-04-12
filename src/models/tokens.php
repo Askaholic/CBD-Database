@@ -3,6 +3,8 @@
 require_once( 'model.php' );
 
 class Token extends Model {
+
+	const LENGTH = 16;
     const TABLE_NAME = 'tokens';
 
     public static $columns = array(

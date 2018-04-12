@@ -35,7 +35,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
 		$timespan = 15; // minutes till expiry
 		$token = 123;//bin2hex(random_bytes($length)); PHP 7 ONLY, NEED random_compat LIBRARY
 		$expires = new DateTime('NOW');
-		$expires->add(new DateInterval('PT'.$timespan.'M'));
+		$expires->add(new DateInterval('PT' . $timespan . 'M'));
 		$expiration_date = $expires->format('Y-m-d H:i:s');
 		
 		$id = $user[0]->id;
@@ -56,20 +56,13 @@ if ( isset( $_POST[$nonce_name] ) ) {
 			$user[0]->commit();
         }
 		
-		
-		/*		
-		// Create a reset link
-		$uri = 'http://' .$_SERVER['HTTP_HOST'];
-		$pwurl = $uri. '/reset_password.php?q=' .$token;
-		
-		// Send the link to user email
-		$to = $user[0]->email;
-		$message = "Dear user,\n\nIf this email does not apply to you please ignore it. ";
-		$message .= "It appears that you have requested a password reset at contraborealis.org.\n\n";
-		$message .= "To reset your password, please click the link below. ";
-		$message .= "If you cannot click it, please paste it into your web browser's address bar.\n\n";
-		$message .= $pwurl . "\n\nThis link will expire in " .$expiry. " minutes.";
-		mail($to, "Contra Borealis - Password Reset", $message);*/
+		$link = get_page_link(get_page_by_title('reset password')) . '?token=' . $token;
+        $subject = "Password Reset";
+        $body = "You recently requested to reset your Contraborealis password. ";
+        $body .= "Click the link below to reset your password. \n\n";
+        $body .= "$link \n\n";
+		$body .= "This link will expire in $timespan minutes.";
+        send_email($email, $subject, $body);
 		
         $info = "Request recieved. Please check your email.";
     }

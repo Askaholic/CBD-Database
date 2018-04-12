@@ -18,12 +18,12 @@ if ( isset( $_POST[$nonce_name] ) && !wp_verify_nonce( $_POST[$nonce_name], 'sub
 }
 
 /* Check if token is set */
-if (!isset($_GET['q']) || $_GET['q'] == NULL){
+if (!isset($_GET['token']) || $_GET['token'] == NULL){
 	die( 'Bad access path.' );
 }
 
 /* Check if token is valid */
-$token = $_GET['q'];
+$token = $_GET['token'];
 $result = Token::query_from_token( $token );
 if ( count( $result ) == 0 ) {
 		die( "Incorrect link or password already changed." );

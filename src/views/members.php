@@ -2,8 +2,6 @@
     require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 ?>
 
-<h1>Members</h1>
-
 <table>
     <tr>
         <th>First</th>
@@ -30,7 +28,7 @@ foreach ( $display_members as $usr ) { ?>
     <tr>
         <td><?php echo $usr->first_name ?></td>
         <td><?php echo $usr->last_name ?></td>
-        <td><?php echo $usr->email ?></td>
+        <td><a href="user/?user_id=<?php echo $usr->id; ?>"><?php echo $usr->email ?></a></td>
         <td><?php echo date_format(date_create($usr->expiration_date), 'M. j, Y') ?></td>
         <?php 
         if ( ! Authenticate::is_admin() ) {
@@ -48,7 +46,6 @@ foreach ( $display_members as $usr ) { ?>
                 <input type="hidden" name="email" value="<?php echo $usr->email; ?>"/>
             </td>
             <td><input type="submit" id="submit" value="Change Role"></td>
-            <td><a href="user/?user_id=<?php echo $usr->id; ?>">View User</a></td>
         <?php } ?>
     </tr>
     </form>

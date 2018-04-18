@@ -1,5 +1,5 @@
 <?php
-/* show_members.php
+/* members.php
  * Rohan Weeden
  * Created: March 12 , 2018
  */
@@ -8,7 +8,7 @@ require_once( DP_PLUGIN_DIR . 'models/user.php' );
 require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
 if ( ! Authenticate::is_logged_in() ) {
-    wp_redirect('login/?afterlog=show_members');
+    wp_redirect('login/?afterlog=members');
 }
 
 if ( ! Authenticate::is_door_host() ) {
@@ -71,7 +71,7 @@ catch (Exception $e) {
     }
 }
 
-DanceParty::render_view_with_template( 'show_members.php',
+DanceParty::render_view_with_template( 'members.php',
     array(
         'title' => $title,
         'members' => $members,

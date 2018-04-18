@@ -4,7 +4,7 @@ require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
 if ( ! Authenticate::is_logged_in() ) {
-    wp_redirect('login/?afterlog=create_event');
+    wp_redirect(get_page_link(get_page_by_title('login')) . '?afterlog=create_event');
 }
 
 $schema_types = array(
@@ -16,6 +16,8 @@ $schema_types = array(
     'select' => 'multivalued',
     'userinfo' => 'userinfo',
     'eventdesc' => 'eventdesc',
+    'childinfo' => 'childinfo',
+    'payinfo' => 'payinfo',
 );
 
 $error;
@@ -28,6 +30,9 @@ if ( isset($_POST['event_schema']) ) {
     try {
         $field_info = json_decode(stripslashes($_POST['event_schema']), true);
         $event_name = not_empty(reg_chars($field_info['name']));
+
+        //TODO make these be numbers (already admin editable only)
+        $event_cost = not_empty($field_info['costs']);
 
         $schema = array(
             'columns' => array_map( function($value) use( &$schema_types ) {
@@ -53,6 +58,9 @@ if ( isset($_POST['event_schema']) ) {
                     );
                 }, $field_info['fields'] )
         );
+
+        //push cost info into schema - doesn't match structure but cleaned up on show_event
+        array_unshift( $schema['columns'], array( 'type' => 'costinfo', 'obj' => $event_cost ) );
 
         $empty_schema = array(
             'columns' => array()

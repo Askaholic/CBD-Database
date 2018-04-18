@@ -13,3 +13,6 @@
     <input type="submit" name="submit" value="Sign Up">
     <br><span id="error"></span><br>
 </form>
+
+<h3>Already have a Contra Borealis Dance account?</h3>
+<input type="button" value="Login"onClick="document.location.href='login'" />

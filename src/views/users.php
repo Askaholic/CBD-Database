@@ -16,8 +16,6 @@
     }
 </script>
 
-<h1>Expired Members</h1>
-
 <table>
     <tr>
         <th>First</th>
@@ -33,8 +31,17 @@
         <tr>
             <td><?php echo $usr->first_name ?></td>
             <td><?php echo $usr->last_name ?></td>
-            <td><?php echo $usr->email ?></td>
-            <td><?php echo date_format(date_create($usr->expiration_date), 'M. j, Y') ?></td>
+            <td><a href="user/?user_id=<?php echo $usr->id; ?>"><?php echo $usr->email ?></a></td>
+            <td>
+            <?php 
+                if( is_null( $usr->expiration_date ) ) {
+                    echo "Not a Member";
+                }
+                else{
+                    echo date_format(date_create($usr->expiration_date), 'M. j, Y');
+                }
+            ?>
+            </td>
             <td style="width: 200px">
                 <input class="default-date" type="date" name="expiry">
                 <input type="hidden" name="id" value="<?php echo $usr->id; ?>"/>

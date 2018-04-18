@@ -26,7 +26,7 @@ require_once( DP_PLUGIN_DIR . 'helpers.php' );
  */
 
 if ( ! Authenticate::is_logged_in() ) {
-    wp_redirect('login/?afterlog=user');
+    wp_redirect(get_page_link(get_page_by_title('login')) . '?afterlog=user');
 }
 
 

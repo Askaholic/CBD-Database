@@ -31,7 +31,7 @@
             <div ng-if="!(f.nodelete === true)" class="inline-container">
                 <input class="button-sm button secondary input-inline" type="button" value="Delete" ng-click="deleteField($index)">
             </div>
-            <editable ng-if="!(f.type === 'userinfo' || f.type === 'eventdesc')" form-value="f.name"></editable>
+            <editable ng-if="!((f.type === 'payinfo' || f.type === 'userinfo' || f.type === 'childinfo' || f.type === 'eventdesc')" form-value="f.name"></editable>
             <editable tag="i" form-value="f.desc"></editable>
             <br/>
             <div ng-if="f.type === 'checkbox' || f.type === 'radio'">
@@ -43,15 +43,38 @@
             <div ng-if="f.type === 'textarea'">
                 <textarea></textarea>
             </div>
-            <div ng-if="!(f.type === 'eventdesc' || f.type === 'userinfo' || f.type === 'checkbox' || f.type === 'radio' || f.type === 'textarea')">
+            <div ng-if="!(f.type === 'payinfo' || f.type === 'eventdesc' || f.type === 'userinfo' || f.type === 'childinfo' || f.type === 'checkbox' || f.type === 'radio' || f.type === 'textarea')">
                 <input type="{{ f.type }}" id="{{ f.short_name }}" name="{{ f.short_name }}">
             </div>
             <div ng-if="(f.type === 'userinfo')">
                 <?php FormBuilder::userInfoForm() ?>
             </div>
+            <div ng-if="(f.type === 'childinfo')">
+                <?php FormBuilder::childInfoForm() ?>
+            </div>
+            <div ng-if="(f.type === 'payinfo')">
+                <?php FormBuilder::paymentInfoForm() ?>
+            </div>
         </div>
         <br/>
     </div>
+
+    <?php
+        if( Authenticate::is_admin()) {
+    ?>
+        <div class="border-light">
+            <span>Enter cost for member attendance<span><br>
+            <editable form-value="form.costs.user"></editable>
+            <span>Enter cost per child attendance<span><br>
+            <editable form-value="form.costs.child"></editable>
+            <span>Enter cost per young adult attendance<span><br>
+            <editable form-value="form.costs.young_adult"></editable>
+            <span>Enter cost per adult attendance<span><br>
+            <editable form-value="form.costs.adult"></editable>
+        </div>
+    <?php
+        }
+    ?>
 
     <div ng-if="showCreateField">
         <br/>

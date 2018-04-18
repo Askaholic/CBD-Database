@@ -3,11 +3,12 @@
 require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once(DP_PLUGIN_DIR . 'models/user.php');
 require_once(DP_PLUGIN_DIR . 'models/roles.php');
+require_once( DP_PLUGIN_DIR . 'models/tokens.php' );
 require_once(DP_PLUGIN_DIR . 'helpers.php');
 
 
 if ( ! Authenticate::is_logged_in() ) {
-    wp_redirect( 'login/?afterlog=create_member' );
+    wp_redirect(get_page_link(get_page_by_title('login')) . '?afterlog=create_member');
 }
 
 if ( ! Authenticate::is_admin() ) {
@@ -57,9 +58,27 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
         ));
         $member->commit();
 
-        $link = ""; // need to generate link with token here
+        /* Create a password reset token for the new user */
+        $timespan = 15 ; // days till expiry
+        $token = bin2hex(openssl_random_pseudo_bytes(Token::LENGTH));
+        $expires = new DateTime('NOW');
+        $expires->add(new DateInterval('P' . $timespan . 'D'));
+        $expiration_date = $expires->format('Y-m-d H:i:s');
+                
+        // insert token into database (updates on duplicate reset request)
+        $recovery_token = new Token( array(
+        'user_id' => $new_id,
+        'recovery_token' => $token,
+        'expiration_date' => $expiration_date
+        ));
+        $recovery_token->commit();
+        
+        $link = get_page_link(get_page_by_title('reset password')) . '?token=' . $token;
         $subject = "Your new Contra Borealis membership";
-        $body = "A new Contra Borealis account with a membership expiring on $expiry has been created for you. Click here to complete your registration $link";
+        $body = "A new Contra Borealis account with a membership expiring on $expiry has been created for you. \n\n";
+        $body .= "Click the link below to set your password. \n\n";
+        $body .= "$link \n\n";
+        $body .= "This link will expire in $timespan days.";
         send_email($email, $subject, $body);
 
         $info = "$email account created, with expiry date $expiry";

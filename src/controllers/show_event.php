@@ -8,7 +8,7 @@ $event_id = $_GET['event'];
 $unscheduled = $_GET['unscheduled'];
 
 if ( ! Authenticate::is_logged_in() ) {
-    wp_redirect('login/?afterlog=' . "events/?event=$event_id");
+    wp_redirect(get_page_link(get_page_by_title('login')) . '?afterlog=events/?event=$event_id');
 }
 
 $user = $_SESSION['usr'];
@@ -44,27 +44,28 @@ $info = '';
 
 //doesn't commit form if unscheduled event view by admin
 if( isset( $_POST['event_nonce']) && !$unscheduled) {
-//get default form info
-//TODO is name necessary? This should be used to verify user address on file
-    $first = valid_name( not_empty( $_POST['first_name'] ) );
-    $last = valid_name( not_empty( $_POST['last_name'] ) );
-    $output .= "first_name: $first\n";
-    $output .= "last_name: $last\n";
 
-//get custom form info
+
+    //parse form info TODO write to new table specific to event
     $cols = (array) json_decode($event->schema_info);
     foreach($cols as $fields) {
         foreach ($fields as $field) {
             $name =  $field->name;
-            $output .= " $name: " . not_empty($_POST[$name]) . "<br>";
+            //$output .= " $name: " . not_empty($_POST[$name]) . "<br>";
             $val = not_empty($_POST[$name]);
             if($val)
                 $arr[$name] = $val;
         }
     }
     $json = json_encode($arr);
-    //echo "$json\n";
-    //TODO verify matches user? makes more sense with address update
+
+    //calculate total due and guests
+    $total_due = not_empty( $_POST['total_due']);
+    $children = not_empty( $_POST['children']);
+    $young_adults = not_empty( $_POST['young_adults']);
+    $adults = not_empty( $_POST['adults']);
+    $guests = $children+$young_adults+$adults;
+
     // check if user has already signed up
     if( count( UserInvoices::query_invoices( $user_id, $event_id ) ) > 0 ) {
         $error = 'You have already signed up for this event';
@@ -73,8 +74,8 @@ if( isset( $_POST['event_nonce']) && !$unscheduled) {
         $invoice = array(
             'user_id' => $user_id,
             'scheduled_event_id' => $event_id,
-            'guest_amount' => 0,
-            'invoice_amount' => 0.00,
+            'guest_amount' => $guests,
+            'invoice_amount' => $total_due,
             'amount_paid' => 0.00,
         );
 
@@ -84,8 +85,7 @@ if( isset( $_POST['event_nonce']) && !$unscheduled) {
 
         $info = 'Event submission sent';
     }
-    // echo "<br>DEBUG OUTPUT - FORM RESULTS: <br>";
-    // echo $output;
+
 }
 
 DanceParty::render_view_for_event( $event, array(

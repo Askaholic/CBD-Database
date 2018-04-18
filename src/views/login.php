@@ -1,4 +1,3 @@
-<h1>Login to your Contra Borealis Dance account</h1>
 
 <form method="post" action="">
     <?php
@@ -11,5 +10,6 @@
     ?>
     <br/>
     <input type="submit" value="Login">
-
 </form>
+<h3>Don't have an account yet?</h3>
+<input type="button" value="Sign Up"onClick="document.location.href='signup'" />

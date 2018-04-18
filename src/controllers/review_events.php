@@ -15,7 +15,7 @@ require_once( DP_PLUGIN_DIR . 'helpers.php' );
 require_once( DP_PLUGIN_DIR . 'models/event.php' );
 
 if ( ! Authenticate::is_logged_in() ) {
-    wp_redirect('login/?afterlog=review_events');
+    wp_redirect(get_page_link(get_page_by_title('login')) . '?afterlog=review_events');
 }
 
 if ( ! Authenticate::is_admin() ) {

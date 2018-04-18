@@ -5,7 +5,7 @@ require_once( DP_PLUGIN_DIR . 'models/user.php' );
 require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
 if ( ! Authenticate::is_logged_in() ) {
-    wp_redirect('login/?afterlog=show_expired_members');
+    wp_redirect('login/?afterlog=inactive_members');
 }
 
 if ( ! Authenticate::is_admin() ) {
@@ -56,10 +56,9 @@ if ( isset( $_POST['renew_member_nonce'] ) ) {
     }
 }
 
+$members = User::query_all_users();
 
-$members = User::query_all_without_membership();
-
-DanceParty::render_view_with_template( 'show_expired_members.php',
+DanceParty::render_view_with_template( 'inactive_members.php',
     array(
         'members' => $members,
         'error' => $error,

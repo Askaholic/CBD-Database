@@ -16,8 +16,6 @@
     }
 </script>
 
-<h1>Inactive Members</h1>
-
 <table>
     <tr>
         <th>First</th>

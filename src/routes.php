@@ -16,8 +16,8 @@ Router::route_post( 'Inactive Members', 'inactive_members', 'inactive_members.ph
 Router::route_post( 'Create Event', 'create_event', 'create_event.php' );
 Router::route_post( 'Sign up for Event', 'events', 'show_event.php' );
 Router::route_post( 'Review Events', 'review_events', 'review_events.php' );
-Router::route_post( 'Login', 'login', 'login.php' );
-Router::route_post( 'Forgot Password', 'forgot_password', 'forgot_password.php' );
+Router::route_post( 'Login to your Contra Borealis Dance account', 'login', 'login.php' );
+Router::route_post( 'Forgot Your Password?', 'forgot_password', 'forgot_password.php' );
 Router::route_post( 'Reset Password', 'reset_password', 'reset_password.php' );
 Router::route_post( 'Logout', 'logout', 'logout.php' );
 Router::route_post( 'Profile', 'profile', 'profile.php' );

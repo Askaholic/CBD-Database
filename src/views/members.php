@@ -2,8 +2,6 @@
     require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 ?>
 
-<h1>Members</h1>
-
 <table>
     <tr>
         <th>First</th>

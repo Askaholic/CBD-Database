@@ -1,4 +1,3 @@
-<h1>Login to your Contra Borealis Dance account</h1>
 
 <form method="post" action="">
     <?php

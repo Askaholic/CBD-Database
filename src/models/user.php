@@ -64,6 +64,7 @@ class User extends Model {
             "SELECT $columns_string FROM $table AS u
                 INNER JOIN $membership_table as m ON
                     u.id = m.user_id
+                WHERE m.expiration_date < CURDATE()
                 ORDER By u.first_name
             ;"
         );
@@ -75,7 +76,7 @@ class User extends Model {
         return $retval;
     }
 
-    public static function query_all_without_membership() {
+    public static function query_all_users() {
         $table = static::TABLE_NAME;
         $membership_table = Membership::TABLE_NAME;
         $columns_string = '';
@@ -92,11 +93,8 @@ class User extends Model {
             "SELECT * FROM (
                 SELECT user_id AS id, MAX(expiration_date) as expiration_date FROM
                     $membership_table GROUP BY id) AS i
-                INNER JOIN $table AS u ON
-                    u.id = i.id
-                WHERE
-                    i.expiration_date < CURDATE()
-                ;"
+                RIGHT OUTER JOIN $table AS u ON
+                    u.id = i.id;"
         );
         $retval = array();
         foreach ($result as $row) {

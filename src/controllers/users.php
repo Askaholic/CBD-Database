@@ -56,8 +56,7 @@ if ( isset( $_POST['renew_member_nonce'] ) ) {
     }
 }
 
-
-$members = User::query_all_without_membership();
+$members = User::query_all_users();
 
 DanceParty::render_view_with_template( 'inactive_members.php',
     array(

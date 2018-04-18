@@ -12,7 +12,7 @@ Router::route( 'umt', 'umt.php' );
 Router::route_post( 'Sign Up', 'signup', 'signup.php' );
 Router::route_post( 'Create Member', 'create_member', 'create_member.php' );
 Router::route_post( 'Members', 'members', 'members.php' );
-Router::route_post( 'Inactive Members', 'inactive_members', 'inactive_members.php' );
+Router::route_post( 'All users', 'users', 'users.php' );
 Router::route_post( 'Create Event', 'create_event', 'create_event.php' );
 Router::route_post( 'Sign up for Event', 'events', 'show_event.php' );
 Router::route_post( 'Review Events', 'review_events', 'review_events.php' );

@@ -3,10 +3,10 @@
 wp_nonce_field('submit', 'event_nonce');
 DanceParty::render_view('event_snippet.php',
     array(
-        'event' => $event
+        'event' => $event,
+        'user' => $user
     )
 );
 ?>
-<!-- Should button say Join Event or something less generic than Submit? -->
-<input type="submit" name="submit" value="Submit">
+<input type="submit" name="submit" value="Register for Event">
 </form>

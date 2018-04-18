@@ -17,6 +17,7 @@ $schema_types = array(
     'userinfo' => 'userinfo',
     'eventdesc' => 'eventdesc',
     'childinfo' => 'childinfo',
+    'payinfo' => 'payinfo',
 );
 
 $error;
@@ -29,6 +30,9 @@ if ( isset($_POST['event_schema']) ) {
     try {
         $field_info = json_decode(stripslashes($_POST['event_schema']), true);
         $event_name = not_empty(reg_chars($field_info['name']));
+
+        //TODO make these be numbers (already admin editable only)
+        $event_cost = not_empty($field_info['costs']);
 
         $schema = array(
             'columns' => array_map( function($value) use( &$schema_types ) {
@@ -54,6 +58,9 @@ if ( isset($_POST['event_schema']) ) {
                     );
                 }, $field_info['fields'] )
         );
+
+        //push cost info into schema - doesn't match structure but cleaned up on show_event
+        array_unshift( $schema['columns'], array( 'type' => 'costinfo', 'obj' => $event_cost ) );
 
         $empty_schema = array(
             'columns' => array()

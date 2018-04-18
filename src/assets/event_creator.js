@@ -7,7 +7,8 @@ function makeShortName(name) {
 app.controller("formBuilder", function($scope, $http) {
     $scope.form = {
         name: 'Name your Event',
-        fields: []
+        fields: [],
+        costs: {'user':0, 'child': 0,'young_adult': 0, 'adult': 0}    //costs default to 0, only admin editable
     }
 
     //add template form to fields
@@ -21,6 +22,7 @@ app.controller("formBuilder", function($scope, $http) {
     //TODO make default pay like userinfo
     //TODO make addable types like allergies, lodging
     $scope.form.fields.push({'name':'childinfo', 'type':'childinfo', 'desc': 'Number of people attending', 'nodelete':false, 'required':true, 'items':[]});
+    $scope.form.fields.push({'name':'payinfo', 'type':'payinfo', 'desc': 'Payment Information', 'nodelete':true, 'required':true, 'items':[]});
 
     $scope.showCreateField = false;
 

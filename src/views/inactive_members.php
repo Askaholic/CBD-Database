@@ -16,7 +16,7 @@
     }
 </script>
 
-<h1>Expired Members</h1>
+<h1>Inactive Members</h1>
 
 <table>
     <tr>

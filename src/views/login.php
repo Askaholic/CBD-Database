@@ -11,5 +11,6 @@
     ?>
     <br/>
     <input type="submit" value="Login">
-
 </form>
+<h3>Don't have an account yet?</h3>
+<input type="button" value="Sign Up"onClick="document.location.href='signup'" />

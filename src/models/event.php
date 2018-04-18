@@ -18,7 +18,7 @@ class Event extends Model
         'name' => 'VARCHAR(255) NOT NULL',
         'enabled' => 'boolean NOT NULL DEFAULT 0',
         'user_id' => 'int NOT NULL',
-        'schema_info' => 'JSON'
+        'schema_info' => 'TEXT'
     );
     protected static $constraints = '
         FOREIGN KEY (user_id) references users(id)

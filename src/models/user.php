@@ -146,7 +146,7 @@ class UserInvoices extends Model {
         'guest_amount' => 'int',
         'invoice_amount' => 'DOUBLE',
         'amount_paid' => 'DOUBLE',
-        'extra_info' => 'JSON'
+        'extra_info' => 'TEXT'
     );
 
     protected static $constraints = '

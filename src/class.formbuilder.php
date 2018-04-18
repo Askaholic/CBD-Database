@@ -28,6 +28,7 @@ class FormBuilder
         $name = self::input('text', 'first_name', 'First Name', "required value='$first'", false )
                 . self::input('text', 'last_name', 'Last Name', "required value='$last'" , false );
         $html .= $name;
+        $html .= self::input('checkbox', 'checked_waiver', 'I have read, understand, and accept the terms of the<a href="http://contraborealis.org/wp-content/uploads/DCN/DCN-Liability-Release-Form.pdf" >Waiver and Release of Liability</a>', 'required', false);
         $html .= '<p>Not you? <a href="logout"> logout</a></p>';
         echo $html;
         return $html;

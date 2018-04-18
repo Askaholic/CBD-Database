@@ -1,5 +1,4 @@
-<h1>Reset Password</h1>
-<br>Enter your new password.<br>
+Enter your new password.<br>
 
 <form method="post" action="">
 <?php

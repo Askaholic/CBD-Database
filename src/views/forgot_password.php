@@ -2,8 +2,6 @@
 	//TODO: Set up expiration for reset token, 15 mins
 </script>
 
-<h1>Forgot Your Password?</h1>
-
 <form method="post" action="">
 <p>Enter the email address affiliated with your account and we'll send you a link to reset your password.</p>
 <?php

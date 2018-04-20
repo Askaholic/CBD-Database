@@ -24,16 +24,34 @@ class Event extends Model
         FOREIGN KEY (user_id) references users(id)
     ';
 
-    public function create() {
-        $schema = json_decode($this->schema_info);
+    public function create($schema_values, $schema_types, $date, $name) {
+        
+        $table_name = $date . '_' . clean_name($name);
 
-        $table_name = $this->id . '_' . clean_name($this->name);
-        $column_strings = implode(',', $schema->columns);
-        $column_string = json_schema_to_column_string( $schema );
+        foreach($schema_types as $name=>$value) {
+            $column_strings .= "$name $value,";
+        }
+        $column_strings = substr($column_strings, 0, strlen($column_strings)-1);
+
+        //TODO reference user_invoices
+        $constraints = 'FOREIGN KEY (invoice) references user_invoices(id)';
 
         $sql = "CREATE TABLE IF NOT EXISTS $table_name (
             $column_strings
         );";
+        self::query($sql);
+
+        foreach($schema_values as $name=>$value) {
+            $column_name .= "$name,";
+            $column_value .= "'$value',";
+        }
+        $column_name = substr($column_name, 0, strlen($column_name)-1);
+        $column_value = substr($column_value, 0, strlen($column_value)-1);
+        $sql = "INSERT INTO $table_name (
+            $column_name
+        ) VALUES (
+            $column_value
+        )";
         self::query($sql);
     }
 

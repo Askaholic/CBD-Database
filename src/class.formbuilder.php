@@ -53,9 +53,12 @@ class FormBuilder
     }
     /* Create an input field with a label */
     static function input( $type, $id, $display_text, $extraattrs = '', $echo = true ) {
-        $label = '<label for="' . $id . '">' . $display_text . '</label><br/>';
+        if( $display_text !== '' )
+            $label = '<label for="' . $id . '">' . $display_text . '</label><br/>';
         $input = self::_input( $type, $id, $extraattrs);
-        $html = $label . $input . '<br/>';
+        $html = $label . $input;
+        if( $display_text !== '' )
+            $html .= '<br/>';
 
         if ($echo) {
             echo $html;

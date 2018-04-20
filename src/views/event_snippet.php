@@ -10,21 +10,33 @@ function updateCost(c) {
     document.getElementById('total_due').value=cost;
 }
 </script>
+
+<style>
+.border-light {
+    border: 1px solid grey;
+    border-radius: .2rem;
+    padding: 1rem;
+}
+</style>
+
 <?php
 $cols = (array) json_decode($event->schema_info);
 
 foreach($cols as $fields) {
     foreach ($fields as $field) {
+        echo '<div class="border-light">';
         $name =  $field->name;
         $type = $field->type;
-        if($type === "costinfo") {
+        if($type === 'costinfo') {
             $obj = $field->obj;
 
             $coststring = "{ user : $obj->user, "
                         . "child : $obj->child, "
                         . "young_adult : $obj->young_adult, "
                         . "adult : $obj->adult }";
-
+            $child_cost = floatval($obj->child);
+            $young_adult_cost = floatval($obj->young_adult);
+            $adult_cost = floatval($obj->adult);
             $jsfnstr = "updateCost($coststring); ";
             $cost = floatval($obj->user);
             continue;
@@ -48,9 +60,26 @@ foreach($cols as $fields) {
             FormBuilder::paymentInfoForm($cost);
         }
         else {
-            FormBuilder::input($type, $name, $description, $extra);
+            if( $type === 'checkbox' || $type === 'multivalued') {
+                echo "<b>$name</b><br>";
+                echo $description;
+                foreach($field->options as $option)
+                {
+                    if( $type === 'multivalued') $type = 'radio';
+                    FormBuilder::input($type, $option, $option); //TODO required options
+                }
+            }
+            else {
+                echo "<b>$name</b><br>";
+                FormBuilder::input($type, $name, $description, $extra);
+            }
         }
+        echo '</div>';
     }
 }
 FormBuilder::input('hidden', 'total_due', '', 'value="' . "$cost" . '"');
+FormBuilder::input('hidden', 'member_cost', '', 'value="' . "$member_cost" . '"');
+FormBuilder::input('hidden', 'child_cost', '', 'value="' . "$child_cost" . '"');
+FormBuilder::input('hidden', 'young_adult_cost', '', 'value="' . "$young_adult_cost" . '"');
+FormBuilder::input('hidden', 'adult_cost', '', 'value="' . "$adult_cost" . '"');
 ?>

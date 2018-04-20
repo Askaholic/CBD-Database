@@ -10,7 +10,7 @@ if ( ! Authenticate::is_logged_in() ) {
 $schema_types = array(
     'text' => 'text',
     'textarea' => 'text',
-    'number' => 'int',
+    'number' => 'int DEFAULT 0',
     'radio' => 'multivalued',
     'checkbox' => 'checkbox',
     'select' => 'multivalued',

@@ -263,4 +263,12 @@ class AbstractConstantEnforcer {
     }
 }
 
+class PDOConnection extends PDORepository {
+    public static function raw_query( $sql, $args = array() ) {
+        $ps = self::query($sql, $args);
+        if( $ps->execute() )
+        return $ps->fetch();
+     }
+}
+
 ?>

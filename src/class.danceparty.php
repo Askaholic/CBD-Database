@@ -126,6 +126,19 @@ class DanceParty
 
     }
 
+    public static function render_view_for_invoice( $user_inv, $event_inv, $context = array() ) {
+
+        if( empty($event_inv) || empty($user_inv) ) {
+             self::render_view_with_template('invoice_not_found.php');
+        }
+        else {
+            $context['user_inv'] = $user_inv;
+            $context['event_inv'] = $event_inv;
+            self::render_view_with_template( 'show_invoice.php' , $context );
+        }
+
+    }
+
     public static function run_controller( $controller ) {
         include DanceParty::CONTROLLER_DIR . $controller;
     }

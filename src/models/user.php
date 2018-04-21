@@ -163,7 +163,7 @@ class UserInvoices extends Model {
         }
         else {
             $result = self::query(
-              "SELECT * FROM $inv_table WHERE user_id = '$userid' AND scheduled_event_id = '$eventid';"
+              "SELECT * FROM $inv_table WHERE user_id = '$userid' AND id = '$eventid';"
             );
         }
         $invoices = array();

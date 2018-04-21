@@ -1,6 +1,5 @@
 <h1><?php echo htmlspecialchars($event->name) ?></h1>
 <script>
-//TODO move into show_event - snippet shouldn't be interactive
 function updateCost(c) {
     var child = parseFloat(document.getElementById('children').value);
     var young_adult = parseFloat(document.getElementById('young_adults').value);

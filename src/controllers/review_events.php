@@ -66,7 +66,7 @@ try {
             );
             $sched_event->commit();
 
-            $info = "Successfuly scheduled ". htmlspecialchars($event->name);
+            $info = "Successfully scheduled ". htmlspecialchars($event->name);
         }
         else {
             throw new BadInputException("Unknown action");

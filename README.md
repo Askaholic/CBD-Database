@@ -78,3 +78,12 @@ Event viewing
 Notes:
 - be sure to restart plugin for event route
 - need to reenter db info in plugin options page to create new dbs
+
+Invoice viewing
+-basically like Events
+- can get array of users invoices like: $user_invoices = UserInvoices::query_invoices( $user->id );
+- or singular like $user_invoice = UserInvoices::query_invoices( $user->id, $inv_id  )[0];
+- users can view their own invoices
+- eg. http://localhost/index.php/invoices/?invoice=1
+- admins can view other users invoices
+- eg. http://localhost/index.php/invoices/?invoice=1&user=1

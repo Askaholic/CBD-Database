@@ -10,8 +10,8 @@ require_once( DP_PLUGIN_DIR . 'models/user.php' );
 class Authenticate
 {
 	private static function dp_start_session() {
-		if (session_status() == PHP_SESSION_NONE){
-    		session_dp_start_session();
+		if (session_status() === PHP_SESSION_NONE){
+
     		if (!isset($_SESSION['canary'])) {
 				session_regenerate_id(true);
 				$_SESSION['canary'] = time();
@@ -23,9 +23,9 @@ class Authenticate
 			}
     	}
 	}
-	
+
 	public static function dp_stop_session() {
-		if(session_status() != PHP_SESSION_NONE)
+		if(session_status() !== PHP_SESSION_NONE)
 			session_destroy();
 	}
 

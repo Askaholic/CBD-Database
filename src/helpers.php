@@ -146,7 +146,7 @@ function send_email($address, $subject, $body) {
     if (! is_valid_email($address)) {
         throw new BadInputException("Invalid email");
     }
-    $header = 'From: /usr/sbin/sendmail'."\r\n";
+    $header = 'From: Contra Borealis Web <noreply@contraborealis.org>'."\r\n";
     return mail($address, $subject, $body, $header);
 }
 

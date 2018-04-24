@@ -38,6 +38,7 @@ if ( isset( $_POST[$nonce_name] ) ) {
 		$expiration_date = $expires->format('Y-m-d H:i:s');
 		
 		$id = $user[0]->id;
+		$first = $user[0]->first_name;
 		$email = $user[0]->email;
 		
 		// insert token into database (updates on duplicate reset request)
@@ -50,9 +51,10 @@ if ( isset( $_POST[$nonce_name] ) ) {
 
 		$link = get_page_link(get_page_by_title('reset password')) . '?token=' . $token;
         $subject = "Password Reset";
-        $body = "You recently requested to reset your Contraborealis password. ";
+        $body = "Hello $first, \n\n";
+        $body .= "You recently requested to reset your Contraborealis password. \n";
         $body .= "Click the link below to reset your password. \n\n";
-        $body .= "$link \n\n";
+        $body .= "<a href=$link> Reset password</a>\n\n";
 		$body .= "This link will expire in $timespan minutes.";
         send_email($email, $subject, $body);
 		

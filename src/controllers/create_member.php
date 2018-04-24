@@ -31,8 +31,8 @@ $viewParams = array(
 
 if ( isset( $_POST['create_member_nonce'] ) ) {
     try {
-        $first = valid_name(not_empty($_POST['first']));
-        $last = valid_name(not_empty($_POST['last']));
+        $first = valid_name(not_empty($_POST['first_name']));
+        $last = valid_name(not_empty($_POST['last_name']));
         $email = valid_email(not_empty($_POST['email']));
         $expiry = valid_date(not_empty($_POST['expiry']));
         $pass = ''; // empty pass for admin-created members

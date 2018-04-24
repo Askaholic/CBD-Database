@@ -52,8 +52,8 @@ if ( isset( $_POST['signup_nonce'] ) ) {
 
         $link = get_site_url();
         $subject = "Welcome to the Contraborealis Website";
-        $body = "Welcome $first, \n\n";
-        $body .= "Your new Contra Borealis account has been created. \n\n";
+        $body = "Welcome $first, <br><br>";
+        $body .= "Your new Contra Borealis account has been created. <br>";
         $body .= "<a href=$link> Visit Contraborealis</a>";
         send_email($email, $subject, $body);
 

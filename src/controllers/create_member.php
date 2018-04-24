@@ -75,10 +75,10 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
         
         $link = get_page_link(get_page_by_title('reset password')) . '?token=' . $token;
         $subject = "Your new Contraborealis membership";
-        $body = "Welcome $first, \n\n";
-        $body .= "A new Contraborealis account with a membership expiring on $expiry has been created for you. \n\n";
-        $body .= "Click the link below to set your password. \n\n";
-        $body .= "<a href=$link> Set password</a>\n\n";
+        $body = "Welcome $first, <br><br>";
+        $body .= "A new Contraborealis account with a membership expiring on $expiry has been created for you. ";
+        $body .= "Click the link below to set your password. <br><br>";
+        $body .= "<a href=$link> Set password</a> <br><br>";
         $body .= "This link will expire in $timespan days.";
         send_email($email, $subject, $body);
 

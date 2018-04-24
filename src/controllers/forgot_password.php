@@ -51,10 +51,10 @@ if ( isset( $_POST[$nonce_name] ) ) {
 
 		$link = get_page_link(get_page_by_title('reset password')) . '?token=' . $token;
         $subject = "Password Reset";
-        $body = "Hello $first, \n\n";
-        $body .= "You recently requested to reset your Contraborealis password. \n";
-        $body .= "Click the link below to reset your password. \n\n";
-        $body .= "<a href=$link> Reset password</a>\n\n";
+        $body = "Hello $first, <br><br>";
+        $body .= "You recently requested to reset your Contraborealis password. ";
+        $body .= "Click the link below to reset your password. <br><br>";
+        $body .= "<a href=$link> Reset password</a><br><br>";
 		$body .= "This link will expire in $timespan minutes.";
         send_email($email, $subject, $body);
 		

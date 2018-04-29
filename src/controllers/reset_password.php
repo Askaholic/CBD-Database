@@ -65,6 +65,8 @@ if ( isset( $_POST[$nonce_name] ) ) {
 		
 		$user[0]->update('password', $hash, 'id', $id );
 
+        Token::delete_from_token( $token ); 
+
         $info = "Your password has been updated.";
     }
     catch ( Exception $e ) {

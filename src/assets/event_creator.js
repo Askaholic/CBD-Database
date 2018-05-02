@@ -146,7 +146,7 @@ app.component('formChange', {
             this.output = {
                 "name": "Name",
                 "desc": "Description",
-                "required": true,
+                "required": false,
                 "items": []
             }
         }
@@ -164,9 +164,9 @@ app.component('formChange', {
     template:
    `
    <div class="pull-right">
-    <label for="checkbox1">Required to Answer:</label>
+    <label for="checkbox1">Required:</label>
      <label class="switch">
-         <input type="checkbox" id="checkbox1" ng-model="$ctrl.output.required" checked>
+         <input type="checkbox" id="checkbox1" ng-model="$ctrl.output.required">
          <span class="slider round"></span>
      </label>
    </div>

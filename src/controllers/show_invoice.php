@@ -27,7 +27,7 @@ else {
 }
 
 //get user invoice info
-$user_inv = UserInvoices::query_invoices( $user->id, $inv_id )[0];
+$user_inv = UserInvoices::query_invoice( $inv_id );
 
 //get event invoice info
 //make table name

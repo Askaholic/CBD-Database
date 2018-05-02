@@ -34,11 +34,8 @@
             <td><a href="user/?user_id=<?php echo $usr->id; ?>"><?php echo $usr->email ?></a></td>
             <td>
             <?php 
-                if( is_null( $usr->expiration_date ) ) {
-                    echo "Not a Member";
-                }
-                else{
-                    echo date_format(date_create($usr->expiration_date), 'M. j, Y');
+                if( ! is_null( $usr->expiration_date ) ) {
+                    echo date_format(date_create($usr->expiration_date), 'M. j, Y');   
                 }
             ?>
             </td>

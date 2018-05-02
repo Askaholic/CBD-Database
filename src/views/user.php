@@ -9,8 +9,8 @@ if ( empty( $user ))
 <form method="post" action="" onsubmit="return confirm('Are you sure?')">
 <?php
     wp_nonce_field('submit', 'user_nonce');
-    FormBuilder::input('text', 'first', 'First Name', 'pattern="[A-Za-z]{2,128}" required title="First name, letters only" value="' . $user[0]->first_name . '"');
-    FormBuilder::input('text', 'last', 'Last Name', 'pattern="[A-Za-z]{2,128}" required title="Last Name, letters only" value="' . $user[0]->last_name . '"');
+    FormBuilder::input('text', 'first_name', 'First Name', 'pattern="[A-Za-z]{2,128}" required title="First name, letters only" value="' . $user[0]->first_name . '"');
+    FormBuilder::input('text', 'last_name', 'Last Name', 'pattern="[A-Za-z]{2,128}" required title="Last Name, letters only" value="' . $user[0]->last_name . '"');
     echo "<h4>Email Address</h4>";
     echo $user[0]->email;
     echo "<h4>Role</h4>";

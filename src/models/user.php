@@ -152,7 +152,6 @@ class UserInvoices extends Model {
         FOREIGN KEY (scheduled_event_id) REFERENCES scheduled_events(id)
     ';
 
-    //TODO make way to query all invoices for event (all users)
     public static function query_invoices($userid, $eventid = NULL) {
         $inv_table = UserInvoices::TABLE_NAME;
         //if eventid is null then returns all user invoices
@@ -163,7 +162,7 @@ class UserInvoices extends Model {
         }
         else {
             $result = self::query(
-              "SELECT * FROM $inv_table WHERE user_id = '$userid' AND id = '$eventid';"
+              "SELECT * FROM $inv_table WHERE user_id = '$userid' AND scheduled_event_id = '$eventid';"
             );
         }
         $invoices = array();
@@ -172,6 +171,19 @@ class UserInvoices extends Model {
             array_push($invoices, $obj);
         }
         return $invoices;
+    }
+
+    //just for specific invoice
+    public static function query_invoice($inv_id) {
+        $inv_table = UserInvoices::TABLE_NAME;
+
+            $result = self::query(
+              "SELECT * FROM $inv_table WHERE id = '$inv_id';"
+            );
+        foreach($result as $row) {
+            $obj = UserInvoices::create_instance_from_row( $row );
+        }
+        return $obj;
     }
 }
 

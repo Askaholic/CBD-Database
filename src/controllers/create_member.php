@@ -31,8 +31,8 @@ $viewParams = array(
 
 if ( isset( $_POST['create_member_nonce'] ) ) {
     try {
-        $first = valid_name(not_empty($_POST['first']));
-        $last = valid_name(not_empty($_POST['last']));
+        $first = valid_name(not_empty($_POST['first_name']));
+        $last = valid_name(not_empty($_POST['last_name']));
         $email = valid_email(not_empty($_POST['email']));
         $expiry = valid_date(not_empty($_POST['expiry']));
         $pass = ''; // empty pass for admin-created members
@@ -74,10 +74,11 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
         $recovery_token->commit();
         
         $link = get_page_link(get_page_by_title('reset password')) . '?token=' . $token;
-        $subject = "Your new Contra Borealis membership";
-        $body = "A new Contra Borealis account with a membership expiring on $expiry has been created for you. \n\n";
-        $body .= "Click the link below to set your password. \n\n";
-        $body .= "$link \n\n";
+        $subject = "Your new Contraborealis membership";
+        $body = "Welcome $first, <br><br>";
+        $body .= "A new Contraborealis account with a membership expiring on $expiry has been created for you. ";
+        $body .= "Click the link below to set your password. <br><br>";
+        $body .= "<a href=$link> Set password</a> <br><br>";
         $body .= "This link will expire in $timespan days.";
         send_email($email, $subject, $body);
 

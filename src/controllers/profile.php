@@ -34,8 +34,8 @@ if ( isset( $_POST[$nonce_name] ) ) {
         /*
          * Get and validate arguments
          */
-        $first = not_empty( $_POST['first'] );
-        $last = not_empty( $_POST['last'] );
+        $first = not_empty( $_POST['first_name'] );
+        $last = not_empty( $_POST['last_name'] );
 
         $user = User::query_users_from_email( $_SESSION['usr']->email );
         /*

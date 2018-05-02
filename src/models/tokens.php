@@ -21,7 +21,7 @@ class Token extends Model {
 		$token_table = Token::TABLE_NAME;
 		$result = self::query(
 		"SELECT * FROM $token_table WHERE recovery_token = '$token';"
-	);
+		);
 		$tokens = array();
 		foreach($result as $row) {
 			$obj = Token::create_instance_from_row( $row );
@@ -42,6 +42,14 @@ class Token extends Model {
 		}
 		return $ids;
 	}
+
+    public static function delete_from_token($token) {
+		$token_table = Token::TABLE_NAME;
+		$result = self::query(
+		"DELETE FROM $token_table WHERE recovery_token = '$token';"
+		);
+		return $result;
+    }
 }
 
 ?>

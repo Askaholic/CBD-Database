@@ -50,6 +50,13 @@ if ( isset( $_POST['signup_nonce'] ) ) {
         $user = new User( $userData );
         $user->commit();
 
+        $link = get_site_url();
+        $subject = "Welcome to the Contraborealis Website";
+        $body = "Welcome $first, <br><br>";
+        $body .= "Your new Contra Borealis account has been created. <br>";
+        $body .= "<a href=$link> Visit Contraborealis</a>";
+        send_email($email, $subject, $body);
+
         $info = "Account created";
     }
     catch ( Exception $e ) {

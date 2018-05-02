@@ -64,7 +64,7 @@ class User extends Model {
             "SELECT $columns_string FROM $table AS u
                 INNER JOIN $membership_table as m ON
                     u.id = m.user_id
-                WHERE m.expiration_date < CURDATE()
+                WHERE m.expiration_date > CURDATE()
                 ORDER By u.first_name
             ;"
         );

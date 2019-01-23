@@ -9,9 +9,9 @@ $inv_id = $_GET['invoice'];
 $user_id = $_GET['user'];
 if ( ! Authenticate::is_logged_in() ) {
     if( not_empty($user_id) )
-        wp_redirect(get_page_link(get_page_by_title('login')) . "?afterlog=invoices/?invoice=$inv_id&user=$user_id");
+        wp_redirect(get_page_link(get_page_by_path('login')) . "?afterlog=invoices/?invoice=$inv_id&user=$user_id");
     else
-        wp_redirect(get_page_link(get_page_by_title('login')) . "?afterlog=invoices/?invoice=$inv_id");
+        wp_redirect(get_page_link(get_page_by_path('login')) . "?afterlog=invoices/?invoice=$inv_id");
 }
 
 if( isset($user_id) ) {

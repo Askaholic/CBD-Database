@@ -4,7 +4,7 @@ require_once( DP_PLUGIN_DIR . 'class.authenticate.php' );
 require_once( DP_PLUGIN_DIR . 'helpers.php' );
 
 if ( ! Authenticate::is_logged_in() ) {
-    wp_redirect(get_page_link(get_page_by_title('login')) . '?afterlog=create_event');
+    wp_redirect(get_page_link(get_page_by_path('login')) . '?afterlog=create_event');
 }
 
 $schema_types = array(

@@ -8,7 +8,7 @@ $event_id = $_GET['event'];
 $unscheduled = $_GET['unscheduled'];
 
 if ( ! Authenticate::is_logged_in() ) {
-    wp_redirect(get_page_link(get_page_by_title('login')) . "?afterlog=events/?event=$event_id");
+    wp_redirect(get_page_link(get_page_by_path('login')) . "?afterlog=events/?event=$event_id");
 }
 
 $user = $_SESSION['usr'];

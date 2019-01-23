@@ -8,7 +8,7 @@ require_once(DP_PLUGIN_DIR . 'helpers.php');
 
 
 if ( ! Authenticate::is_logged_in() ) {
-    wp_redirect(get_page_link(get_page_by_title('login')) . '?afterlog=create_member');
+    wp_redirect(get_page_link(get_page_by_path('login')) . '?afterlog=create_member');
 }
 
 if ( ! Authenticate::is_admin() ) {
@@ -64,7 +64,7 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
         $expires = new DateTime('NOW');
         $expires->add(new DateInterval('P' . $timespan . 'D'));
         $expiration_date = $expires->format('Y-m-d H:i:s');
-                
+
         // insert token into database (updates on duplicate reset request)
         $recovery_token = new Token( array(
         'user_id' => $new_id,
@@ -72,8 +72,8 @@ if ( isset( $_POST['create_member_nonce'] ) ) {
         'expiration_date' => $expiration_date
         ));
         $recovery_token->commit();
-        
-        $link = get_page_link(get_page_by_title('reset password')) . '?token=' . $token;
+
+        $link = get_page_link(get_page_by_path('reset_password')) . '?token=' . $token;
         $subject = "Your new Contraborealis membership";
         $body = "Welcome $first, <br><br>";
         $body .= "A new Contraborealis account with a membership expiring on $expiry has been created for you. ";

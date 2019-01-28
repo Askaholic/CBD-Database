@@ -30,24 +30,8 @@ class DanceParty
 
     private static $init_done = false;
 
-    public static function add_login_logout_menu($items, $args) {
-        if( Authenticate::is_logged_in() )
-            $link .= '<a href="' . get_page_link(get_page_by_path('logout')) . '" title="Logout">' . __( 'Logout' ) . '</a>';
-        else
-            $link = '<a href="' . get_page_link(get_page_by_path('login')) . '" title="Login">' . __( 'Login' ) . '</a>';
-
-        return $items .= '<li id="login_logout_menu-link" class="menu-item menu-type-link">'. $link . '</li>';
-    }
-
-    public static function add_profile_menu($items, $args) {
-        if( Authenticate::is_logged_in() )
-            $link .= '<a href="' . '/profile' . '" title="Profile">' . __( 'Profile' ) . '</a>';
-
-        return $items .= '<li id="profile_menu-link" class="menu-item menu-type-link">'. $link . '</li>';
-    }
-
     static function init() {
-        if ( !self::$init_done) {
+        if ( !self::$init_done ) {
             self::init_hooks();
         }
     }
@@ -56,10 +40,6 @@ class DanceParty
         Router::init_hooks();
 
         add_action( 'wp_enqueue_scripts', array( 'DanceParty', 'enqueue_scripts_and_styles' ) );
-
-        add_filter( 'wp_nav_menu_items', array( 'DanceParty','add_profile_menu'), 20, 5);
-
-        add_filter( 'wp_nav_menu_items', array( 'DanceParty','add_login_logout_menu'), 20, 5);
 
         $init_done = true;
         ob_start();
@@ -102,8 +82,8 @@ class DanceParty
     public static function render_view( $view, $context = array() ) {
         include_once( 'class.formbuilder.php' );
         // Escape dangerous characters
-        array_map("recurse_htmlspecialchars", $context);
-        extract($context);
+        array_map( "recurse_htmlspecialchars", $context );
+        extract( $context );
 
         include DanceParty::VIEW_DIR . $view;
     }
@@ -117,7 +97,7 @@ class DanceParty
     public static function render_view_for_event( $event, $context = array() ) {
 
         if( empty($event) ) {
-             self::render_view_with_template('event_not_found.php');
+             self::render_view_with_template( 'event_not_found.php' );
         }
         else {
             $context['event'] = $event;
@@ -129,7 +109,7 @@ class DanceParty
     public static function render_view_for_invoice( $user_inv, $event_inv, $context = array() ) {
 
         if( empty($event_inv) || empty($user_inv) ) {
-             self::render_view_with_template('invoice_not_found.php');
+             self::render_view_with_template( 'invoice_not_found.php' );
         }
         else {
             $context['user_inv'] = $user_inv;
@@ -140,7 +120,17 @@ class DanceParty
     }
 
     public static function run_controller( $controller ) {
+        $controller = clean_file_name( $controller );
         include DanceParty::CONTROLLER_DIR . $controller;
+    }
+
+    public static function capture_controller_output( $controller ) {
+        ob_start();
+        self::run_controller( $controller );
+        $rendered_content = ob_get_contents();
+        ob_clean();
+        ob_end_flush();
+        return $rendered_content;
     }
 }
 

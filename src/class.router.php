@@ -48,21 +48,18 @@ class Router
     static function init_hooks() {
         add_filter( 'query_vars', array( 'Router', 'query_vars' ) );
         add_action( 'parse_request', array( 'Router', 'parse_request' ) );
-        add_filter( 'the_content', array( 'Router', 'render_php' ) , 9 );
+        add_filter( 'the_content', array( 'Router', 'embed_pages' ) , 9 );
     }
 
-    static function render_php($content) {
-        if (! preg_match('!^dp_page (.*)!', $content, $matches)) {
+    static function embed_pages( $content ) {
+        $pattern = '!dp_page ([a-z_]+)!';
+        if (! preg_match( $pattern, $content, $matches )) {
             return $content;
         }
 
-        $file = clean_name($matches[1]);
-        ob_start();
-        include DanceParty::CONTROLLER_DIR . "$file.php";
-        $rendered_content = ob_get_contents();
-        ob_clean();
-        ob_end_flush();
-        return $rendered_content;
+        $name = $matches[1];
+        $output = DanceParty::capture_controller_output( "$name.php" );
+        return preg_replace( $pattern, $output, $content);
     }
 
     static function query_vars( $query_vars ) {
@@ -72,7 +69,7 @@ class Router
 
     static function parse_request( &$wp ) {
         if ( array_key_exists( 'dp_router_page', $wp->query_vars ) ) {
-            include DanceParty::CONTROLLER_DIR . $wp->query_vars['dp_router_page'];
+            DanceParty::run_controller($wp->query_vars['dp_router_page']);
             exit();
         }
         return;

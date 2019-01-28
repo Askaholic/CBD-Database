@@ -39,6 +39,13 @@ function clean_name($name) {
     return $newName;
 }
 
+/* Same as above but allows dots*/
+function clean_file_name($name) {
+    $newName = strtolower($name);
+    $newName = preg_replace('/[ ]+/', '_', $newName);
+    $newName = preg_replace('/[^a-zA-Z0-9_ .]+/', '', $name);
+    return $newName;
+}
 
 function is_empty($str) {
     return $str === '' || $str === array();
